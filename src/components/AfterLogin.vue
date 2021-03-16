@@ -43,14 +43,15 @@ export default {
     #dashboard{
         width: 100%;
         min-width: 100%;
+        height: 300px;
         margin: auto;
         text-align: center;
         display:table;
     }
-    .dashboard-button{
+    #dashboard button{
         background-image:url('../assets/community.png');
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: contain;
         background-color: white;
         background-position: center;
         border-radius: 8px;
@@ -58,11 +59,12 @@ export default {
         width: 20%;
         min-width: 20%;
         height: 100%;
-        min-height: 20%;
-        padding: 20 0 10% 0;
+        min-height: 100%;
+        padding: 20% 0 0 0;
         margin: 1%;
-        display: table-cell;
-        text-align:center;
+        display: inline-block;
+        align-items: bottom;
+        line-height: 20px;
         font-size: 20px;
     }
     #sub-footer{
