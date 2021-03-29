@@ -2,7 +2,7 @@
   <div id="financialPathway">
       <div class="header">
         <img class="logo" alt="Finbud logo" src="../assets/logo.png">
-        <h1 class='header-font'>Planning your financial Pathway</h1>
+        <h1 class='header-font'>Planning your Financial Pathway</h1>
         <p>Use this to plan your journey towards your financial freedom</p>
       </div>
 
