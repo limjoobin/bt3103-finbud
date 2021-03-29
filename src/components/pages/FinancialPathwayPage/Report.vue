@@ -6,11 +6,11 @@
 
 
 <script>
-import RetirementChart from './charts/RetirementChart.vue'
+import RetirementChart from '../../charts/RetirementChart.vue'
 
 export default {
   components: { RetirementChart },
-    name:"report",
+    name:"Report",
     props:["dataset"],
     data:function(){
         return{

@@ -3,21 +3,21 @@
       <Welcome></Welcome>
       <Service></Service>
       <Reviews></Reviews>
-      <Community></Community>
+      <HomePageCommunity></HomePageCommunity>
 
   </div>
 </template>
 
 <script>
-import Welcome from './welcome.vue';
-import Reviews from './reviews.vue';
-import Community from './communityhp.vue';
+import Welcome from './Welcome.vue';
+import Reviews from './Reviews.vue';
+import HomePageCommunity from './HomePageCommunity.vue';
 import Service from './Service.vue';
 
 export default {
   components: {
     Service,
-    Community,
+    HomePageCommunity,
     Welcome,
     Reviews,
   },

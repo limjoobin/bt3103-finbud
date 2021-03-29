@@ -2,7 +2,7 @@
 <div>
     <div class="container">
     <div id="pic">
-        <img src="../assets/community.png" height="320px" width="400px">
+        <img src="../../../assets/community.png" height="320px" width="400px">
     </div>
     <div>
         <h1 style="font-family:Lustria">Join our exclusive community</h1>

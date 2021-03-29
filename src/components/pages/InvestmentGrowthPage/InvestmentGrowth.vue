@@ -104,9 +104,10 @@
 </template>
 
 <script>
-import IGChart from './charts/IGChart'
+import IGChart from '../../charts/IGChart'
 
 export default {
+    name: 'InvestmentGrowth',
     data() {
         return {
             content: 'Estimated time: 1 min',
@@ -123,10 +124,10 @@ export default {
     },
     methods: {
         investGrowth: function() {
-            this.$router.push('/InvestmentGrowth'); 
+            this.$router.push('/investment_growth'); 
         },
         community: function() {
-            this.$router.push('/CommunityContent');
+            this.$router.push('/community');
         },
         onChangeYearly() {
             this.data = [];

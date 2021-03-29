@@ -1,21 +1,24 @@
-import HomePage from './components/HomePage.vue'
-import AfterLogin from './components/AfterLogin.vue'
-import BudgetPlanning from './components/BudgetPlanning.vue'
-import InvestmentGrowth from './components/InvestmentGrowth.vue'
-import SavingsWithdrawal from './components/SavingsWithdrawal.vue'
-import Communityhp from './components/communityhp.vue'
-import Dashboard from './components/Dashboard.vue'
-import FinancialPathway from './components/FinancialPathway.vue'
-import LoginPage from './components/LoginPage.vue'
+import HomePage from './components/pages/HomePage/HomePage.vue'
+import SignUpPage from './components/pages/HomePage/SignUpPage.vue'
+import AfterLogin from './components/pages/AfterLogin.vue'
+
+import BudgetCalculatorContent from './components/pages/BudgetCalculatorPage/BudgetCalculatorContent.vue'
+import InvestmentGrowth from './components/pages/InvestmentGrowthPage/InvestmentGrowth.vue'
+import SavingsWithdrawal from './components/pages/SavingsWithdrawalPage/SavingsWithdrawal.vue'
+import FinancialPathway from './components/pages/FinancialPathwayPage/FinancialPathway.vue'
+
+import Community from './components/pages/CommunityPage/Community.vue'
+import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
+
 
 export default[
     {path:'/', component: HomePage},
     {path:'/home', component: AfterLogin},
-    {path:'/budget_planning', component: BudgetPlanning},
+    {path:'/budget_planning', component: BudgetCalculatorContent},
     {path:'/investment_growth', component: InvestmentGrowth},
     {path:'/savings_withdrawal', component: SavingsWithdrawal},
     {path:'/financial_pathway', component: FinancialPathway},
-    {path:'/communityhp', component: Communityhp},
     {path:'/dashboard', component: Dashboard},
-    {path:'/login', component:LoginPage},
+    {path:'/signup', component:SignUpPage},
+    {path:'/community', component:Community},
 ]

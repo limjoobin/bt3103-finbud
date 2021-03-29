@@ -5,10 +5,10 @@
             What would you like to do today?
         </h1>
         <div id = 'dashboard'>
-            <button class= 'dashboard-button'>Community News Feed</button>
-            <button class= 'dashboard-button'>Dashboard</button>
+            <button class= 'dashboard-button' v-on:click="$router.push('community')">Community News Feed</button>
+            <button class= 'dashboard-button' v-on:click="$router.push('dashboard')">Dashboard</button>
             <button class= 'dashboard-button'>Chat with Expert</button>
-            <button class= 'dashboard-button'>Financial Calculators</button>
+            <button class= 'dashboard-button' v-on:click="$router.push('financial_pathway')">Financial Calculators</button>
         </div>
         <div id = 'sub-footer'>
             <h1>Exclusive Financial Deals</h1>
@@ -49,7 +49,7 @@ export default {
         display:table;
     }
     #dashboard button{
-        background-image:url('../assets/community.png');
+        background-image:url('../../assets/community.png');
         background-repeat: no-repeat;
         background-size: contain;
         background-color: white;

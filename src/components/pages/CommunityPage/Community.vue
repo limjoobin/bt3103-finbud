@@ -1,5 +1,5 @@
 <template>
-    <div style ="background-color: #B9DEFF;">
+    <div>
         <header1></header1>
         <br><br>
         <div class ="topics">
@@ -35,17 +35,16 @@
             <br><br>
         </div>
         <br><br>
-        <ig-footer></ig-footer>
     </div>
 </template>
 
 <script>
 
 import HeaderCommunity from './HeaderCommunity.vue'
-import Footer from './Footer.vue'
-import database from '../firebase.js'
+import database from '../../../../firebase.js'
 
 export default {
+    name: 'Community',
     data() {
         return {
             img: "https://drive.google.com/thumbnail?id=1mMiIhrHB6jV3WyWr8eZl-ZmWg04UeTTw",
@@ -82,10 +81,9 @@ export default {
     },
     components:{
         'header1': HeaderCommunity,
-        'ig-footer': Footer,
     },
     created(){
-      this.fetchItems()    
+        this.fetchItems()    
     },
 }
 </script>

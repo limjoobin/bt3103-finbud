@@ -44,8 +44,8 @@
         </div>
         <div class ="budCon2">
             <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
-            <button class ="navBut" @click="$router.push('InvestmentGrowth')">Calculate Your Investment Growth</button>
-            <button class ="navBut" @click="$router.push('CommunityContent')">Find out how long can your investment last you for</button>
+            <button class ="navBut" @click="$router.push('/investment_growth')">Calculate Your Investment Growth</button>
+            <button class ="navBut" @click="$router.push('/community')">Find out how long can your investment last you for</button>
             <button class ="navBut">Map out your pathway to Financial Freedom</button>
         </div>
         <!--
@@ -95,6 +95,7 @@
 <script>
 
 export default {
+    name: 'BudgetPlanning',
     data() {
         return {
             content: 'Estimated time: 1 min',
@@ -107,10 +108,10 @@ export default {
     },
     methods: {
         investGrowth: function() {
-            this.$router.push('/InvestmentGrowth'); 
+            this.$router.push('/investment_growth'); 
         },
         CommunityContent: function() {
-            this.$router.push('/CommunityContent'); 
+            this.$router.push('/community'); 
         }
     },
     watch: {

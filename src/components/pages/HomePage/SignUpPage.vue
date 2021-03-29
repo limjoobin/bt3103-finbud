@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <img alt="Vue logo" src="../assets/logo.png" height="70px" />
+    <img alt="Vue logo" src="../../../assets/logo.png" height="70px" />
     <h1>Welcome to FinBud!</h1>
     <h3>The only personal finance buddy you need</h3>
     <div class="register">
@@ -24,11 +24,7 @@
         </div>
         <div>
           <label for="password-again">Password Again:</label>
-          <input
-            type="password"
-            id="password-again"
-            placeholder="Re-enter Password"
-          />
+          <input type="password" id="password-again" placeholder="Re-enter Password" />
         </div>
         <br />
         <div>
@@ -42,7 +38,7 @@
 </template>
 
 <script>
-import firebase from "../../firebase.js"
+import firebase from "../../../../firebase.js"
 export default {
   data() {
     return {
@@ -52,14 +48,16 @@ export default {
   },
 methods: {
   register() {
-    // console.log(this.email + ":" + this.password);
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(() => {
-        console.log('Successfully registered! Please login.');
-        //this.$router.push('/');
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+    alert(this.email + ":" + this.password);
+    firebase.auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then(() => {
+              alert("Successfully registered! Please login.");
+              this.$router.push("/");
+            })
+            .catch(error => {
+              console.log(error.message);
+            });
   },
 },
 };

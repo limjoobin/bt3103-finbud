@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="login" id="login_div">
-      <img alt="Vue logo" src="../assets/logo.png" height="40px" />
+      <img alt="Vue logo" src="../../../assets/logo.png" height="40px" />
       <p>FinBud</p>
       <form>
         <input type="text" placeholder="Username" v-model="email_field" />
@@ -11,7 +11,7 @@
       <button id="button1" v-on:click="login()">Login</button>
       <br /><br />
       <button id="button2">
-        <router-link to="/login">Get Started</router-link>
+        <router-link to="/signup">Get Started</router-link>
       </button>
     </div>
     <div id="user_div" style="display: none">
@@ -24,7 +24,7 @@
 
 
 <script>
-import firebase from "../../firebase";
+import firebase from "../../../../firebase";
 
 export default {
   data() {
@@ -37,14 +37,16 @@ export default {
     login: function () {
       var userEmail = this.email_field;
       var userPass = this.password;
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(userEmail, userPass)
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorCode + ":" + errorMessage);
-        });
+      firebase.auth()
+              .signInWithEmailAndPassword(userEmail, userPass)
+              .then(()=>{
+                this.$router.push({path: 'home'})
+              })
+              .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + ":" + errorMessage);
+              });
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           // User is signed in.

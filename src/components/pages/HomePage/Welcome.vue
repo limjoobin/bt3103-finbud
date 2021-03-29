@@ -1,15 +1,15 @@
 <template>
 <div id="welcome">
-    <img alt="Vue logo" src="../assets/logo.png" height="70px">
+    <img alt="Vue logo" src="../../../assets/logo.png" height="70px">
     <h1>Welcome to FinBud!</h1>
     <h3>The only personal finance buddy you need</h3>
     <div class="flex-container">
         <div class="one">
-        <img class="cropped" src="../assets/mainpic.jpg" height="360px">
+        <img class="cropped" src="../../../assets/mainpic.jpg" height="360px">
         </div>
 
         <div class="two">
-            <div id="login"><login></login></div>
+            <div id="login"><login-section></login-section></div>
         </div>
 
 
@@ -20,12 +20,12 @@
 
 
 <script>
-import login from './login.vue'
+import LoginSection from './LoginSection.vue'
 
 
 export default {
     components: {
-        login
+        LoginSection
     }
 
     }
