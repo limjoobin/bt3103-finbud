@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import firebase from "../firebase"
+import firebase from "../../firebase.js"
 export default {
   data() {
     return {
@@ -52,13 +52,13 @@ export default {
   },
 methods: {
   register() {
-    alert(this.email + ":" + this.password);
+    // console.log(this.email + ":" + this.password);
     firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(() => {
-        alert('Successfully registered! Please login.');
-        this.$router.push('/');
+        console.log('Successfully registered! Please login.');
+        //this.$router.push('/');
       })
       .catch(error => {
-        alert(error.message);
+        console.log(error.message);
       });
   },
 },
