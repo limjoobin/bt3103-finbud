@@ -2,9 +2,14 @@ import {Bar} from 'vue-chartjs'
 
 export default{
     extends:Bar,
+    data() {
+        return {
+            label: [1,2,3,4,5,6,7,8,9,10],
+        }       
+    },
     props: ['data','options'],
     mounted() {
-        //alert(this.data)
+        //alert(this.label)
         this.renderBarChart();
     },
     computed: {
@@ -15,10 +20,10 @@ export default{
     methods: {
         renderBarChart: function() {
             this.renderChart( {
-                labels: [0,1,2,3,4,5,6,7,8,9],
+                labels: this.label,
                 datasets: [{
-                    label: "Data 1",
-                    backgroundColor: "#f87979",
+                    label: "Investment Growth",
+                    backgroundColor: "blue",
                     data: this.chartData
                 }]
             },
@@ -30,6 +35,10 @@ export default{
         data: function() {
             //alert(this.chartData)
             //this._chart.destroy();
+            this.label = [];
+            for (let i = 1; i < this.data.length+1; i++) {
+                this.label.push(i);
+            }
             this.renderBarChart();
         }
     },
