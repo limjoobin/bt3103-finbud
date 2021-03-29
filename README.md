@@ -1,4 +1,4 @@
-# bt3103-finbud
+# bt3103website
 
 ## Project setup
 ```
