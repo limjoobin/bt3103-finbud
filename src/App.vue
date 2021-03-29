@@ -51,7 +51,7 @@ export default {
 		text-align:center;
 	}
 	footer img{
-		content: url('./assets/footer-logo.png');
+		content: url('./assets/logo.png');
 		padding: 2px;
 		max-width: 100%;
         max-height: 100%;

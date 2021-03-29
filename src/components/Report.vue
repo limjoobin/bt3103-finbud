@@ -6,7 +6,7 @@
 
 
 <script>
-import RetirementChart from './charts/RetirementCharts/RetirementChart.vue'
+import RetirementChart from './charts/RetirementChart.vue'
 
 export default {
   components: { RetirementChart },
