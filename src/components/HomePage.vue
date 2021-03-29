@@ -1,21 +1,28 @@
-<template> 
+<template>
   <div>
-    <h1>Home Page</h1>
+      <Welcome></Welcome>
+      <Service></Service>
+      <Reviews></Reviews>
+      <Community></Community>
+
   </div>
 </template>
 
 <script>
+import Welcome from './welcome.vue';
+import Reviews from './reviews.vue';
+import Community from './communityhp.vue';
+import Service from './Service.vue';
 
 export default {
-    name: 'HomePage',
-    data (){
-        return{}
-    }
-
-}
+  components: {
+    Service,
+    Community,
+    Welcome,
+    Reviews,
+  },
+};
 </script>
 
-
-<style>
-
+<style scoped>
 </style>

@@ -5,7 +5,7 @@
     <h3>The only personal finance buddy you need</h3>
     <div class="flex-container">
         <div class="one">
-        <img class="cropped" src="../assets/mainpic.png" height="360px">
+        <img class="cropped" src="../assets/mainpic.jpg" height="360px">
         </div>
 
         <div class="two">
