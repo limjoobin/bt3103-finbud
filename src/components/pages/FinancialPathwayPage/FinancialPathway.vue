@@ -372,14 +372,23 @@
         </div>
       </div>
 
-      <div class="others">
+
+      <div class ="budCon2">
+            <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
+            <br>
+            <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
+            <button class ="navBut">Find out how long can your investment last you for</button>
+            <button class ="navBut">Calculate your investment Growth</button>
+      </div>
+
+      <!-- <div class="others">
         <h1 class="header-font">You might be interested in</h1>
         <div class="calculators" >
           <div class="calculator" v-for='(cal,i) in calculators' v-bind:key="i">
             <p>{{cal}}</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <report :dataset="dataset"></report>
   
@@ -1365,5 +1374,24 @@ input, select{
 .calculator p{
   padding:5%;
 }
+
+
+.budCon2{
+    background-color: #A9D6FF;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.navBut{
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+    margin-left: 85px;
+    height: 230px;
+    width: 200px;
+    border-radius: 12px;
+    color: #0E4070;
+}
+
 
 </style>
