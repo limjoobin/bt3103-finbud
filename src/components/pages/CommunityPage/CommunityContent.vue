@@ -1,9 +1,9 @@
 <template>
     <div>
         <br><br>
-        <div class ="topics">
+        <div class ="topicscc">
             <br>
-            <p style ="font-size: 30px; color: #0E4070">Explore Topics</p>
+            <p style ="font-size: 30px; color: #0E4070; background-color: white; border-radius: 50px;">Explore Topics</p>
             <button class ="exptopic">Banking</button>
             <button class ="exptopic">Cards</button>
             <button class ="exptopic">Investments</button>
@@ -11,23 +11,26 @@
             <button class ="exptopic">...</button>
         </div>
         <br><br>
-        <div class ="forum">
+        <div class ="forumc">
             <br>
-            <p>Top Questions</p>
-            
-            <ol class="rolldown-list" id="myList">
-                <li v-for="item in items" v-bind:key="item.question">
-                    <h4 style ="padding: 10px">{{item.question.question}}</h4>
+            <p style ="background-color: white; border-radius: 50px;">Top Questions</p>
+            <br>
+            <ol class="myList" style ="width: 80%; margin-left: 10%; border-radius: 50px">
+                <li class ="li4" style ="" v-for="item in items" v-bind:key="item.question">
+                    <br>
+                    Asked by {{item.question.user}}
+                    <h4 style ="padding: 10px;">{{item.question.question}}</h4>
                     Comments: {{item.question.comments.length}}
                 </li>
                 <br>
             </ol>
-            
+            <br>
         </div>
-        <h1 style ="text-align: center;"> See more Questions </h1>
+        <h1 style ="text-align: center;"  @click="$router.push('/communitypost')"> See more Questions </h1>
         <div class ="askQn">
             <br>
-            <p style ="font-size: 30px;">Ask a Question</p>
+            <p style ="font-size: 30px; background-color: white; border-radius: 50px">Ask a Question</p>
+            <br>
             <textarea name="textarea" style = "background-color: #E6F3FF" v-model.trim.lazy="textAreaValue"></textarea>
             <br><br>
             <button class ="submitQn" v-on:click="askQn()">Submit</button>
@@ -39,7 +42,8 @@
 
 <script>
 
-import database from '../../../../firebase.js'
+import firebase from '../../../../firebase.js'
+var database = firebase.firestore();
 
 export default {
     data() {
@@ -50,6 +54,10 @@ export default {
                 ques: [],
             },
             items: [],
+            name: '',
+            email: '',
+            emailVerified: '',
+            uid: '',
         }
     },
     methods: {
@@ -58,35 +66,45 @@ export default {
         },
         askQn: function() {
             this.question.ques.push(this.textAreaValue,[]);
-            database.collection('question').add({
+            database.collection('forum').add({
                 question: {
                     "question": this.question.ques[0],
-                    "comments": this.question.ques[1]
+                    "comments": this.question.ques[1],
+                    "user": this.email,
                 }
             }).then(()=>{location.reload()});
         },
         fetchItems:function(){
-            database.collection('question').get().then((querySnapShot)=>{
+            database.collection('forum').get().then((querySnapShot)=>{
             let item={}
             querySnapShot.forEach(doc=>{
                 item=doc.data()
                 item.show=false
                 item.id=doc.id
                 this.items.push(item) 
-                })      })    
+                })      })
+                
         },
+        
     },
     components:{
     },
     created(){
-        this.fetchItems()    
+        this.fetchItems()
+        var user = firebase.auth().currentUser;
+        if (user != null) {
+            this.name = user.displayName;
+            this.email = user.email.split("@")[0];
+            this.emailVerified = user.emailVerified;
+            this.uid = user.uid;
+        }
     },
 }
 </script>
 
 <style scoped>
 
-.topics {
+.topicscc {
     background-color: white;
     text-align: center;
     border-radius: 50px;
@@ -94,7 +112,7 @@ export default {
     margin-left: 10%;
 }
 
-.forum {
+.forumc {
     background-color: white;
     text-align: center;
     border-radius: 50px;
@@ -135,15 +153,14 @@ textarea {
   font-size: 20px;
 }
 
-ol {
+.myList {
   counter-reset: section;
 }
 
-li { 
+.li4 { 
   list-style-type: none;
-  position: relative;
   font-size: 20px;
-  background: rgb(196, 196, 230);
+  background: #A9D6FF;
   color: #0E4070;
   width: 50%;
   margin-left: 25%;
