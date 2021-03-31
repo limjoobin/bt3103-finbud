@@ -3,7 +3,9 @@
         <h1>
             Good Morning {{ username }}!<br>
             What would you like to do today?
+           
         </h1>
+         <button class ="logout" v-on:click="logout()" style = "background-color: white;font-size: 30px; margin-left: 80%;">Logout</button>
         <div id = 'dashboard'>
             <button class= 'dashboard-button' v-on:click="$router.push('community')">Community News Feed</button>
             <button class= 'dashboard-button' v-on:click="$router.push('dashboard')">Dashboard</button>
@@ -21,12 +23,29 @@
 </template>
 
 <script>
+import firebase from "../../../firebase";
+
 export default {
     name: 'AfterLogin',
     data (){
         return{
             username : 'USER1234',
         }
+    },
+    methods: {
+        logout: function () {
+            firebase
+            .auth()
+            .signOut()
+            .then(() => {
+                this.$router.replace('/');
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + ":" + errorMessage);
+            });
+        },
     }
 
 }
