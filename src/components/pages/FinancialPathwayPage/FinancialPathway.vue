@@ -397,6 +397,9 @@
 
 <script>
 import Report from './Report.vue';
+// import database from "../../../../firebase.js";
+import firebase from "../../../../firebase";
+
 export default {
   components: { Report },
   name: 'FinancialPathway',
@@ -496,7 +499,8 @@ export default {
         totalAmount:0,
         periodicPaymentAmount:0}
       ],
-      calculators:["Find out you're ideal Budget", "Find out how long can your investment last you for","Calculate your investment Growth"],
+      // calculators:["Find out you're ideal Budget", "Find out how long can your investment last you for","Calculate your investment Growth"],
+      
       //information taken from online resources
       estimatedChildExpenses:{"pre-birth":13006,0:10514,1:10514,2:10514,3:6823,4:6823,5:6823,6:6823,
                               7:11423,8:11423,9:11423,10:11423,11:11423,12:11423,13:12566,14:12566,
@@ -701,6 +705,39 @@ export default {
         this.dataset['projectedInvestmentExpected'] = this.projectedInvestment[1]
         this.dataset['projectedExpenses'] = this.projectedExpenses
         this.dataset['currentAge'] = this.currentAge
+
+        // firebase.database.collection('user/user1/financialPathway').set({
+        //   'ProjectedCashInBank':this.projectedCashInBank
+        // },{merge:true})
+
+        var db = firebase.firestore();
+        // db.collection('user/user1/financialPathway').set({
+        //   'ProjectedCashInBank':this.projectedCashInBank
+        // },{merge:true})
+        db.collection('user/user1/financialPathway').get().then(snapshot =>{
+          if(!snapshot.empty){
+            snapshot.docs.forEach(doc =>{
+              console.log(doc)
+              db.doc(`user/user1/financialPathway/${doc.id}`).update({
+                "projectedCashInBank":this.projectedCashInBank,
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "projectedExpenses": this.projectedExpenses,
+                "currentAge": this.currentAge
+              })
+            })
+          } else{
+            db.collection('user/user1/financialPathway').add({
+              "projectedCashInBank":this.projectedCashInBank,
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "projectedExpenses": this.projectedExpenses,
+                "currentAge": this.currentAge
+            })
+          }
+        })
+
+
+        // firebase.
+        
 
 
     },
