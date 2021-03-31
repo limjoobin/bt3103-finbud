@@ -6,6 +6,7 @@ import BudgetCalculatorContent from './components/pages/BudgetCalculatorPage/Bud
 import InvestmentGrowth from './components/pages/InvestmentGrowthPage/InvestmentGrowth.vue'
 import SavingsWithdrawal from './components/pages/SavingsWithdrawalPage/SavingsWithdrawal.vue'
 import FinancialPathway from './components/pages/FinancialPathwayPage/FinancialPathway.vue'
+import Report from './components/pages/FinancialPathwayPage/Report.vue'
 
 import Community from './components/pages/CommunityPage/Community.vue'
 import CommunityPost from './components/pages/CommunityPage/CommunityPost'
@@ -43,6 +44,11 @@ export default[
         path:'/financial_pathway', 
         name: 'financial-pathway',
         component: FinancialPathway, meta: {requiresAuth: true}
+    },
+    {
+        path:'/report', 
+        name: 'report',
+        component: Report, meta: {requiresAuth: true}
     },
     {
         path:'/dashboard', 
