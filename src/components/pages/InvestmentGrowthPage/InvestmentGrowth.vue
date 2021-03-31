@@ -43,6 +43,7 @@
                 <tr>
                     <th class ="th2">
                         <p>Periodic Addition Frequency</p>
+                        <br>
                         <input type="radio" id="radio1" @change= "onChangeYearly()" name="radios" value="all" checked> 
                         <label for="radio1">Yearly</label>
                         <input type="radio" id="radio2" @change= "onChangeQuarterly()" name="radios" value="false">
@@ -62,12 +63,14 @@
         </div>
         <br><br><br><br>
         <div class ="budCon2">
+            <br><br>
             <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
-            <br>
+            <br><br>
             <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
             <button class ="navBut">Find out how long can your investment last you for</button>
             <button class ="navBut">Map out your pathway to Financial Freedom</button>
         </div>
+        <br><br><br>
     </div>
 </template>
 
@@ -195,25 +198,94 @@ export default {
     },
     watch: {
         Pa: function() {
-            this.data = [];
-            var total = Number(this.startingBalance);
-            var tracker = Number(this.startingBalance);
-            var storage = [];
-            storage.push(tracker);
-            for (let i = 0; i < this.Duration; i++) {
-                tracker += Number(this.Pa);
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
                 storage.push(tracker);
-                if (i == 0) {
-                    total += total*Number(this.Arr/100);
+                for (let i = 0; i < this.Duration; i++) {
+                    tracker += Number(this.Pa);
+                    storage.push(tracker);
+                    if (i == 0) {
+                        total += total*Number(this.Arr/100);
+                    }
+                    total += Number(this.Pa);
+                    total += (Number(total)*Number(this.Arr/100));
+                    this.data.push(total);
                 }
-                total += Number(this.Pa);
-                total += (Number(total)*Number(this.Arr/100));
-                this.data.push(total);
+                this.value1 = this.data.slice(-1)[0];
+                this.value2 =  tracker;
+                this.value3 = this.value1 - this.value2;
+            }     
+        },
+        startingBalance: function() {
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                storage.push(tracker);
+                for (let i = 0; i < this.Duration; i++) {
+                    tracker += Number(this.Pa);
+                    storage.push(tracker);
+                    if (i == 0) {
+                        total += total*Number(this.Arr/100);
+                    }
+                    total += Number(this.Pa);
+                    total += (Number(total)*Number(this.Arr/100));
+                    this.data.push(total);
+                }
+                this.value1 = this.data.slice(-1)[0];
+                this.value2 =  tracker;
+                this.value3 = this.value1 - this.value2;
             }
-            this.value1 = this.data.slice(-1)[0];
-            this.value2 =  tracker;
-            this.value3 = this.value1 - this.value2;
-        }
+        },
+        Arr: function() {
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                storage.push(tracker);
+                for (let i = 0; i < this.Duration; i++) {
+                    tracker += Number(this.Pa);
+                    storage.push(tracker);
+                    if (i == 0) {
+                        total += total*Number(this.Arr/100);
+                    }
+                    total += Number(this.Pa);
+                    total += (Number(total)*Number(this.Arr/100));
+                    this.data.push(total);
+                }
+                this.value1 = this.data.slice(-1)[0];
+                this.value2 =  tracker;
+                this.value3 = this.value1 - this.value2;
+            }
+        },
+        Duration: function() {
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                storage.push(tracker);
+                for (let i = 0; i < this.Duration; i++) {
+                    tracker += Number(this.Pa);
+                    storage.push(tracker);
+                    if (i == 0) {
+                        total += total*Number(this.Arr/100);
+                    }
+                    total += Number(this.Pa);
+                    total += (Number(total)*Number(this.Arr/100));
+                    this.data.push(total);
+                }
+                this.value1 = this.data.slice(-1)[0];
+                this.value2 =  tracker;
+                this.value3 = this.value1 - this.value2;
+            }
+        },
+
     },
     components: {
         'igchart': IGChart,
@@ -252,7 +324,7 @@ export default {
 
 .yourBudget{
     background-color: #A9D6FF;
-    margin-left: 290px;
+    margin-left: 22.5%;
 }
 
 .thIG1{
