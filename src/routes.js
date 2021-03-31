@@ -8,6 +8,7 @@ import SavingsWithdrawal from './components/pages/SavingsWithdrawalPage/SavingsW
 import FinancialPathway from './components/pages/FinancialPathwayPage/FinancialPathway.vue'
 
 import Community from './components/pages/CommunityPage/Community.vue'
+import CommunityPost from './components/pages/CommunityPage/CommunityPost'
 import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
 
 
@@ -58,6 +59,12 @@ export default[
         path:'/community', 
         name:'community',
         component:Community, 
+        meta: {requiresAuth: true}
+    },
+    {
+        path: '/communitypost',
+        name: 'communitypost',
+        component: CommunityPost,
         meta: {requiresAuth: true}
     },
 ]
