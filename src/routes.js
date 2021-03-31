@@ -13,12 +13,12 @@ import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
 
 export default[
     {path:'/', component: HomePage},
-    {path:'/home', component: AfterLogin},
+    {path:'/home', component: AfterLogin, meta: {requiresAuth: true}},
     {path:'/budget_planning', component: BudgetCalculatorContent},
     {path:'/investment_growth', component: InvestmentGrowth},
     {path:'/savings_withdrawal', component: SavingsWithdrawal},
-    {path:'/financial_pathway', component: FinancialPathway},
-    {path:'/dashboard', component: Dashboard},
+    {path:'/financial_pathway', component: FinancialPathway, meta: {requiresAuth: true}},
+    {path:'/dashboard', component: Dashboard, meta: {requiresAuth: true}},
     {path:'/signup', component:SignUpPage},
-    {path:'/community', component:Community},
+    {path:'/community', component:Community, meta: {requiresAuth: true}},
 ]
