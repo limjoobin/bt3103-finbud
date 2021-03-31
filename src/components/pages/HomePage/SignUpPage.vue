@@ -48,16 +48,16 @@ export default {
   },
 methods: {
   register() {
-    alert(this.email + ":" + this.password);
+    console.log(this.email + ":" + this.password);
     firebase.auth()
             .createUserWithEmailAndPassword(this.email, this.password)
             .then(() => {
               alert("Successfully registered! Please login.");
-              this.$router.push("/");
             })
             .catch(error => {
               console.log(error.message);
             });
+    this.$router.push({name:'homepage'});
   },
 },
 };

@@ -12,13 +12,52 @@ import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
 
 
 export default[
-    {path:'/', component: HomePage},
-    {path:'/home', component: AfterLogin, meta: {requiresAuth: true}},
-    {path:'/budget_planning', component: BudgetCalculatorContent},
-    {path:'/investment_growth', component: InvestmentGrowth},
-    {path:'/savings_withdrawal', component: SavingsWithdrawal},
-    {path:'/financial_pathway', component: FinancialPathway, meta: {requiresAuth: true}},
-    {path:'/dashboard', component: Dashboard, meta: {requiresAuth: true}},
-    {path:'/signup', component:SignUpPage},
-    {path:'/community', component:Community, meta: {requiresAuth: true}},
+    {
+        path:'/', 
+        name: 'homepage',
+        component: HomePage
+    },
+    {
+        path:'/home', 
+        name:'after-login',
+        component: AfterLogin, 
+        meta: {requiresAuth: true}
+    },
+    {
+        path:'/budget_planning', 
+        name:'budget-planning',
+        component: BudgetCalculatorContent
+    },
+    {
+        path:'/investment_growth', 
+        name:'investment-growth',
+        component: InvestmentGrowth
+    },
+    {
+        path:'/savings_withdrawal', 
+        name:'savings-withdrawal',
+        component: SavingsWithdrawal
+    },
+    {
+        path:'/financial_pathway', 
+        name: 'financial-pathway',
+        component: FinancialPathway, meta: {requiresAuth: true}
+    },
+    {
+        path:'/dashboard', 
+        name:'dashboard',
+        component: Dashboard, 
+        meta: {requiresAuth: true}
+    },
+    {
+        path:'/signup', 
+        name:'signup',
+        component:SignUpPage
+    },
+    {
+        path:'/community', 
+        name:'community',
+        component:Community, 
+        meta: {requiresAuth: true}
+    },
 ]
