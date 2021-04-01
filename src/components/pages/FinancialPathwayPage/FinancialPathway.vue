@@ -381,27 +381,13 @@
             <button class ="navBut">Calculate your investment Growth</button>
       </div>
 
-      <!-- <div class="others">
-        <h1 class="header-font">You might be interested in</h1>
-        <div class="calculators" >
-          <div class="calculator" v-for='(cal,i) in calculators' v-bind:key="i">
-            <p>{{cal}}</p>
-          </div>
-        </div>
-      </div> -->
-
-      <report :dataset="dataset"></report>
-  
   </div>
 </template>
 
 <script>
-import Report from './Report.vue';
-// import database from "../../../../firebase.js";
 import firebase from "../../../../firebase";
 
 export default {
-  components: { Report },
   name: 'FinancialPathway',
   data: function(){
     return{
