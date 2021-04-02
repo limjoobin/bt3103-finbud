@@ -385,7 +385,7 @@
 </template>
 
 <script>
-// import firebase from "../../../../firebase";
+import firebase from "../../../../firebase";
 
 export default {
   name: 'FinancialPathway',
@@ -696,32 +696,30 @@ export default {
         //   'ProjectedCashInBank':this.projectedCashInBank
         // },{merge:true})
 
-        // var db = firebase.firestore();
+        var db = firebase.firestore();
         
-        // db.collection('user/user1/financialPathway').get().then(snapshot =>{
-        //   if(!snapshot.empty){
-        //     snapshot.docs.forEach(doc =>{
-        //       console.log(doc)
-        //       db.doc(`user/user1/financialPathway/${doc.id}`).update({
-        //         "projectedCashInBank":this.projectedCashInBank,
-        //         "projectedInvestmentExpected": this.projectedInvestment[1],
-        //         "projectedExpenses": this.projectedExpenses,
-        //         "currentAge": this.currentAge
-        //       })
-        //     })
-        //   } else{
-        //     db.collection('user/user1/financialPathway').add({
-        //       "projectedCashInBank":this.projectedCashInBank,
-        //         "projectedInvestmentExpected": this.projectedInvestment[1],
-        //         "projectedExpenses": this.projectedExpenses,
-        //         "currentAge": this.currentAge
-        //     })
-        //   }
-        // })
+        db.collection('user/user1/financialPathway').get().then(snapshot =>{
+          if(!snapshot.empty){
+            snapshot.docs.forEach(doc =>{
+              console.log(doc)
+              db.doc(`user/user1/financialPathway/${doc.id}`).update({
+                "projectedCashInBank":this.projectedCashInBank,
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "projectedExpenses": this.projectedExpenses,
+                "currentAge": this.currentAge
+              })
+            })
+          } else{
+            db.collection('user/user1/financialPathway').add({
+              "projectedCashInBank":this.projectedCashInBank,
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "projectedExpenses": this.projectedExpenses,
+                "currentAge": this.currentAge
+            })
+          }
+        })
 
 
-        // firebase.
-        
 
 
     },
@@ -1112,7 +1110,7 @@ export default {
       var salist = [parseInt(this.cpfSA)]
       var malist = [parseInt(this.cpfMA)]
       var currAge = this.currentAge
-      for(let i = 0; i<incomes.length; i++){
+      for(let i = 0; i< 55 -this.currentAge; i++){
         var oa = oalist[i] * 1.025
         var sa = salist[i] * 1.04
         var ma = malist[i] * 1.04
@@ -1120,43 +1118,36 @@ export default {
           if(this.haveFlat === 'yes' || this.planFlat === 'yes'){
             oa -= i <= flatDetails.length ? flatDetails[i] : 0
           } 
-          // else{
-          //   if(this.planFlat === 'yes'){
-          //     var yr = i - (this.ageGettingFlat - this.currentAge) 
-          //     if(yr >= 0){
-          //       oa -= (yr) <= flatDetails.length ? flatDetails[yr] : 0
-          //     }
-          //   }
-          // }
         }
+        var inc = i < incomes.length ? incomes[i] : 0
         if(currAge <=35){
-          oa = oa + (incomes[i] * 0.23)
-          sa = sa + (incomes[i] * 0.06)
-          ma = ma + (incomes[i] * 0.08)
+          oa = oa + (inc * 0.23)
+          sa = sa + (inc * 0.06)
+          ma = ma + (inc * 0.08)
         } else if(currAge >35 && currAge<= 45) {
-          oa = oa + (incomes[i] * 0.21)
-          sa = sa + (incomes[i] * 0.07)
-          ma = ma + (incomes[i] * 0.09)
+          oa = oa + (inc * 0.21)
+          sa = sa + (inc * 0.07)
+          ma = ma + (inc * 0.09)
         } else if(currAge >45 && currAge<= 50) {
-          oa = oa + (incomes[i] * 0.19)
-          sa = sa + (incomes[i] * 0.08)
-          ma = ma + (incomes[i] * 0.1)
+          oa = oa + (inc * 0.19)
+          sa = sa + (inc * 0.08)
+          ma = ma + (inc * 0.1)
         } else if(currAge >50 && currAge<= 55) {
-          oa = oa + (incomes[i] * 0.15)
-          sa = sa + (incomes[i] * 0.115)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.15)
+          sa = sa + (inc * 0.115)
+          ma = ma + (inc * 0.105)
         } else if(currAge >55 && currAge<= 60) {
-          oa = oa + (incomes[i] * 0.12)
-          sa = sa + (incomes[i] * 0.035)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.12)
+          sa = sa + (inc * 0.035)
+          ma = ma + (inc * 0.105)
         } else if(currAge >60 && currAge<= 65) {
-          oa = oa + (incomes[i] * 0.035)
-          sa = sa + (incomes[i] * 0.025)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.035)
+          sa = sa + (inc * 0.025)
+          ma = ma + (inc * 0.105)
         }else {
-          oa = oa + (incomes[i] * 0.01)
-          sa = sa + (incomes[i] * 0.01)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.01)
+          sa = sa + (inc * 0.01)
+          ma = ma + (inc * 0.105)
         }
         oalist.push(Math.round(oa))
         salist.push(Math.round(sa))
@@ -1203,11 +1194,16 @@ export default {
     calculateCpfPayout:function(){
             var yearsTo55 = 55 - this.currentAge
             var cpfAmtAt55 = this.projectedCpfOA[yearsTo55-1] + this.projectedCpfSA[yearsTo55-1]
+            console.log("CPF AT 55", cpfAmtAt55)
+            console.log("Retirement sum", this.cpfRetirement[1])
             if(cpfAmtAt55 > this.cpfRetirement[1].ers){
+                console.log("GETTING ERS")
                 return this.cpfRetirement[0].ersCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].frs){
+                console.log("GETTING FRS")
                 return this.cpfRetirement[0].frsCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].brs){
+                console.log("GETTING BRS")
                 return this.cpfRetirement[0].brsCpfPayout
             }else{
                 return 0
@@ -1240,7 +1236,7 @@ export default {
         }
         
         currCashInBank.push(currCash)
-        inv *=1.02
+        inv *=1.04
         investmentWithAfterRetirement.push(inv)
       }
       return [currCashInBank, investmentWithAfterRetirement] 
