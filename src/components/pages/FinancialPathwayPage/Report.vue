@@ -39,12 +39,14 @@ export default {
                         this.assetGrowthData['idealRetirementAge'] = data.idealRetirementAge
                         this.assetGrowthData['milestones'] = milestones[0]
                         this.assetGrowthData['milestonesLabel'] = milestones[1]
+                        this.details['currentAge'] = data.currentAge
                         this.details['idealRetirementAge'] = data.idealRetirementAge
                         this.details['cpfPayout'] = data.cpfPayout
                         this.details['idealIncome'] =  data.idealRetirementIncome
                         this.details['expectedInflation'] = data.expectedInflation
                         this.details['idealRetirementIncomeAt65'] = data.idealRetirementIncomeAt65
                         this.details['milestones'] = milestones[0]
+                        this.details['incomes']
                 })
             }
         }).then(()=>{
@@ -110,5 +112,11 @@ export default {
 <style scoped>
 *{
     padding:5%;
+}
+
+.profile{
+    display: flex;
+    justify-content: center;
+    align-content:  center;
 }
 </style>
