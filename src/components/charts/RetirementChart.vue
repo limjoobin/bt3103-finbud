@@ -25,7 +25,6 @@ export default {
         }
     },methods:{
         sendData:function(){
-            console.log("SENDING DATTT")
             this.$emit('barData',this.assetGrowthData)
             this.isloading = this.loading
             this.$emit('loading', this.isloading)
