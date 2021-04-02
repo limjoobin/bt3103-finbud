@@ -16,7 +16,7 @@
             <p style ="background-color: white; border-radius: 50px;">Top Questions</p>
             <br>
             <ol class="myList" style ="width: 80%; margin-left: 10%; border-radius: 50px">
-                <li class ="li4" style ="" v-for="item in items" v-bind:key="item.question">
+                <li class ="li4" v-for="item in items" v-bind:key="item.question">
                     <br>
                     Asked by {{item.question.user}}
                     <h4 style ="padding: 10px;">{{item.question.question}}</h4>
@@ -71,11 +71,12 @@ export default {
                     "question": this.question.ques[0],
                     "comments": this.question.ques[1],
                     "user": this.email,
+                    'timestamp': firebase.firestore.FieldValue.serverTimestamp()
                 }
             }).then(()=>{location.reload()});
         },
         fetchItems:function(){
-            database.collection('forum').get().then((querySnapShot)=>{
+            database.collection('forum').orderBy('question.timestamp','desc').limit(5).get().then((querySnapShot)=>{
             let item={}
             querySnapShot.forEach(doc=>{
                 item=doc.data()
