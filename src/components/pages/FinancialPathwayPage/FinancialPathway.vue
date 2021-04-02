@@ -405,10 +405,10 @@ export default {
       excessUse:100,
       //slide 2
       incomes:[
-        {income:3000,
+        {income:3600,
          incomeGrowthRate:0.2,
          jobSwitchFreq:5,
-         incomeGrowthRateJobSwitch:5,
+         incomeGrowthRateJobSwitch:10,
          jobSwitchStop:50,
          incomeGrowthStop:50,
         }
@@ -422,15 +422,15 @@ export default {
       haveChildren:'no',
       childrenPlan:"yes",
       children:[],
-      expectedChildren:[],
+      expectedChildren:[{estimatedAge:30}, {estimatedAge:32}],
       // expectedChildren:[],
       //slide 5
       cashInBank:10000,
-      totalInvestment:10000,
+      totalInvestment:5000,
       investmentReturn:8,
       cpfOA:10000,
       cpfSA:6000,
-      cpfMA:60000,
+      cpfMA:6000,
 
       //Slide 6
       haveFlat:'no',
@@ -441,7 +441,7 @@ export default {
       spouseMonthlyMortagePayment:0,
       mortageInterestRate:2.6,
       planFlat:"yes",
-      ageGettingFlat:40,
+      ageGettingFlat:30,
       // https://www.singsaver.com.sg/blog/costs-of-bto-flat-resale-flat-ec-and-condo-in-singapore
       flats:[{type:"BTO 2-room Flexi (NM)",price:162000},{type:'BTO 2-room Flexi (M)',price:277000},
       {type:'BTO 3-room (NM)',price:248000},{type:'BTO 3-room (M)',price:421000},
@@ -454,7 +454,7 @@ export default {
       {type:"2-room Condominiums",price:900000},{type:"3-room Condominiums",price:1200000},{type:"4-room Condominiums",price:1800000},
       {type:"5-room Condominiums",price:2200000},{type:"Penthouse Condominiums",price:3000000}
       ],
-      typeOfFlat:{type:"3-room Resale",price:380000},
+      typeOfFlat:{type:'BTO 4-room (NM)',price:381000},
       milestones:[
         {name:"Travel",
          date:'2025-04-01',
@@ -468,7 +468,7 @@ export default {
          name:"Flat Renovation",
          date:'2034-01-01',
          inflation:2,
-         amount: 30000,
+         amount: 50000,
          freq:'once'
         }
       ],
@@ -675,7 +675,6 @@ export default {
         var retirementProject = this.projectedCashInBankAfterRetirement(finalExpenses,this.minEmergencyAmt,cpfLifePayout,this.projectedInvestment[1],this.projectedCashInBankBeforeRetirement,milestoneCost )
         this.projectedCashInBank = retirementProject[0]
         this.projectedInvestment[1] = retirementProject[1]
-
         console.log("CashInBank", this.projectedCashInBank)
         console.log("Investment Contribution",this.investmentContribution)
         console.log("InvestmentExpected", this.projectedInvestment[1])
@@ -700,6 +699,7 @@ export default {
               console.log(doc)
               db.doc(`user/user1/financialPathway/${doc.id}`).update({
                 "date": new Date().toDateString(),
+                "projectedIncome": this.projectedIncome,
                 "projectedCashInBank":this.projectedCashInBank,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "projectedExpenses": this.projectedExpenses,
@@ -709,7 +709,8 @@ export default {
                 "cpfPayout": cpfLifePayout,
                 "expectedInflation": this.expectedInflation/100,
                 "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
-                "milestoneGoals": this.milestones
+                "milestoneGoals": this.milestones,
+
               })
             })
           } else{
@@ -727,9 +728,11 @@ export default {
                 "milestoneGoals": this.milestones
             })
           }
+        }).then(()=>{
+          this.$router.push({path: `/report`})
+
         })
 
-        this.$router.push({path: `/report`})
 
 
 
