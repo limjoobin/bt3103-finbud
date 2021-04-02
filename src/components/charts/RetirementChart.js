@@ -54,7 +54,6 @@ export default {
       },
       methods:{
         prepChart:function(){
-            console.log(this.loading)
             this.min = this.barData.idealRetirementAge
             this.max = 100
             var rangeStart = parseInt(this.min) - this.barData.currentAge 
@@ -97,7 +96,6 @@ export default {
               this.prepChart();
           },
           loading:function(){
-              console.log("LOADINNNGGG")
               this.prepChart();
           }
       },
