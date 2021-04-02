@@ -10,6 +10,7 @@ import Report from './components/pages/FinancialPathwayPage/Report.vue'
 
 import Community from './components/pages/CommunityPage/Community.vue'
 import CommunityPost from './components/pages/CommunityPage/CommunityPost'
+import Posts from './components/pages/CommunityPage/Posts.vue'
 import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
 
 
@@ -73,4 +74,11 @@ export default[
         component: CommunityPost,
         meta: {requiresAuth: true}
     },
+    {
+        path: '/posts',
+        name: 'Posts',
+        component: Posts,
+        meta: {requiresAuth: true},
+        props: 'true'
+    }
 ]
