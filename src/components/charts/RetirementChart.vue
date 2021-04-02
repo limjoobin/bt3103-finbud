@@ -1,7 +1,8 @@
 <template>
     <div>
         <h1>Retirement Chart</h1>
-        <chart :min='min' :max='max' ></chart>
+        <chart :loading='isloading' :barData='assetGrowthData' :min='min' :max='max' ></chart>
+        
         <label>Start Age</label>
         <input type='number' v-model="min">
         <label>End Age</label>
@@ -15,11 +16,30 @@ import Chart from "./RetirementChart.js";
 
 export default {
     components:{Chart},
-    props:['dataset'],
+    props:['assetGrowthData','loading'],
     data:function(){
         return{
             min:40,
             max:70,
+            isloading: true
+        }
+    },methods:{
+        sendData:function(){
+            console.log("SENDING DATTT")
+            this.$emit('barData',this.assetGrowthData)
+            this.isloading = this.loading
+            this.$emit('loading', this.isloading)
+        }
+    },created(){
+        this.sendData()
+    },
+    watch:{
+        assetGrowthData:function(){
+            this.sendData()
+        },
+        loading:function(){
+            this.isloading = this.loading
+            this.$emit('loading', this.isloading)
         }
     }
 }
