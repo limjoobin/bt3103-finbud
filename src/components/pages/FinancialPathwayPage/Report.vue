@@ -1,5 +1,6 @@
 <template>
     <div>
+        <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
         <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
         <Retirement-income-chart :incomeData='incomeInfo' :loading='loading'></Retirement-income-chart>
     </div>    
@@ -9,9 +10,10 @@
 import RetirementChart from '../../charts/RetirementChart.vue'
 import firebase from '../../../../firebase'
 import RetirementIncomeChart from '../../charts/retirementIncomeChart.vue'
+import RetirementLineChart from '../../charts/RetirementLineChart.vue'
 
 export default {
-  components: { RetirementChart, RetirementIncomeChart},
+  components: { RetirementChart, RetirementIncomeChart, RetirementLineChart},
     name:"Report",
     data:function(){
         return{
@@ -24,22 +26,25 @@ export default {
     },
     methods:{
       fetchData:function(){
-        //   this.incomeInfo = [[10,20],[10,100,30]]
-          this.sendIncomeInfo()
+        this.sendIncomeInfo()
         this.database.collection('user/user1/financialPathway').get().then(snapshot =>{
             if(!snapshot.empty){
                 snapshot.docs.forEach(doc =>{
                         var data = doc.data()
+                        var milestones = this.getDataPointsForMilestone(data.milestoneGoals,data.date,data.currentAge)
                         this.assetGrowthData['currentAge'] = data.currentAge
                         this.assetGrowthData['projectedCashInBank'] = data.projectedCashInBank
                         this.assetGrowthData['projectedInvestmentExpected'] = data.projectedInvestmentExpected
                         this.assetGrowthData['projectedExpenses'] = data.projectedExpenses
                         this.assetGrowthData['idealRetirementAge'] = data.idealRetirementAge
+                        this.assetGrowthData['milestones'] = milestones[0]
+                        this.assetGrowthData['milestonesLabel'] = milestones[1]
                         this.details['idealRetirementAge'] = data.idealRetirementAge
                         this.details['cpfPayout'] = data.cpfPayout
                         this.details['idealIncome'] =  data.idealRetirementIncome
                         this.details['expectedInflation'] = data.expectedInflation
                         this.details['idealRetirementIncomeAt65'] = data.idealRetirementIncomeAt65
+                        this.details['milestones'] = milestones[0]
                 })
             }
         }).then(()=>{
@@ -76,7 +81,19 @@ export default {
           var expAt65 = Math.round(this.assetGrowthData.projectedExpenses[yearsto65]/12)
           console.log(expAtRetirement,expAt65)
           this.incomeInfo.push([expAtRetirement,expAt65])
-
+      }, getDataPointsForMilestone:function(milestone, date,currentAge){
+        //   {x:3,y:10}
+          var milestones =[]
+          var milestonesLabel = []
+          for(let i = 0; i < milestone.length ; i++){
+              var amt = milestone[i].amount
+              var yr =  new Date(milestone[i].date).getFullYear() - new Date(date).getFullYear()
+              console.log(new Date(milestone[i].date).getFullYear() , new Date(date).getFullYear())
+              milestones.push({x:yr+currentAge,y:amt})
+              milestonesLabel.push(milestone[i].name)
+          }
+          console.log(milestones)
+          return [milestones, milestonesLabel]
       }
     },    
     created(){

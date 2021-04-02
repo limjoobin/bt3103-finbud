@@ -25,7 +25,6 @@ export default {
         this.renderChart(this.datacollection)
     },methods:{
         updateChart:function(){
-            console.log(this.dataInfo)
             this.datacollection.datasets[0].data = this.dataInfo
             this.renderChart(this.datacollection,this.options)
         }
@@ -34,7 +33,6 @@ export default {
         dataInfo:function(){
             this.updateChart()
         },loading:function(){
-            console.log("HIHIH")
             this.updateChart()
         }
     }

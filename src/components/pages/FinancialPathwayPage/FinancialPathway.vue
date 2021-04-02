@@ -456,27 +456,27 @@ export default {
       ],
       typeOfFlat:{type:'4-room Resale',price:550000},
       milestones:[
-        {name:"",
-         date:'',
-         endDate:'',
-         inflation:0,
-         amount:0,
+        {name:"Travel",
+         date:'2025-04-01',
+         endDate:'2100-01-01',
+         inflation:2,
+         amount:1000,
          freq:'yearly'
         }
-        // ,{
-        //  name:"Treat",
-        //  date:'2021-04-01',
-        //  endDate:'2100-01-01',
-        //  inflation:1,
-        //  amount:200,
-        //  freq:'monthly'
-        // }, {
-        //  name:"Flat Renovation",
-        //  date:'2034-01-01',
-        //  inflation:2,
-        //  amount: 30000,
-        //  freq:'once'
-        // }
+        ,{
+         name:"Treat",
+         date:'2021-04-01',
+         endDate:'2100-01-01',
+         inflation:1,
+         amount:200,
+         freq:'monthly'
+        }, {
+         name:"Flat Renovation",
+         date:'2034-01-01',
+         inflation:2,
+         amount: 30000,
+         freq:'once'
+        }
       ],
       liabilities:[
         {name:'',
@@ -696,6 +696,8 @@ export default {
         //   'ProjectedCashInBank':this.projectedCashInBank
         // },{merge:true})
 
+
+        console.log(this.milestones)
         var db = firebase.firestore();
         
         db.collection('user/user1/financialPathway').get().then(snapshot =>{
@@ -703,6 +705,7 @@ export default {
             snapshot.docs.forEach(doc =>{
               console.log(doc)
               db.doc(`user/user1/financialPathway/${doc.id}`).update({
+                "date": new Date().toDateString(),
                 "projectedCashInBank":this.projectedCashInBank,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "projectedExpenses": this.projectedExpenses,
@@ -712,10 +715,12 @@ export default {
                 "cpfPayout": cpfLifePayout,
                 "expectedInflation": this.expectedInflation/100,
                 "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
+                "milestoneGoals": this.milestones
               })
             })
           } else{
             db.collection('user/user1/financialPathway').add({
+                "date": new Date().toDateString(),
                 "projectedCashInBank":this.projectedCashInBank,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "projectedExpenses": this.projectedExpenses,
@@ -725,7 +730,7 @@ export default {
                 "cpfPayout": cpfLifePayout,
                 "expectedInflation": this.expectedInflation/100,
                 "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
-
+                "milestoneGoals": this.milestones
             })
           }
         })
