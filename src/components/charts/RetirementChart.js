@@ -4,11 +4,9 @@ import firebase from '../../../firebase'
 
 export default {
     extends: Bar,
-    // props:['barData','min','max'],
     props:['min','max'],
     data: function () {
         return {
-            //["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
             database: firebase.firestore(),
             barData:{},
             datacollection: {
@@ -78,11 +76,7 @@ export default {
                 this.datacollection.datasets[2].data = this.barData.projectedExpenses.slice(rangeStart,rangeEnd)
                 this.renderChart(this.datacollection,this.options)
             })
-            
-
-
-            // console.log(this.barData)
-
+ 
         },renderChartBar: function(){
             this.prepChart()
         },updateChartBar:function(){

@@ -373,8 +373,8 @@
       </div>
 
 
+      <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
       <div class ="budCon2">
-            <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
             <br>
             <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
             <button class ="navBut">Find out how long can your investment last you for</button>
@@ -385,7 +385,7 @@
 </template>
 
 <script>
-import firebase from "../../../../firebase";
+// import firebase from "../../../../firebase";
 
 export default {
   name: 'FinancialPathway',
@@ -696,30 +696,28 @@ export default {
         //   'ProjectedCashInBank':this.projectedCashInBank
         // },{merge:true})
 
-        var db = firebase.firestore();
-        // db.collection('user/user1/financialPathway').set({
-        //   'ProjectedCashInBank':this.projectedCashInBank
-        // },{merge:true})
-        db.collection('user/user1/financialPathway').get().then(snapshot =>{
-          if(!snapshot.empty){
-            snapshot.docs.forEach(doc =>{
-              console.log(doc)
-              db.doc(`user/user1/financialPathway/${doc.id}`).update({
-                "projectedCashInBank":this.projectedCashInBank,
-                "projectedInvestmentExpected": this.projectedInvestment[1],
-                "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge
-              })
-            })
-          } else{
-            db.collection('user/user1/financialPathway').add({
-              "projectedCashInBank":this.projectedCashInBank,
-                "projectedInvestmentExpected": this.projectedInvestment[1],
-                "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge
-            })
-          }
-        })
+        // var db = firebase.firestore();
+        
+        // db.collection('user/user1/financialPathway').get().then(snapshot =>{
+        //   if(!snapshot.empty){
+        //     snapshot.docs.forEach(doc =>{
+        //       console.log(doc)
+        //       db.doc(`user/user1/financialPathway/${doc.id}`).update({
+        //         "projectedCashInBank":this.projectedCashInBank,
+        //         "projectedInvestmentExpected": this.projectedInvestment[1],
+        //         "projectedExpenses": this.projectedExpenses,
+        //         "currentAge": this.currentAge
+        //       })
+        //     })
+        //   } else{
+        //     db.collection('user/user1/financialPathway').add({
+        //       "projectedCashInBank":this.projectedCashInBank,
+        //         "projectedInvestmentExpected": this.projectedInvestment[1],
+        //         "projectedExpenses": this.projectedExpenses,
+        //         "currentAge": this.currentAge
+        //     })
+        //   }
+        // })
 
 
         // firebase.
@@ -1400,18 +1398,18 @@ input, select{
 
 
 .budCon2{
-    background-color: #A9D6FF;
-    text-align: center;
-    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    min-height: 100px;
 }
 
 .navBut{
+    background-color: #fff;
     text-align: center;
-    font-size: 30px;
-    padding: 5px;
-    margin-left: 85px;
-    height: 230px;
-    width: 200px;
+    padding:2%;
+    width:20%;
+    margin-left: 2%;
+    margin-right: 2%;
     border-radius: 12px;
     color: #0E4070;
 }
