@@ -1,13 +1,14 @@
 <template>
     <div>
-        <h1>Retirement Chart</h1>
-        <chart :loading='isloading' :barData='assetGrowthData' :min='min' :max='max' ></chart>
+        <h1>Asset After Retirement Projection</h1>
+        <!-- <chart :loading='loading' :barData='assetGrowthData' :min='min' :max='max' ></chart> -->
+        <chart :loading='loading' :barData='assetGrowthData' ></chart>
         
-        <label>Start Age</label>
+        <!-- <label>Start Age</label>
         <input type='number' v-model="min">
         <label>End Age</label>
         <input type='number' v-model="max">
-        <button v-on:click="clicked()">Update</button>
+        <button v-on:click="clicked()">Update</button> -->
     </div>
 </template>
 
@@ -20,14 +21,14 @@ export default {
     data:function(){
         return{
             min:40,
-            max:70,
+            max:100,
             isloading: true
         }
     },methods:{
         sendData:function(){
+            this.min = this.assetGrowthData.idealRetirementAge
             this.$emit('barData',this.assetGrowthData)
-            this.isloading = this.loading
-            this.$emit('loading', this.isloading)
+            this.$emit('loading', this.loading)
         }
     },created(){
         this.sendData()
@@ -37,8 +38,7 @@ export default {
             this.sendData()
         },
         loading:function(){
-            this.isloading = this.loading
-            this.$emit('loading', this.isloading)
+            this.$emit('loading', this.loading)
         }
     }
 }

@@ -706,15 +706,26 @@ export default {
                 "projectedCashInBank":this.projectedCashInBank,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge
+                "currentAge": this.currentAge,
+                "idealRetirementAge": this.retirementAge,
+                "idealRetirementIncome": this.idealRetirementIncome,
+                "cpfPayout": cpfLifePayout,
+                "expectedInflation": this.expectedInflation/100,
+                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
               })
             })
           } else{
             db.collection('user/user1/financialPathway').add({
-              "projectedCashInBank":this.projectedCashInBank,
+                "projectedCashInBank":this.projectedCashInBank,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge
+                "currentAge": this.currentAge,
+                "idealRetirementAge": this.retirementAge,
+                "idealRetirementIncome": this.idealRetirementIncome,
+                "cpfPayout": cpfLifePayout,
+                "expectedInflation": this.expectedInflation/100,
+                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
+
             })
           }
         })
@@ -1236,7 +1247,7 @@ export default {
         }
         
         currCashInBank.push(currCash)
-        inv *=1.04
+        inv *=1.05
         investmentWithAfterRetirement.push(inv)
       }
       return [currCashInBank, investmentWithAfterRetirement] 
