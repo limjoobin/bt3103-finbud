@@ -402,7 +402,7 @@ export default {
       minEmergencyFundType:'expense',
       // maxEmergencyFundMultiple:9,
       // maxEmergencyFundType:'income',
-      excessUse:80,
+      excessUse:100,
       //slide 2
       incomes:[
         {income:3000,
@@ -426,8 +426,8 @@ export default {
       // expectedChildren:[],
       //slide 5
       cashInBank:10000,
-      totalInvestment:5000,
-      investmentReturn:6,
+      totalInvestment:10000,
+      investmentReturn:8,
       cpfOA:10000,
       cpfSA:6000,
       cpfMA:60000,
@@ -454,7 +454,7 @@ export default {
       {type:"2-room Condominiums",price:900000},{type:"3-room Condominiums",price:1200000},{type:"4-room Condominiums",price:1800000},
       {type:"5-room Condominiums",price:2200000},{type:"Penthouse Condominiums",price:3000000}
       ],
-      typeOfFlat:{type:'4-room Resale',price:550000},
+      typeOfFlat:{type:"3-room Resale",price:380000},
       milestones:[
         {name:"Travel",
          date:'2025-04-01',
@@ -462,15 +462,9 @@ export default {
          inflation:2,
          amount:1000,
          freq:'yearly'
-        }
-        ,{
-         name:"Treat",
-         date:'2021-04-01',
-         endDate:'2100-01-01',
-         inflation:1,
-         amount:200,
-         freq:'monthly'
-        }, {
+        },
+        
+        {
          name:"Flat Renovation",
          date:'2034-01-01',
          inflation:2,
@@ -735,6 +729,7 @@ export default {
           }
         })
 
+        this.$router.push({path: `/report`})
 
 
 

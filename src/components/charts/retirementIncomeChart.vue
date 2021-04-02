@@ -91,6 +91,9 @@ export default {
 .chart{
     margin-left:2%;
     margin-right:2%;
+    padding:5%;
+    display: block;
+    width: 100%;
 }
 
 .title, .subtitle{
