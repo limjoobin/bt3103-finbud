@@ -11,11 +11,12 @@ export default{
                 datasets:[
                       {
                         label: 'Net Asset',
-                        backgroundColor: '#f87979',
+                        backgroundColor: 'rgb(255, 174, 23)',
+                        borderColor:'rgb(255, 174, 23)',
                         data: [],
                         fill:false,
                         pointStyle: 'circle',
-                        // pointRadius:50,
+                        pointRadius:5,
                         pointBackgroundColor:'rgb(255, 174, 23)',
                         pointBorderColor:'rgb(255, 174, 23)'
                       },
@@ -52,6 +53,7 @@ export default{
                         {
                             label: this.assetGrowthData.milestonesLabel[i],
                             backgroundColor: '#f87979',
+                            borderColor:'#f87979',
                             data: [this.assetGrowthData.milestones[i]],
                             fill:false,
                             pointStyle: 'triangle',

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Asset before Retirement Projection</h1>
         <chart :assetGrowthData='assetGrowthData' :loading='loading'></chart>
     </div>
 </template>

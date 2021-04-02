@@ -90,7 +90,12 @@ export default {
               var yr =  new Date(milestone[i].date).getFullYear() - new Date(date).getFullYear()
               console.log(new Date(milestone[i].date).getFullYear() , new Date(date).getFullYear())
               milestones.push({x:yr+currentAge,y:amt})
-              milestonesLabel.push(milestone[i].name)
+              if(milestone[i].freq !== 'once'){
+                  milestonesLabel.push(milestone[i].freq +" " + milestone[i].name)
+              } else{
+                  milestonesLabel.push(milestone[i].name)
+
+              }
           }
           console.log(milestones)
           return [milestones, milestonesLabel]
