@@ -4,7 +4,8 @@ import firebase from '../../../firebase'
 
 export default {
     extends: Bar,
-    props:['barData','min','max','loading'],
+    // props:['barData','min','max','loading'],
+    props:['barData','loading'],
     data: function () {
         return {
             database: firebase.firestore(),
@@ -54,6 +55,8 @@ export default {
       methods:{
         prepChart:function(){
             console.log(this.loading)
+            this.min = this.barData.idealRetirementAge
+            this.max = 100
             var rangeStart = parseInt(this.min) - this.barData.currentAge 
             var rangeEnd = parseInt(this.max) - this.barData.currentAge +1
             this.datacollection.labels = Array.from({length: rangeEnd- rangeStart}, (_, i) => i + this.barData.currentAge + rangeStart)
