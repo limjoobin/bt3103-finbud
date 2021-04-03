@@ -4,6 +4,7 @@ import AfterLogin from './components/pages/AfterLogin.vue'
 
 import BudgetCalculatorContent from './components/pages/BudgetCalculatorPage/BudgetCalculatorContent.vue'
 import InvestmentGrowth from './components/pages/InvestmentGrowthPage/InvestmentGrowth.vue'
+import InvestmentGrowthLogin from './components/pages/InvestmentGrowthPage/InvestmentGrowthLogin.vue'
 import SavingsWithdrawal from './components/pages/SavingsWithdrawalPage/SavingsWithdrawal.vue'
 import FinancialPathway from './components/pages/FinancialPathwayPage/FinancialPathway.vue'
 import Report from './components/pages/FinancialPathwayPage/Report.vue'
@@ -81,5 +82,11 @@ export default[
         component: Posts,
         meta: {requiresAuth: true},
         props: 'true'
+    },
+    {
+        path: '/investment_growth_login',
+        name: 'InvestmentGrowthLogin',
+        component: InvestmentGrowthLogin,
+        meta: {requiresAuth: true}
     }
 ]
