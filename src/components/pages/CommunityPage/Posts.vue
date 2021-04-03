@@ -52,11 +52,12 @@ export default {
                 this.name = user.displayName;
                 this.email = user.email.split("@")[0];
                 this.post[0].comments.push(this.email,this.comment)
+                this.comment = '';
             }
             database.collection('forum').doc(this.id).update({
                 //name: this.email,
                 'question.comments': this.post[0].comments
-            }).then(()=>{window.location.reload()});
+            })//.then(()=>{window.location.reload()});
         },
     },
     created() {

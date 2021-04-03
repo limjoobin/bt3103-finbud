@@ -17,7 +17,7 @@
                     <ul v-for = "p in post" v-bind:key ="p">
                         <p>{{p.question}}</p>
                     </ul>      
-                    <p style = "font-size: 15px;">Number of comments: {{post.question.comments.length}}</p>
+                    <p style = "font-size: 15px;">Number of comments: {{post.question.comments.length/2}}</p>
                 </li>
             </ul>    
         </div>
