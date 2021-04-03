@@ -20,7 +20,7 @@
                     <br>
                     Asked by {{item.question.user}}
                     <h4 style ="padding: 10px;">{{item.question.question}}</h4>
-                    Comments: {{item.question.comments.length}}
+                    Comments: {{item.question.comments.length/2}}
                 </li>
                 <br>
             </ol>
