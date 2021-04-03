@@ -1,5 +1,24 @@
 <template>
-    <div>
+    <div class='report'>
+        <div class='profile-details'>
+            <h1>Current Profile</h1>
+            <div class='section'>
+                <div class="input-label">
+                    <label for='currentAge'>Current Age:&nbsp; &nbsp; </label>
+                    <input type='number' id='currentAge' name='currentAge' v-model='this.details.currentAge' :disabled='!editMode'>
+                </div>
+                <div class="input-label">
+                    <label for='idealRetirmentAge'>Ideal Retirement Age: &nbsp; &nbsp;  </label>
+                    <input type='number' id='idealRetirmentAge' name='idealRetirmentAge' v-model='this.details.idealRetirementAge' :disabled='!editMode'>
+                </div>
+                <div class="input-label">
+                    <label for='currentIncome'>Ideal Retirement Income: &nbsp; &nbsp;  </label>
+                    <!-- <input type='number' id='currentIncome' name='currentIncome' v-model='this.details.incomes[0]' :disabled='!editMode'> -->
+                </div>
+                <button v-on:click='edit()' >Edit</button>
+
+            </div>
+        </div>
         <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
         <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
         <Retirement-income-chart :incomeData='incomeInfo' :loading='loading'></Retirement-income-chart>
@@ -18,6 +37,7 @@ export default {
     data:function(){
         return{
             database: firebase.firestore(),
+            editMode:false,
             loading:true,
             assetGrowthData:{},
             details:{},
@@ -25,6 +45,9 @@ export default {
         }
     },
     methods:{
+      edit:function(){
+          this.$router.push({path:'./financial_pathway', query:{edit:true}})
+      },
       fetchData:function(){
         this.sendIncomeInfo()
         this.database.collection('user/user1/financialPathway').get().then(snapshot =>{
@@ -39,6 +62,8 @@ export default {
                         this.assetGrowthData['idealRetirementAge'] = data.idealRetirementAge
                         this.assetGrowthData['milestones'] = milestones[0]
                         this.assetGrowthData['milestonesLabel'] = milestones[1]
+
+
                         this.details['currentAge'] = data.currentAge
                         this.details['idealRetirementAge'] = data.idealRetirementAge
                         this.details['cpfPayout'] = data.cpfPayout
@@ -46,7 +71,7 @@ export default {
                         this.details['expectedInflation'] = data.expectedInflation
                         this.details['idealRetirementIncomeAt65'] = data.idealRetirementIncomeAt65
                         this.details['milestones'] = milestones[0]
-                        this.details['incomes']
+                        this.details['incomes'] = data.incomes
                 })
             }
         }).then(()=>{
@@ -110,7 +135,7 @@ export default {
 </script>
 
 <style scoped>
-*{
+.report{
     padding:5%;
 }
 
@@ -118,5 +143,16 @@ export default {
     display: flex;
     justify-content: center;
     align-content:  center;
+}
+
+.section{
+    display: flex;
+    justify-content: center;
+    align-content:  center;
+    margin:5%;
+}
+
+.input-label{
+    margin:1%;
 }
 </style>
