@@ -13,23 +13,26 @@
               <h3 class='header-font'>Ultimate Goal</h3>
               <div class="sub-section">
                 <div class='user-input'>
-                  <label>Ideal Retirement Age</label>
+                  <label>Ideal Retirement Age*</label>
                   <input type="number" placeholder="Retirement age" v-model='retirementAge'>    
                 </div>
                 <div class='user-input'>
-                  <label>Ideal Retirement Monthly Income</label>
+                  <label>Ideal Retirement Monthly Income*</label>
                   <input type="number" placeholder="Monthly Income before inflation" v-model="retirementIncome">               
                 </div>
                 <div class='user-input'>
-                  <label>Current Age</label>
+                  <label>Current Age*</label>
                   <input type="number" placeholder="Enter your age now" v-model="currentAge">               
                 </div>
 
                 <div class='user-input'>
-                  <label>Expected Inflation Rate</label>
+                  <label>Expected Inflation Rate*</label>
                   <input type="number" placeholder="Inflation" v-model="expectedInflation">               
                 </div>
               </div>
+                <div class='btn' style="float:right;">
+                  <button v-show='slide !== 8' v-on:click='next(retirementAge == 0 | retirementIncome == 0 | currentAge == 0 | expectedInflation == 0)' >Next</button>
+                </div>
             </div>
 
             <div v-if='slide === 1'>
@@ -44,15 +47,6 @@
                     <option value="expense">Expenses</option>
                   </select>
                 </div>
-                <!-- <div style="display:block; width:100%">
-                  <p style=" width:30%; display:inline-block">Maximum Emergency Fund:</p>
-                  <input type="text" style="display:inline-block; width:20%" v-model='maxEmergencyFundMultiple'> 
-                  <p style=" display:inline-block; width:20%"> times of</p>
-                  <select style="width:20%; display:inline-block;" v-model='maxEmergencyFundType'>
-                    <option value="income">Income</option>
-                    <option value="expense">Expenses</option>
-                  </select>
-                </div> -->
                   <div style="display:block; width:100%">
                     <h4>Allocation of excess funds</h4>
                     <div style="display:block; width:100%">
@@ -61,6 +55,10 @@
                       <p style="display:inline-block; width:15%">Investment {{excessUse}}%</p>
                     </div>
                   </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(minEmergencyFundMultiple == 0, 'Minimum Emergency fund has to be more than 0')">Next</button>
               </div>
             </div>
 
@@ -94,14 +92,19 @@
                       <input type="number" id='incomeGrowthStop' v-model="incomes[i].incomeGrowthStop">
                     </div>
 
-                    <div class="top-bottom">
+                    <!-- <div class="top-bottom">
                       <button v-on:click="addIncome" v-show="i == incomes.length-1">Add new</button>
                       <button v-show="incomes.length > 1" v-on:click="removeIncome(i)"> Remove</button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
+               <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(incomes[0].income == 0 | incomes[0].jobSwitchStop < currentAge | incomes[0].incomeGrowthStop < currentAge ,'Income cant be 0. And please make sure that income growth age is equal or older than your current age')">Next</button>
+              </div>
             </div>
+
             <div v-if="slide === 3">
               <h3 class="header-font">Expenses Growth</h3>
               <div class="sub-section">
@@ -117,6 +120,11 @@
                   <label for="expensesRise">% increase in expenses per income rise</label>
                   <input type="number" id='expensesRise' v-model="expensesRise">
                 </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(expensesGrowth < 0 | expensesRise < 0 | expenses <= 0 | expensesGrowth <=0,
+                'Expenses cant be 0 and expenses growth rate cannot be negative ')">Next</button>
               </div>
             </div>
 
@@ -138,8 +146,8 @@
                   </select>
                 </div>
                 <!-- If no is selected -->
-                <div class="user-input" v-show='haveChildren === "no" && excludeChildren =="no" '>
-                  <label for="childrenPlan">Do you plan to have children?</label>
+                <div class="user-input" v-show='excludeChildren =="no" '>
+                  <label for="childrenPlan">Do you plan to have children or more children?</label>
                   <select name="childrenPlan" id="childrenPlan" v-model='childrenPlan'>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -149,14 +157,13 @@
                   <label for="numOfChildren">Number of children: {{children.length}} </label>
                   <button v-on:click="addChildren('currentChild')">add</button>
                   <button v-on:click="removeChildren('currentChild')">minus</button>
-                  <!-- <input type="number" v-model="numOfChildren" @blur='addChildren' > -->
                 </div>
-                <div class="user-input" v-if='((haveChildren == "yes" ) || (haveChildren === "no" && childrenPlan =="yes")) && excludeChildren == "no"'>
+                <div class="user-input" v-if='childrenPlan =="yes" && excludeChildren == "no"'>
                   <label for="expectedChild">Expected child in the future: {{expectedChildren.length}}</label>
                   <button v-on:click="addChildren('expectedChild')">add</button>
                   <button v-on:click="removeChildren('expectedChild')">minus</button>
-                  <!-- <input type="number" v-model='additionalChildren' @blur='addChildren'> -->
                 </div>
+
                 <div v-show='children.length>0 && haveChildren == "yes" ' style="display:flex-box;  width:100%;">
                 <h3>Current Child</h3>
                 <div v-for='(child,index) in children' v-bind:key="index" style="display:inline-block;">
@@ -185,6 +192,12 @@
                  </div>
                 </div>
               </div>
+                <div class='btn'>
+                  <button  v-on:click='back'>Back</button>
+                  <button  v-on:click="next(true)">
+                    
+                    Next</button>
+                </div>
             </div>
 
             <div v-if='slide === 5'>
@@ -214,6 +227,10 @@
                   <label for="cpfMA">CPF-Medisave Account</label>
                   <input type="number" id='cpfMA' v-model='cpfMA'>
                 </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click='next'>Next</button>
               </div>
             </div>
 
@@ -278,6 +295,10 @@
                   <input type="number" v-model="typeOfFlat.price">
                 </div>
               </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click='next'>Next</button>
+              </div>
             </div>
 
             <div v-if="slide === 7">
@@ -315,7 +336,12 @@
                   </div>
                 </div>
               </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click='next'>Next</button>
+              </div>
             </div>
+
             <div v-if="slide === 8">
               <h3 class="header-font">Milestone Goal</h3>
               <div class="sub-section">
@@ -355,6 +381,11 @@
                       <button v-on:click="addMilestone" v-show="i == milestones.length-1">Add new</button>
                       <button v-show="milestones.length > 1" v-on:click="removeMilestone(i)"> Remove</button>
                     </div>
+
+                </div>
+                <div class='btn'>
+                  <button  v-on:click='back'>Back</button>
+                  <button  v-on:click='plan'>Plan</button>
                 </div>
 
                 </div>
@@ -365,11 +396,11 @@
             
           </div>
         </div>
-        <div class='btn'>
+        <!-- <div class='btn'>
           <button v-show='slide !== 0' v-on:click='back'>Back</button>
           <button v-show='slide !== 8' v-on:click='next'>Next</button>
           <button v-show='slide === 8' v-on:click='plan'>Plan</button>
-        </div>
+        </div> -->
       </div>
 
 
@@ -391,48 +422,47 @@ export default {
   name: 'FinancialPathway',
   data: function(){
     return{
-      slide:8,
+      slide:4,
       onEdit:false,
       db:firebase.firestore(),
       //slide 0
-      retirementAge:50,
-      currentAge:23,
-      retirementIncome:3000,
-      expectedInflation:2,
+      retirementAge:0,
+      currentAge:0,
+      retirementIncome:0,
+      expectedInflation:0,
       //slide 1
-      minEmergencyFundMultiple:8,
+      minEmergencyFundMultiple:0,
       minEmergencyFundType:'expense',
       // maxEmergencyFundMultiple:9,
       // maxEmergencyFundType:'income',
       excessUse:100,
       //slide 2
       incomes:[
-        {income:3600,
-         incomeGrowthRate:0.2,
-         jobSwitchFreq:5,
-         incomeGrowthRateJobSwitch:10,
-         jobSwitchStop:50,
-         incomeGrowthStop:50,
+        {income:0,
+         incomeGrowthRate:0,
+         jobSwitchFreq:0,
+         incomeGrowthRateJobSwitch:0,
+         jobSwitchStop:0,
+         incomeGrowthStop:0,
         }
       ],
       //slide 3
-      expenses:1000,
-      expensesGrowth:2,
-      expensesRise:2,
+      expenses:0,
+      expensesGrowth:0,
+      expensesRise:0,
       //slide 4
       excludeChildren:'no',
       haveChildren:'no',
       childrenPlan:"yes",
       children:[],
-      expectedChildren:[{estimatedAge:30}, {estimatedAge:32}],
-      // expectedChildren:[],
+      expectedChildren:[],
       //slide 5
-      cashInBank:10000,
-      totalInvestment:5000,
-      investmentReturn:8,
-      cpfOA:10000,
-      cpfSA:6000,
-      cpfMA:6000,
+      cashInBank:0,
+      totalInvestment:0,
+      investmentReturn:0,
+      cpfOA:0,
+      cpfSA:0,
+      cpfMA:0,
 
       //Slide 6
       haveFlat:'no',
@@ -442,8 +472,8 @@ export default {
       monthlyMortagePayment:0,
       spouseMonthlyMortagePayment:0,
       mortageInterestRate:2.6,
-      planFlat:"yes",
-      ageGettingFlat:30,
+      planFlat:"no",
+      ageGettingFlat:0,
       // https://www.singsaver.com.sg/blog/costs-of-bto-flat-resale-flat-ec-and-condo-in-singapore
       flats:[{type:"BTO 2-room Flexi (NM)",price:162000},{type:'BTO 2-room Flexi (M)',price:277000},
       {type:'BTO 3-room (NM)',price:248000},{type:'BTO 3-room (M)',price:421000},
@@ -458,20 +488,12 @@ export default {
       ],
       typeOfFlat:{type:'BTO 4-room (NM)',price:381000},
       milestones:[
-        {name:"Travel",
-         date:'2025-04-01',
-         endDate:'2100-01-01',
-         inflation:2,
-         amount:1000,
+        {name:"",
+         date:'',
+         endDate:'',
+         inflation:0,
+         amount:0,
          freq:'yearly'
-        },
-        
-        {
-         name:"Flat Renovation",
-         date:'2034-01-01',
-         inflation:2,
-         amount: 50000,
-         freq:'once'
         }
       ],
       liabilities:[
@@ -516,8 +538,51 @@ export default {
     back:function(){
       this.slide--;
     },
-    next:function(){
-      this.slide++;
+    next:function(missing, msg = ''){
+      if(missing){
+        var m = msg ? msg : "Please fill up all the required fields before proceeding"
+        if(this.slide == 4){
+          if((this.haveChildren == 'no' && this.childrenPlan == 'no') | this.excludeChildren == 'yes'){
+            this.slide++;
+          } else{
+            console.log('either hav')
+            var invaild = false
+            if(this.childrenPlan == 'yes') {
+              for(let i = 0; i < this.expectedChildren.length; i++){
+                if(this.expectedChildren[i].estimatedAge < this.currentAge ){
+                  invaild = true
+                } 
+              }
+              if(this.expectedChildren.length == 0){
+                invaild = true
+                m =" Please tell us your estimated Age to have a child"
+              }
+            }
+            if(this.haveChildren == 'yes'){
+              for(let i = 0; i< this.children.length; i++){
+                if(this.children[i].age < 0 || this.children[i].age){
+                  m += "  Invalid age for child " + i+1
+                  invaild = true
+                }
+              }
+              if(this.children.length == 0){
+                invaild = true
+                m += " Please let us know your child age and gender"
+              }
+            }
+            if(!invaild){
+              this.slide++
+            }else{
+
+              alert(m)
+            }
+          }
+        }else{
+          alert(m)
+        }
+      }else{
+        this.slide++;
+      }
     },
     addChildren:function(type){
       if(type == 'currentChild') {
@@ -606,7 +671,9 @@ export default {
         console.log("Liabilities",liabilitiesDetails[0])
         
         //Accounting flat prices into consideration
+        console.log('still okay')
         var flatDetails = this.deductCPFforFlat(this.typeOfFlat.price)
+        console.log('still okay')
         // var flatValue = flatDetails[1]
         var flatPayment = flatDetails[0]
   
@@ -694,11 +761,11 @@ export default {
 
         console.log(this.milestones)
         
-        this.db.collection('user/user1/financialPathway').get().then(snapshot =>{
+        this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
           if(!snapshot.empty){
             snapshot.docs.forEach(doc =>{
-              console.log(doc)
-              this.db.doc(`user/user1/financialPathway/${doc.id}`).update({
+              console.log(this.typeOfFlat,doc)
+              this.db.doc(`user/${firebase.auth().currentUser.uid}/financialPathway/${doc.id}`).update({
                 //User input value
                 "date": new Date().toDateString(),
                 "idealRetirementAge": this.retirementAge,
@@ -729,6 +796,7 @@ export default {
                 "monthlyMortagePayment":this.monthlyMortagePayment,
                 "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
                 "mortageInterestRate": this.mortageInterestRate,
+
                 "planFlat":this.planFlat,
                 "ageGettingFlat":this.ageGettingFlat,
                 "typeOfFlat": this.typeOfFlat,
@@ -754,7 +822,7 @@ export default {
               })
             })
           } else{
-            this.db.collection('user/user1/financialPathway').add({
+            this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).add({
               //User input value
               "date": new Date().toDateString(),
               "idealRetirementAge": this.retirementAge,
@@ -785,13 +853,15 @@ export default {
               "monthlyMortagePayment":this.monthlyMortagePayment,
               "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
               "mortageInterestRate": this.mortageInterestRate,
+
               "planFlat":this.planFlat,
               "ageGettingFlat":this.ageGettingFlat,
+
               "typeOfFlat": this.typeOfFlat,
               "milestonesGoals":this.milestones,
               "liabilities":this.liabilities,
   
-              //Calculated values
+              // Calculated values
               "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
               "projectedIncome": this.projectedIncome,
               "projectedExpenses": this.projectedExpenses,
@@ -811,7 +881,7 @@ export default {
               })
           }
         }).then(()=>{
-          this.$router.push({path: `/report`})
+          // this.$router.push({path: `/report`})
 
         })
 
@@ -1068,11 +1138,11 @@ export default {
             }
             projectedLiabilities.push([ l[i].name , amtpayable, amtPaid])
           }
+          return [projectedLiabilities, totalLiabilitiesPayable]
         } else{
           return []
         }
       
-      return [projectedLiabilities, totalLiabilitiesPayable]
 
     },
     calculateMilestoneCost:function(milestone){
@@ -1152,6 +1222,7 @@ export default {
       return [investmentPortfolioConservative, investmentPortfolioExpected, investmentPortfolioOptimistic]
     },
     deductCPFforFlat:function(){
+      console.log("This has error")
       var totalPaid = []
       var flatValue = []
        if(this.haveFlat === 'no' && this.planFlat === 'yes'){
@@ -1338,13 +1409,13 @@ export default {
       return [currCashInBank, investmentWithAfterRetirement] 
     },
     fetchData:function(){
-      console.log(firebase.auth().currentUser.uid)
+      
       if(this.onEdit){
-        this.db.collection('user/user1/financialPathway').get().then(snapshot =>{
+        console.log("logged In user")
+        this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
           if(!snapshot.empty){
             snapshot.docs.forEach(doc =>{
               var data = doc.data()
-                console.log(data)
                 this.retirementAge = data['idealRetirementAge']
                 this.currentAge = data["currentAge"]
                 this.retirementIncome = data["idealRetirementIncome"]
@@ -1427,6 +1498,7 @@ export default {
 }
 .form{
   background: #A9D6FF;
+  padding:2%;
 }
 
 input, select{
@@ -1438,12 +1510,12 @@ input, select{
 }
 
 .sub-section{
-  margin-left:2%;
+  /* padding-left:2%; */
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-content: space-around;
-  margin-top:2%;
+  /* padding-top:2%; */
 }
 
 
