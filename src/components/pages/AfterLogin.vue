@@ -2,8 +2,7 @@
     <div>
         <h1>
             Good Morning {{ username }}!<br>
-            What would you like to do today?
-           
+            What would you like to do today?  
         </h1>
          <button class ="logout" v-on:click="logout()" style = "background-color: white;font-size: 30px; margin-left: 80%;">Logout</button>
         <div id = 'dashboard'>

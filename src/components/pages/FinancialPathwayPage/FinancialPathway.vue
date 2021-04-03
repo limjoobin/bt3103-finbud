@@ -392,6 +392,8 @@ export default {
   data: function(){
     return{
       slide:8,
+      onEdit:false,
+      db:firebase.firestore(),
       //slide 0
       retirementAge:50,
       currentAge:23,
@@ -691,42 +693,122 @@ export default {
 
 
         console.log(this.milestones)
-        var db = firebase.firestore();
         
-        db.collection('user/user1/financialPathway').get().then(snapshot =>{
+        this.db.collection('user/user1/financialPathway').get().then(snapshot =>{
           if(!snapshot.empty){
             snapshot.docs.forEach(doc =>{
               console.log(doc)
-              db.doc(`user/user1/financialPathway/${doc.id}`).update({
+              this.db.doc(`user/user1/financialPathway/${doc.id}`).update({
+                //User input value
                 "date": new Date().toDateString(),
-                "projectedIncome": this.projectedIncome,
-                "projectedCashInBank":this.projectedCashInBank,
-                "projectedInvestmentExpected": this.projectedInvestment[1],
-                "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge,
                 "idealRetirementAge": this.retirementAge,
-                "idealRetirementIncome": this.idealRetirementIncome,
-                "cpfPayout": cpfLifePayout,
-                "expectedInflation": this.expectedInflation/100,
-                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
-                "milestoneGoals": this.milestones,
+                "currentAge": this.currentAge,
+                "idealRetirementIncome": this.retirementIncome,
+                "expectedInflation": this.expectedInflation,
+                "minEmergencyFundMultiple": this.minEmergencyFundMultiple,
+                "excessUseOfEmergencyFund": this.excessUse,
+                "currentIncome" :this.incomes,
+                "currentExpenses":this.expenses,
+                "expensesGrowth":this.expensesGrowth,
+                "expensesRise": this.expensesRise,
+                "excludeChildren": this.excludeChildren,
+                "haveChildren":this.haveChildren,
+                "childrenPlan": this.childrenPlan,
+                "children": this.children,
+                "expectedChildren": this.expectedChildren,
+                "cashInBank": this.cashInBank,
+                "totalInvestment": this.totalInvestment,
+                "investmentReturn": this.investmentReturn,
+                "cpfOA": this.cpfOA,
+                "cpfSA": this.cpfSA,
+                "cpfMA": this.cpfMA,
+                "haveFlat":this.haveFlat,
+                "mortagePayable":this.mortagePayable,
+                "mortagePaymentMethod": this.mortagePaymentMethod,
+                "totalMortagePaymentAmount": this.totalMortagePaymentAmount,
+                "monthlyMortagePayment":this.monthlyMortagePayment,
+                "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
+                "mortageInterestRate": this.mortageInterestRate,
+                "planFlat":this.planFlat,
+                "ageGettingFlat":this.ageGettingFlat,
+                "typeOfFlat": this.typeOfFlat,
+                "milestonesGoals":this.milestones,
+                "liabilities":this.liabilities,
 
+                //Calculated values
+                "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
+                "projectedIncome": this.projectedIncome,
+                "projectedExpenses": this.projectedExpenses,
+                "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+                'flatPayment': flatDetails[0],
+                "milestonesCost": milestoneDetails[1],
+                "minEmergencyFund": this.minEmergencyAmt,
+                "projectedCpfOA": cpf[0],
+                "projectedCpfSA": cpf[1],
+                "projectedCpfMA": cpf[2],
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "cpfPayout": cpfLifePayout,
+                "projectedCashInBank":this.projectedCashInBank,
+                "cpfRetirementSum": this.cpfRetirement,
+                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge)
               })
             })
           } else{
-            db.collection('user/user1/financialPathway').add({
-                "date": new Date().toDateString(),
-                "projectedCashInBank":this.projectedCashInBank,
-                "projectedInvestmentExpected": this.projectedInvestment[1],
-                "projectedExpenses": this.projectedExpenses,
-                "currentAge": this.currentAge,
-                "idealRetirementAge": this.retirementAge,
-                "idealRetirementIncome": this.idealRetirementIncome,
-                "cpfPayout": cpfLifePayout,
-                "expectedInflation": this.expectedInflation/100,
-                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge),
-                "milestoneGoals": this.milestones
-            })
+            this.db.collection('user/user1/financialPathway').add({
+              //User input value
+              "date": new Date().toDateString(),
+              "idealRetirementAge": this.retirementAge,
+              "currentAge": this.currentAge,
+              "idealRetirementIncome": this.retirementIncome,
+              "expectedInflation": this.expectedInflation,
+              "minEmergencyFundMultiple": this.minEmergencyFundMultiple,
+              "excessUseOfEmergencyFund": this.excessUse,
+              "currentIncome" :this.incomes,
+              "currentExpenses":this.expenses,
+              "expensesGrowth":this.expensesGrowth,
+              "expensesRise": this.expensesRise,
+              "excludeChildren": this.excludeChildren,
+              "haveChildren":this.haveChildren,
+              "childrenPlan": this.childrenPlan,
+              "children": this.children ? this.children : [],
+              "expectedChildren": this.expectedChildren ? this.children : [],
+              "cashInBank": this.cashInBank,
+              "totalInvestment": this.totalInvestment,
+              "investmentReturn": this.investmentReturn,
+              "cpfOA": this.cpfOA,
+              "cpfSA": this.cpfSA,
+              "cpfMA": this.cpfMA,
+              "haveFlat":this.haveFlat,
+              "mortagePayable":this.mortagePayable,
+              "mortagePaymentMethod": this.mortagePaymentMethod,
+              "totalMortagePaymentAmount": this.totalMortagePaymentAmount,
+              "monthlyMortagePayment":this.monthlyMortagePayment,
+              "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
+              "mortageInterestRate": this.mortageInterestRate,
+              "planFlat":this.planFlat,
+              "ageGettingFlat":this.ageGettingFlat,
+              "typeOfFlat": this.typeOfFlat,
+              "milestonesGoals":this.milestones,
+              "liabilities":this.liabilities,
+  
+              //Calculated values
+              "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
+              "projectedIncome": this.projectedIncome,
+              "projectedExpenses": this.projectedExpenses,
+              "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+              'flatPayment': flatDetails[0],
+              "milestonesCost": milestoneDetails[1],
+              "minEmergencyFund": this.minEmergencyAmt,
+              "projectedCpfOA": cpf[0],
+              "projectedCpfSA": cpf[1],
+              "projectedCpfMA": cpf[2],
+              "projectedInvestmentExpected": this.projectedInvestment[1],
+              "cpfPayout": cpfLifePayout,
+              "projectedCashInBank":this.projectedCashInBank,
+              "cpfRetirementSum": this.cpfRetirement,
+              "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge)
+              
+              })
           }
         }).then(()=>{
           this.$router.push({path: `/report`})
@@ -1254,8 +1336,64 @@ export default {
         investmentWithAfterRetirement.push(inv)
       }
       return [currCashInBank, investmentWithAfterRetirement] 
+    },
+    fetchData:function(){
+      console.log(firebase.auth().currentUser.uid)
+      if(this.onEdit){
+        this.db.collection('user/user1/financialPathway').get().then(snapshot =>{
+          if(!snapshot.empty){
+            snapshot.docs.forEach(doc =>{
+              var data = doc.data()
+                console.log(data)
+                this.retirementAge = data['idealRetirementAge']
+                this.currentAge = data["currentAge"]
+                this.retirementIncome = data["idealRetirementIncome"]
+                this.expectedInflation = data["expectedInflation"]
+                this.minEmergencyFundMultiple = data["minEmergencyFundMultiple"]
+                this.excessUse = data['excessUseOfEmergencyFund']
+                
+                this.incomes = data["currentIncome"] 
+                this.expenses = data["currentExpenses"]
+                this.expensesGrowth = data["expensesGrowth"]
+                this.expensesRise = data["expensesRise"] 
+                this.excludeChildren = data["excludeChildren"] 
+                this.haveChildren = data["haveChildren"]
+                this.childrenPlan = data["childrenPlan"] 
+                this.children = data["children"] 
+                this.expectedChildren = data["expectedChildren"] 
+                this.cashInBank = data["cashInBank"] 
+                this.totalInvestment = data["totalInvestment"] 
+                this.investmentReturn = data["investmentReturn"] 
+                this.cpfOA = data["cpfOA"] 
+                this.cpfSA = data["cpfSA"] 
+                this.cpfMA = data["cpfMA"] 
+                this.haveFlat = data["haveFlat"]
+                this.mortagePayable = data["mortagePayable"]
+                this.mortagePaymentMethod = data["mortagePaymentMethod"] 
+                this.totalMortagePaymentAmount = data["totalMortagePaymentAmount"] 
+                this.monthlyMortagePayment = data["monthlyMortagePayment"]
+                this.spouseMonthlyMortagePayment = data["spouseMonthlyMortagePayment"] 
+                this.mortageInterestRate = data["mortageInterestRate"] 
+                this.planFlat = data["planFlat"]
+                this.ageGettingFlat = data["ageGettingFlat"]
+                this.typeOfFlat = data["typeOfFlat"] 
+                this.milestones = data["milestonesGoals"]
+                this.liabilites = data["liabilities"]
+              })
+          }
+          }
+        
+        )
+
+      }
     }
   },
+  created(){
+    if(this.$route.query.edit){
+      this.onEdit = this.$route.query.edit
+      this.fetchData()
+    }
+  }
   
 }
 </script>

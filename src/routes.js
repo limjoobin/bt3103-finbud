@@ -43,7 +43,8 @@ export default[
     {
         path:'/financial_pathway', 
         name: 'financial-pathway',
-        component: FinancialPathway, meta: {requiresAuth: true}
+        component: FinancialPathway, meta: {requiresAuth: true},
+        // props: true
     },
     {
         path:'/report', 
