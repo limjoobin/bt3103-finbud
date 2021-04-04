@@ -13,11 +13,11 @@
               <h3 class='header-font'>Ultimate Goal</h3>
               <div class="sub-section">
                 <div class='user-input'>
-                  <label>Ideal Retirement Age*</label>
+                  <label>Ideal Retirement Age* <div class="tooltip">(?)<span class='tooltiptext'>Age that you wish to stop working</span></div> </label>
                   <input type="number" placeholder="Retirement age" v-model='retirementAge'>    
                 </div>
                 <div class='user-input'>
-                  <label>Ideal Retirement Monthly Income*</label>
+                  <label>Ideal Retirement Monthly Income* <div class="tooltip">(?)<span class='tooltiptext'>How much you wish to receive monthly during your retirment years. Without considering inflation</span></div></label>
                   <input type="number" placeholder="Monthly Income before inflation" v-model="retirementIncome">               
                 </div>
                 <div class='user-input'>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class='user-input'>
-                  <label>Expected Inflation Rate*</label>
+                  <label>Expected Inflation Rate* <div class="tooltip">(?)<span class='tooltiptext'>How much do you think the average inflation would be for your currency</span></div></label>
                   <input type="number" placeholder="Inflation" v-model="expectedInflation">               
                 </div>
               </div>
@@ -38,8 +38,13 @@
             <div v-if='slide === 1'>
               <h3 class="header-font">General</h3>
               <div class="sub-section">
-                <div style="display:block; width:100%">
-                  <p style=" width:30%; display:inline-block">Mininum Emergency Fund:</p>
+                <div style="display:block; width:100%; margin-top:2%;">
+                  <p style=" width:30%; display:inline-block">Mininum Emergency Fund: 
+                    <span class="tooltip">(?)
+                      <span class='tooltiptext'> Emergency fund is a stash of money kept aside for raining days. 
+                        This will serve as the minimum balance you'll need to have in your cash in bank at all times </span>
+                    </span>
+                  </p>
                   <input type="text" style="display:inline-block; width:20%" v-model='minEmergencyFundMultiple'> 
                   <p style=" display:inline-block; width:20%"> times of</p>
                   <select style="width:20%; display:inline-block;" v-model='minEmergencyFundType'>
@@ -48,7 +53,12 @@
                   </select>
                 </div>
                   <div style="display:block; width:100%; margin-top:2%;">
-                    <h4>Allocation of excess funds</h4>
+                    <h4>Allocation of excess funds 
+                      <div class="tooltip">(?)<span class='tooltiptext'>
+                        What do you wish to do with balance that exceeds your desired emergency fund. 
+                        For example, if your emergency fund exceed by $1,000, choosing an 80% investment allocation means, 
+                        you will invest $800 and leave $200 in your bank</span></div>
+                    </h4>
                     <div style="display:block; width:100%">
                       <p style="width:15%; display:inline-block; ">Saving {{100 - excessUse}}%</p>
                       <input style="width:60%; display:inline-block;" v-model="excessUse" type="range" min="0" max=100>
@@ -72,19 +82,37 @@
                       <input type="number" id="income" v-model="incomes[i].income">
                     </div>
                     <div class="user-input">
-                      <label for="incomeGrowthRate">Annual Income Growth rate</label>
+                      <label for="incomeGrowthRate">Annual Income Growth rate <div class="tooltip">(?)<span class='tooltiptext'>
+                        How much do you think your income will increase every year. Some companies give their employees annual increment to combat inflation
+                        but that's not always the case. 
+                        </span></div> </label>
                       <input type="number" id='incomeGrowthRate' v-model="incomes[i].incomeGrowthRate">
                     </div>
                     <div class="user-input">
-                      <label for="jobSwitchFreq">How frequency would you change your job</label>
+                      <label for="jobSwitchFreq">How frequently would you change your job or expect a promotion
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          This question is to account for any big increment in your salary everytime you change job or get a promotion
+                       </span></div>
+
+                      </label>
                       <input type="number" id='jobSwitchFreq' v-model="incomes[i].jobSwitchFreq">
                     </div>
                     <div class="user-input">
-                      <label for="incomeGrowthRateJobSwitch">Income growth per job switch (in percent)</label>
+                      <label for="incomeGrowthRateJobSwitch">Income growth per job switch (in percent)
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much do you think your income will increase per promotion or job switch. If you are unsure, we recommend 10%
+                       </span></div>
+
+                      </label>
                       <input type="number" id="incomeGrowthRateJobSwitch" v-model="incomes[i].incomeGrowthRateJobSwitch">
                     </div>
                     <div class="user-input">
-                      <label for="jobSwitchStop">Stop job switch at age</label>
+                      <label for="jobSwitchStop">Stop job switch at age
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          As you grow older, closer to your retirement age, you might feel like you want to settle down with a company or you feel that you would have reach your peaked by thn.
+                           This is to account for such situation.
+                       </span></div>
+                      </label>
                       <input type="number" id="jobSwitchStop" v-model="incomes[i].jobSwitchStop">
                     </div>
                     <div class="user-input">
@@ -109,15 +137,31 @@
               <h3 class="header-font">Expenses Growth</h3>
               <div class="sub-section">
                 <div class="user-input">
-                  <label for="expenses">Expenses per Month</label>
+                  <label for="expenses">Expenses per Month (necessity only)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much are you spending per month. For better accuracy, please include only your necessity, i.e. food, bills etc. 
+                          You may include your wants expenses later in the milestone section.
+                       </span></div>
+                  </label>
                   <input type="number" id='expenses' v-model='expenses'>
                 </div>
                 <div class="user-input">
-                  <label for="expensesGrowth">Annual Expenses growth rate</label>
+                  <label for="expensesGrowth">Annual Expenses growth rate (in percent)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much do you think your expenses will increase per year. Inflation would already be accounted for. 
+                          Therefore, if you choose 2%, your annual expenses rate will be 2% plus the expected inflation you keyed in earlier.
+                       </span></div>
+                  </label>
                   <input type="number" id='expensesGrowth' v-model='expensesGrowth'>
                 </div>
                 <div class="user-input">
-                  <label for="expensesRise">% increase in expenses per income rise</label>
+                  <label for="expensesRise">% increase in expenses per income rise (in percent)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          This question is to account for any lifestyle inflation everytime you have a pay rise that's bigger than your expected inflation. 
+                          For example, with a value of 10% and a current expenses of 1000. If your income rise above the expected inflation, 
+                          your new expenses next year would be $1,100.  
+                       </span></div>
+                  </label>
                   <input type="number" id='expensesRise' v-model="expensesRise">
                 </div>
               </div>
@@ -132,14 +176,22 @@
               <h3 class="header-font">Dependent Expenses</h3>
               <div class="sub-section">
                 <div class="user-input">
-                  <label for="excludeChildren">Do you want to exclude children planning?</label>
+                  <label for="excludeChildren">Do you want to exclude children planning?
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          By selecting yes, we will exclude all expenses related to having a children from Pregnancy to university fees.
+                       </span></div>
+                  </label>
                   <select name="excludeChildren" id="excludeChildren" v-model="excludeChildren">
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                   </select>
                 </div>
                 <div v-if='excludeChildren == "no"' class="user-input">
-                  <label for="children">Do you have children?</label>
+                  <label for="children">Do you have children?
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          We will estimate the future expenses that is related to having a child, in particular school expenses. 
+                    </span></div>
+                  </label>
                   <select v-model='haveChildren'>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -147,7 +199,8 @@
                 </div>
                 <!-- If no is selected -->
                 <div class="user-input" v-show='excludeChildren =="no" '>
-                  <label for="childrenPlan">Do you plan to have children or more children?</label>
+                  <label for="childrenPlan">Do you plan to have children or more children?
+                  </label>
                   <select name="childrenPlan" id="childrenPlan" v-model='childrenPlan'>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -159,7 +212,11 @@
                   <button v-on:click="removeChildren('currentChild')">minus</button>
                 </div>
                 <div class="user-input" v-if='childrenPlan =="yes" && excludeChildren == "no"'>
-                  <label for="expectedChild">Expected child in the future: {{expectedChildren.length}}</label>
+                  <label for="expectedChild">Expected child in the future 
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          Based on your estimated age to have the child, we will be including related expenses such as tuition fee, allowance, etc. to the cost calculation. 
+                          We will assume that your expected child(ren) are all female for easier projection as male have to undergo National Service.
+                       </span></div>: {{expectedChildren.length}}</label>
                   <button v-on:click="addChildren('expectedChild')">add</button>
                   <button v-on:click="removeChildren('expectedChild')">minus</button>
                 </div>
@@ -212,7 +269,11 @@
                   <input type="number" min="0"  id='totalInvestment' v-model='totalInvestment'>
                 </div>
                 <div class="user-input">
-                  <label for="investmentReturn">Average return on Investment</label>
+                  <label for="investmentReturn">Average return on Investment
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                         How much do you think your investment will grow on yearly? If you are unsure, we recommend 6%. 
+                       </span></div>
+                  </label>
                   <input type="number" min="0"  id="investmentReturn" v-model='investmentReturn'>
                 </div>
                 <div class="user-input">
@@ -246,7 +307,11 @@
                 </div>
 
                 <div class="user-input" v-show='haveFlat === "yes" '>
-                  <label for="mortagePayable">Total Amount Payable</label>
+                  <label for="mortagePayable">Total Amount Payable
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                         What was the total loan amount you got when u first purchase the flat
+                       </span></div>
+                  </label>
                   <input type="number" id='mortagePayable' v-model='mortagePayable'>
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes"'>
@@ -281,7 +346,11 @@
                   </select>
                 </div>
                 <div class="user-input" v-show='haveFlat === "no" && planFlat === "yes"'>
-                  <label for="ageGettingFlat">Estimated age to get Flat</label>
+                  <label for="ageGettingFlat">Estimated age to get Flat
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          If you are planning to get BTO flat, please enter the age you foresee yourself apply for the BTO application
+                       </span></div>
+                  </label>
                   <input type="number" id='ageGettingFlat' v-model="ageGettingFlat">
                 </div>
                 <div class="user-input" v-show='haveFlat === "no" && planFlat === "yes"' >
@@ -343,7 +412,11 @@
             </div>
 
             <div v-if="slide === 8">
-              <h3 class="header-font">Milestone Goal</h3>
+              <h3 class="header-font">Milestone Goal 
+                <div class="tooltip">(?)<span class='tooltiptext'>
+                          This section is a chance for you to account for all the wants you want in life, or big milestone that you have. 
+                          For example, annual travel starting 5 years from now, cost of wedding or flat renovation cost etc. 
+                       </span></div></h3>
               <div class="sub-section">
                 <div class='container' v-for="(milestone,i) in milestones" v-bind:key="i">
                   <h5>Milestone {{i+1}}</h5>
@@ -1688,5 +1761,36 @@ input, select{
     color: #0E4070;
 }
 
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: x-small;
+  line-height: 120%;
+  width:50%;
+  min-width:250px;
+  background-color: rgb(255, 255, 255);
+  color: rgba(8, 35, 61, 0.685);
+  text-align: center;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 </style>
