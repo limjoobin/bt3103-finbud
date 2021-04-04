@@ -29,7 +29,8 @@ export default{
                         {
                             ticks: {
                                 beginAtZero: true,
-                                min:0
+                                min:0,
+                                // max:1000000
                             }
                         }]
                 },
@@ -46,7 +47,9 @@ export default{
         renderChartLine:function(){
             if(!this.loading){
                 this.datacollection.labels = Array.from({length: this.assetGrowthData.idealRetirementAge - this.assetGrowthData.currentAge+1}, (_, i) => i + this.assetGrowthData.currentAge )
-                this.datacollection.datasets[0].data = this.assetGrowthData.projectedInvestmentExpected.slice(0,this.assetGrowthData.idealRetirementAge+1)
+                // this.datacollection.labels = Array.from({length: this.assetGrowthData.projectedInvestmentExpected.length}, (_, i) => i + this.assetGrowthData.currentAge )
+                this.datacollection.datasets[0].data = this.assetGrowthData.projectedInvestmentExpected.slice(0,this.assetGrowthData.currentAge - this.assetGrowthData.idealRetirementAge+1)
+                // this.datacollection.datasets[0].data = this.assetGrowthData.projectedInvestmentExpected
                 for(let i = 0; i < this.assetGrowthData.milestones.length; i ++){
                     console.log("Pushing",this.assetGrowthData.milestonesLabel[i]," ",this.assetGrowthData.milestones[i])
                     this.datacollection.datasets.push(
@@ -63,8 +66,6 @@ export default{
                           }
                     )
                 }
-                
-                // this.datacollection.datasets.push = this.assetGrowthData.milestones
                 this.renderChart(this.datacollection,this.options)
             }
         }

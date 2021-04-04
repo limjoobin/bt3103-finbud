@@ -1,23 +1,8 @@
 <template>
     <div class='report'>
         <div class='profile-details'>
-            <h1>Current Profile</h1>
-            <div class='section'>
-                <div class="input-label">
-                    <label for='currentAge'>Current Age:&nbsp; &nbsp; </label>
-                    <input type='number' id='currentAge' name='currentAge' v-model='this.details.currentAge' :disabled='!editMode'>
-                </div>
-                <div class="input-label">
-                    <label for='idealRetirmentAge'>Ideal Retirement Age: &nbsp; &nbsp;  </label>
-                    <input type='number' id='idealRetirmentAge' name='idealRetirmentAge' v-model='this.details.idealRetirementAge' :disabled='!editMode'>
-                </div>
-                <div class="input-label">
-                    <label for='currentIncome'>Ideal Retirement Income: &nbsp; &nbsp;  </label>
-                    <!-- <input type='number' id='currentIncome' name='currentIncome' v-model='this.details.incomes[0]' :disabled='!editMode'> -->
-                </div>
-                <button v-on:click='edit()' >Edit</button>
-
-            </div>
+            <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>
+               
         </div>
         <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
         <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
@@ -40,7 +25,15 @@ export default {
             editMode:false,
             loading:true,
             assetGrowthData:{},
-            details:{},
+            details:{
+                currentIncome:{income:0,
+                                incomeGrowthRate: 0,
+                                incomeGrowthRateJobSwich:0,
+                                incomeGrowthStop:0,
+                                jobSwitchFreq:0,
+                                jobSwitchStop:0
+                            }
+            },
             incomeInfo:[]
         }
     },
@@ -50,11 +43,13 @@ export default {
       },
       fetchData:function(){
         this.sendIncomeInfo()
-        this.database.collection('user/user1/financialPathway').get().then(snapshot =>{
+        this.database.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
             if(!snapshot.empty){
                 snapshot.docs.forEach(doc =>{
                         var data = doc.data()
-                        var milestones = this.getDataPointsForMilestone(data.milestoneGoals,data.date,data.currentAge)
+                        console.log("HIIIII")
+                        console.log(data)
+                        var milestones = this.getDataPointsForMilestone(data.milestonesGoals, data.date ,data.currentAge)
                         this.assetGrowthData['currentAge'] = data.currentAge
                         this.assetGrowthData['projectedCashInBank'] = data.projectedCashInBank
                         this.assetGrowthData['projectedInvestmentExpected'] = data.projectedInvestmentExpected
@@ -67,11 +62,12 @@ export default {
                         this.details['currentAge'] = data.currentAge
                         this.details['idealRetirementAge'] = data.idealRetirementAge
                         this.details['cpfPayout'] = data.cpfPayout
-                        this.details['idealIncome'] =  data.idealRetirementIncome
+                        this.details['idealIncome'] =  data.idealRetirementIncomeAfterInflation
                         this.details['expectedInflation'] = data.expectedInflation
                         this.details['idealRetirementIncomeAt65'] = data.idealRetirementIncomeAt65
                         this.details['milestones'] = milestones[0]
                         this.details['incomes'] = data.incomes
+                        this.details['currentIncome'] = data.currentIncome[0]
                 })
             }
         }).then(()=>{
@@ -109,22 +105,19 @@ export default {
           console.log(expAtRetirement,expAt65)
           this.incomeInfo.push([expAtRetirement,expAt65])
       }, getDataPointsForMilestone:function(milestone, date,currentAge){
-        //   {x:3,y:10}
           var milestones =[]
           var milestonesLabel = []
           for(let i = 0; i < milestone.length ; i++){
               var amt = milestone[i].amount
-              var yr =  new Date(milestone[i].date).getFullYear() - new Date(date).getFullYear()
-              console.log(new Date(milestone[i].date).getFullYear() , new Date(date).getFullYear())
-              milestones.push({x:yr+currentAge,y:amt})
+              var yr =  new Date(milestone[i].date).getFullYear() - new Date(date).getFullYear() +1
+              console.log(yr+currentAge)
+              milestones.push({x:yr+currentAge, y:amt})
               if(milestone[i].freq !== 'once'){
                   milestonesLabel.push(milestone[i].freq +" " + milestone[i].name)
               } else{
                   milestonesLabel.push(milestone[i].name)
-
               }
           }
-          console.log(milestones)
           return [milestones, milestonesLabel]
       }
     },    
@@ -154,5 +147,19 @@ export default {
 
 .input-label{
     margin:1%;
+    width:30%
+}
+
+/* td{
+    text-align: left;
+} */
+
+
+.right{
+    text-align: center;
+}
+
+.left{
+    text-align: center;
 }
 </style>

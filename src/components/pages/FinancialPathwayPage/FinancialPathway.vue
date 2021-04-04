@@ -47,7 +47,7 @@
                     <option value="expense">Expenses</option>
                   </select>
                 </div>
-                  <div style="display:block; width:100%">
+                  <div style="display:block; width:100%; margin-top:2%;">
                     <h4>Allocation of excess funds</h4>
                     <div style="display:block; width:100%">
                       <p style="width:15%; display:inline-block; ">Saving {{100 - excessUse}}%</p>
@@ -383,11 +383,11 @@
                     </div>
 
                 </div>
-                <div class='btn'>
+
+                </div>
+                <div class='btn' style="width:100%">
                   <button  v-on:click='back'>Back</button>
                   <button  v-on:click='plan'>Plan</button>
-                </div>
-
                 </div>
               </div>
             </div>
@@ -422,7 +422,7 @@ export default {
   name: 'FinancialPathway',
   data: function(){
     return{
-      slide:7,
+      slide:0,
       onEdit:false,
       db:firebase.firestore(),
       //slide 0
@@ -559,8 +559,6 @@ export default {
       } else{
         var invaild = false
         if(this.childrenPlan == 'yes') {
-          console.log("Planning to have child")
-          console.log(this.expectedChildren)
           for(let i = 0; i < this.expectedChildren.length; i++){
             if(this.expectedChildren[i].estimatedAge < this.currentAge || this.expectedChildren[i].estimatedAge <= 0 ){
               m += this.expectedChildren[i].estimatedAge < this.currentAge ? "Your current age already exceed the estimated age you will have kid!" : ''
@@ -713,10 +711,7 @@ export default {
         console.log("Liabilities",liabilitiesDetails[0])
         
         //Accounting flat prices into consideration
-        console.log('still okay')
         var flatDetails = this.deductCPFforFlat(this.typeOfFlat.price)
-        console.log('still okay')
-        // var flatValue = flatDetails[1]
         var flatPayment = flatDetails[0]
   
         console.log("Flat Payment details",flatPayment)
@@ -856,6 +851,7 @@ export default {
                 "projectedCpfOA": cpf[0],
                 "projectedCpfSA": cpf[1],
                 "projectedCpfMA": cpf[2],
+                "investmentContribution":this.investmentContribution,
                 "projectedInvestmentExpected": this.projectedInvestment[1],
                 "cpfPayout": cpfLifePayout,
                 "projectedCashInBank":this.projectedCashInBank,
@@ -914,6 +910,7 @@ export default {
               "projectedCpfOA": cpf[0],
               "projectedCpfSA": cpf[1],
               "projectedCpfMA": cpf[2],
+              "investmentContribution":this.investmentContribution,
               "projectedInvestmentExpected": this.projectedInvestment[1],
               "cpfPayout": cpfLifePayout,
               "projectedCashInBank":this.projectedCashInBank,
@@ -923,7 +920,7 @@ export default {
               })
           }
         }).then(()=>{
-          // this.$router.push({path: `/report`})
+          this.$router.push({path: `/report`})
 
         })
 
@@ -949,12 +946,12 @@ export default {
               currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRateJobSwitch)/100)
             }else{ //if age beyond jobSwitchstop thn just add the annual income growth
               if (i <= this.incomes[0].incomeGrowthStop){ 
-                currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRate)/100)
+                currIncome = currIncome*(1 + parseFloat(this.incomes[0].incomeGrowthRate)/100)
               }
             }
           }else{ //if it is not jobswitch year and just normal year and below income growth, just add normal increment
               if (i <= this.incomes[0].incomeGrowthStop){ 
-                currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRate)/100)
+                currIncome = currIncome*(1 + parseFloat(this.incomes[0].incomeGrowthRate)/100)
               }
             }
         }
@@ -972,14 +969,18 @@ export default {
       return [totalIncome, afterCPF ]         
     },
     projectExpense:function(){
-      var currExpenses = this.expenses
+      var currExpenses = parseInt(this.expenses)
       var totalExpenses =[currExpenses*12]
+      var expInflation = parseInt(this.expectedInflation)
+      var expGrowth = parseInt(this.expensesGrowth)
+      console.log("EXP INFLAT",expInflation)
+      console.log("EXP Growth",expGrowth)
       for(let i = this.currentAge; i < this.retirementAge; i++) {
         var yr = i-this.currentAge+1
-        var growth = currExpenses * ((this.expectedInflation + this.expensesGrowth)/100)
+        var growth = currExpenses * ((expInflation + expGrowth)/100)
         if( (yr !== 0) && ((yr % this.incomes[0].jobSwitchFreq) === 0) ){ 
-          if(i <= this.incomes[0].jobSwitchStop && (this.incomes[0].incomeGrowthRateJobSwitch > this.expectedInflation)){
-            currExpenses = currExpenses*(1 + this.expensesRise/100)
+          if(i <= this.incomes[0].jobSwitchStop && (this.incomes[0].incomeGrowthRateJobSwitch > expInflation)){
+            currExpenses = currExpenses*(1 + parseInt(this.expensesRise)/100)
           }
         }
         currExpenses += growth
@@ -988,7 +989,7 @@ export default {
 
       var exp = totalExpenses[totalExpenses.length-1]
       for(let i = this.retirementAge; i < 100; i++){
-        exp *=(1+(this.expectedInflation/100))
+        exp *=(1+(expInflation/100))
         totalExpenses.push(exp)
       }
 
@@ -1104,7 +1105,10 @@ export default {
       }
       return finalCost
     },
-    projectEmergencyAmt:function(values,multiple){
+    projectEmergencyAmt:function(values ,multiple){
+      multiple = parseInt(multiple)
+      console.log("Value is ",values)
+      console.log("Multiple is ",multiple)
       var maxVal = []
       for(let i = 0; i<values.length;i++){
         maxVal.push((values[i]/12) * multiple)
@@ -1112,12 +1116,15 @@ export default {
       return maxVal
     },
     projectCashInBankBeforeRetirement:function(incomes,expenses){
-      var cash = [parseInt(this.cashInBank)]
-      var curr = parseInt(this.cashInBank)
+      console.log("CALCULATING CASH BEFORE RETIREMENNTTTTTT \n\n")
+      var cash = [parseFloat(this.cashInBank)]
+      var curr = parseFloat(this.cashInBank)
       for(let i = 0; i < incomes.length; i++){
         var newBal = 0
         var investmentAmt = 0
-        newBal = curr + (incomes[i] -expenses[i])
+        newBal = curr + (incomes[i] - expenses[i])
+        console.log("Current Age: "+ i+this.currentAge,"Before Bal: "+curr,"After Bal: "+newBal  ," Income: " + incomes[i]," Expenses: " +expenses[i], "Diff: "+ (incomes[i] - expenses[i]) )
+
         // var liability = i <= liabilities.length ? liabilities[i] : 0
         // if(flatDetails.length > 0){
         //   var flatPayment = 0
@@ -1136,6 +1143,9 @@ export default {
 
         if(newBal <= this.minEmergencyAmt[i+1]){
           console.log("WARNING LOW EMERGENCY FUND",i)
+          var withdrawlFromInvestment = newBal - this.minEmergencyAmt[i+1]  
+          newBal = this.minEmergencyAmt[i+1]
+          this.investmentContribution.push(withdrawlFromInvestment)
         } else{
           var extra = newBal- this.minEmergencyAmt[i+1]
           investmentAmt = extra *this.excessUse/100 //excessUse will be 100 if user choose to put all funds in investment.
@@ -1236,8 +1246,8 @@ export default {
     return [cost, totalCosts]
     },
     projectInvestment:function(investmentContribution, milestoneCost){
-      var conservative = this.investmentReturn - 2
-      var optimistic = this.investmentReturn + 2
+      var conservative = parseInt(this.investmentReturn) - 2
+      var optimistic = parseInt(this.investmentReturn) + 2
       var inv = parseInt(this.totalInvestment)
       var investmentPortfolioExpected = [inv]
       var investmentPortfolioConservative= [inv]
@@ -1264,7 +1274,6 @@ export default {
       return [investmentPortfolioConservative, investmentPortfolioExpected, investmentPortfolioOptimistic]
     },
     deductCPFforFlat:function(){
-      console.log("This has error")
       var totalPaid = []
       var flatValue = []
        if(this.haveFlat === 'no' && this.planFlat === 'yes'){
@@ -1419,6 +1428,8 @@ export default {
             }
     },
     projectedCashInBankAfterRetirement:function(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost){
+      console.log("PROJECTING CASH IN BANK AFTER RETIREMENT")
+      console.log(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost)
       var currCashInBank = cashInBank
       var retirementAge = this.retirementAge
       var inv = investment[investment.length-1]
@@ -1517,7 +1528,7 @@ export default {
   text-align: center;
   color: #0E4070;
   background: #A9D6FF;
-  height: 100vh;
+  /* height: 100vh; */
 }
 .header{
   padding-top:2%;
@@ -1535,7 +1546,6 @@ export default {
 
 .second{
   background: #B9DEFF;
-  /* height: 20vh; */
   padding:5%;
 }
 .form{
@@ -1605,6 +1615,7 @@ input, select{
 }
 .container{
   width: 100%;
+  margin-top:2%;
 }
 .milestone h5{
   text-decoration: underline 1px solid #0E4070;
@@ -1663,6 +1674,7 @@ input, select{
     display: flex;
     justify-content: center;
     min-height: 100px;
+    margin-bottom: 2%;
 }
 
 .navBut{
