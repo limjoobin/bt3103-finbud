@@ -187,7 +187,7 @@
                     <p>Child {{index+1}}</p>
                     <div class="user-input">
                       <label for="childAge">Estimated age of having child</label>
-                      <input type="number" id='childAge' v-model='expectedChildren[index].age'>
+                      <input type="number" id='childAge' v-model='expectedChildren[index].estimatedAge'>
                     </div>
                  </div>
                 </div>
@@ -209,28 +209,28 @@
                 </div>
                 <div class="user-input">
                   <label for="totalInvestment">Total Investment</label>
-                  <input type="number" id='totalInvestment' v-model='totalInvestment'>
+                  <input type="number" min="0"  id='totalInvestment' v-model='totalInvestment'>
                 </div>
                 <div class="user-input">
                   <label for="investmentReturn">Average return on Investment</label>
-                  <input type="number" id="investmentReturn" v-model='investmentReturn'>
+                  <input type="number" min="0"  id="investmentReturn" v-model='investmentReturn'>
                 </div>
                 <div class="user-input">
                   <label for="cpfOA">CPF-Ordinary Account</label>
-                  <input type="number" id='cpfOA' v-model='cpfOA'>
+                  <input type="number" min="0"  id='cpfOA' v-model='cpfOA'>
                 </div>
                 <div class="user-input">
                   <label for="cpfSA">CPF-Special Account</label>
-                  <input type="number" id='cpfSA' v-model='cpfSA'>
+                  <input type="number" min="0"  id='cpfSA' v-model='cpfSA'>
                 </div>
                 <div class="user-input">
                   <label for="cpfMA">CPF-Medisave Account</label>
-                  <input type="number" id='cpfMA' v-model='cpfMA'>
+                  <input type="number" id='cpfMA' min="0" v-model='cpfMA'>
                 </div>
               </div>
               <div class='btn'>
                 <button  v-on:click='back'>Back</button>
-                <button  v-on:click='next'>Next</button>
+                <button  v-on:click="next(investmentReturn <= 0, 'Investment return can\'t be negative and must be more than 0')">Next</button>
               </div>
             </div>
 
@@ -257,7 +257,7 @@
                   </select>
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes" ' >
-                  <label for="totalMortagePayment">Total amount payable</label>
+                  <label for="totalMortagePayment">Remaining mortage amount payable</label>
                   <input type="number" id="totalMortagePayment" v-model="totalMortagePaymentAmount">
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes"'>
@@ -297,7 +297,7 @@
               </div>
               <div class='btn'>
                 <button  v-on:click='back'>Back</button>
-                <button  v-on:click='next'>Next</button>
+                <button  v-on:click='next(true)'>Next</button>
               </div>
             </div>
 
@@ -312,11 +312,11 @@
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesAmount">Total amount Payable</label>
-                      <input type="number" id='liabilitiesAmount' v-model="liabilities[i].amountPayable">
+                      <input type="number" id='liabilitiesAmount' min="0" v-model="liabilities[i].totalAmount">
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesInterestRate">Interest Rate</label>
-                      <input type="number" id='liabilitiesInterestRate' v-model="liabilities[i].interestRate">
+                      <input type="number" id='liabilitiesInterestRate' min="0" v-model="liabilities[i].interestRate">
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesPaymentFreq">Payment Frequency</label>
@@ -327,7 +327,7 @@
                     </div>
                     <div class="top-bottom">
                       <label for="periodicPaymentAmount">Periodic Payment Amount</label>
-                      <input type="number" id='periodicPaymentAmount' v-model='liabilities[i].periodicPaymentAmount'>
+                      <input type="number" id='periodicPaymentAmount' min="0" v-model='liabilities[i].periodicPaymentAmount'>
                     </div>
                   <div class="top-bottom">
                       <button v-on:click="addLiability" v-show="i == liabilities.length-1">Add new</button>
@@ -338,7 +338,7 @@
               </div>
               <div class='btn'>
                 <button  v-on:click='back'>Back</button>
-                <button  v-on:click='next'>Next</button>
+                <button  v-on:click='next(false)'>Next</button>
               </div>
             </div>
 
@@ -358,7 +358,7 @@
                     </div>
                     <div class="top-bottom">
                       <label for='milestone-inflation'>Inflation</label>
-                      <input id='milestone-inflation' type='number' v-model="milestones[i].inflation">
+                      <input id='milestone-inflation'  type='number' v-model="milestones[i].inflation">
                     </div>
                     <div class="top-bottom">
                       <label for='milestone-amount-needed'>Amount needed</label>
@@ -422,12 +422,12 @@ export default {
   name: 'FinancialPathway',
   data: function(){
     return{
-      slide:4,
+      slide:7,
       onEdit:false,
       db:firebase.firestore(),
       //slide 0
       retirementAge:0,
-      currentAge:0,
+      currentAge:23,
       retirementIncome:0,
       expectedInflation:0,
       //slide 1
@@ -542,47 +542,89 @@ export default {
       if(missing){
         var m = msg ? msg : "Please fill up all the required fields before proceeding"
         if(this.slide == 4){
-          if((this.haveChildren == 'no' && this.childrenPlan == 'no') | this.excludeChildren == 'yes'){
-            this.slide++;
-          } else{
-            console.log('either hav')
-            var invaild = false
-            if(this.childrenPlan == 'yes') {
-              for(let i = 0; i < this.expectedChildren.length; i++){
-                if(this.expectedChildren[i].estimatedAge < this.currentAge ){
-                  invaild = true
-                } 
-              }
-              if(this.expectedChildren.length == 0){
-                invaild = true
-                m =" Please tell us your estimated Age to have a child"
-              }
-            }
-            if(this.haveChildren == 'yes'){
-              for(let i = 0; i< this.children.length; i++){
-                if(this.children[i].age < 0 || this.children[i].age){
-                  m += "  Invalid age for child " + i+1
-                  invaild = true
-                }
-              }
-              if(this.children.length == 0){
-                invaild = true
-                m += " Please let us know your child age and gender"
-              }
-            }
-            if(!invaild){
-              this.slide++
-            }else{
-
-              alert(m)
-            }
-          }
+          this.childSlideValidity()
+        }else if(this.slide == 6){
+          this.flatSlideValidity()
         }else{
           alert(m)
         }
       }else{
         this.slide++;
       }
+    },
+    childSlideValidity(){
+      var m = ''
+      if((this.haveChildren == 'no' && this.childrenPlan == 'no') | this.excludeChildren == 'yes'){
+        this.slide++;
+      } else{
+        var invaild = false
+        if(this.childrenPlan == 'yes') {
+          console.log("Planning to have child")
+          console.log(this.expectedChildren)
+          for(let i = 0; i < this.expectedChildren.length; i++){
+            if(this.expectedChildren[i].estimatedAge < this.currentAge || this.expectedChildren[i].estimatedAge <= 0 ){
+              m += this.expectedChildren[i].estimatedAge < this.currentAge ? "Your current age already exceed the estimated age you will have kid!" : ''
+              m += !this.expectedChildren[i].estimatedAge <= 0 ? "Please enter a vaild age for your child" : ""
+              invaild = true
+            } 
+          }
+          if(this.expectedChildren.length == 0){
+            invaild = true
+            m = " Please tell us your estimated Age to have a child "
+          }
+        }
+        if(this.haveChildren == 'yes'){
+          for(let i = 0; i< this.children.length; i++){
+            if(this.children[i].age < 0 || this.children[i].age){
+              m += "  Invalid age for child " + i+1
+              invaild = true
+            }
+          }
+          if(this.children.length == 0){
+            invaild = true
+            m += " Please let us know your child age and gender"
+          }
+        }
+        if(!invaild){
+          this.slide++
+        }else{
+          alert(m)
+        }
+      }
+    },
+    flatSlideValidity(){
+      var m = ''
+      var invalid = false
+      if(this.haveFlat === 'yes'){
+        if(this.mortagePayable < this.totalMortagePaymentAmount ){
+          m += "Total mortage payment cant be greater than mortage payable"
+
+        }
+        if(this.spouseMonthlyMortagePayment < 0 ||  this.monthlyMortagePayment < 0){
+          m +=  "Monthly mortage payment can't be negative"
+          invalid = true
+        }
+        if(this.interestRate <= 0){
+          m += " Interest rate can't be less than or equal to 0 "
+          invalid = true
+        } 
+      }else if(this.haveFlat === 'no' && this. planFlat == 'yes'){
+        if(this.ageGettingFlat < this.currentAge){
+          m += "Your estimated age of getting a flat cant be younger than your own age"
+          invalid = true
+        }
+        if(this.typeOfFlat.price < 0){
+          m += "Your flat price can't be negative "
+          invalid = true
+        }
+      }
+
+      if(invalid){
+        alert(m)
+      }else{
+        this.slide++;
+      }
+
     },
     addChildren:function(type){
       if(type == 'currentChild') {
@@ -620,7 +662,7 @@ export default {
     addLiability:function(){
       this.liabilities.push({
         name:'',
-        amountPayable:0,
+        totalAmount:0,
         interestRate:0,
         paymentFreq:"monthly",
         periodicPaymentAmount:0
