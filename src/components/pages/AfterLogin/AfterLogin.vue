@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>
-            Good Morning {{ username }}!<br>
+            Good Morning {{ this.user.username }}!<br>
             What would you like to do today?
         </h1>
 
@@ -22,8 +22,7 @@ export default {
     name: 'AfterLogin',
     data (){
         return{
-            // TODO: get rid of this, get user details from firebase auth
-            username : 'USER1234',
+            user : null,
         }
     },
     components:{
@@ -44,6 +43,16 @@ export default {
                 alert(errorCode + ":" + errorMessage);
             });
         },
+    },
+    created: function(){
+        var user = firebase.auth().currentUser
+        if (user){
+            // user is signed in
+            this.user = user;
+
+        }else{
+            // no user is signed in
+        }
     }
 }
 </script>
