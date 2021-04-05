@@ -20,13 +20,14 @@ export default {
         width: 100%;
         min-width: 100%;
         height: 300px;
-        margin: auto;
+        padding:1% 0 1% 0;
+        margin: 0;
         text-align: center;
         display:table;
     }
     #dashboard button{
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 80%;
         background-color: white;
         background-position: center;
         border-radius: 8px;
@@ -47,6 +48,7 @@ export default {
     #dashboard button:hover {
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     }
+
     #community-button{
         background-image:url('../../../assets/community.png');
     }

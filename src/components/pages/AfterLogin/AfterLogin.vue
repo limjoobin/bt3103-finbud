@@ -6,9 +6,9 @@
         </h1>
 
         <button class ="logout" v-on:click="logout()" >Logout</button>
+        
         <dashboard-buttons></dashboard-buttons>
         <subfooter></subfooter>
-        
     </div>
     
 </template>
@@ -22,6 +22,7 @@ export default {
     name: 'AfterLogin',
     data (){
         return{
+            // TODO: get rid of this, get user details from firebase auth
             username : 'USER1234',
         }
     },
