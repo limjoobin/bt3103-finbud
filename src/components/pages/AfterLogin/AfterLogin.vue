@@ -3,12 +3,14 @@
         <h1>
             Good Morning {{ username }}!<br>
             What would you like to do today?
+           
         </h1>
+         <button class ="logout" v-on:click="logout()" style = "background-color: white;font-size: 30px; margin-left: 80%;">Logout</button>
         <div id = 'dashboard'>
-            <button class= 'dashboard-button' v-on:click="$router.push('community')">Community News Feed</button>
-            <button class= 'dashboard-button' v-on:click="$router.push('dashboard')">Dashboard</button>
-            <button class= 'dashboard-button'>Chat with Expert</button>
-            <button class= 'dashboard-button' v-on:click="$router.push('financial_pathway')">Financial Calculators</button>
+            <button id='community-button' v-on:click="$router.push('community')">Community News Feed</button>
+            <button id='dashboard-button' v-on:click="$router.push('dashboard')">Dashboard</button>
+            <button id='chat-button'>Chat with Expert</button>
+            <button id='financial-calculator-button' v-on:click="$router.push('financial_pathway')">Financial Calculators</button>
         </div>
         <div id = 'sub-footer'>
             <h1>Exclusive Financial Deals</h1>
@@ -21,12 +23,29 @@
 </template>
 
 <script>
+import firebase from "../../../../firebase";
+
 export default {
     name: 'AfterLogin',
     data (){
         return{
             username : 'USER1234',
         }
+    },
+    methods: {
+        logout: function () {
+            firebase
+            .auth()
+            .signOut()
+            .then(() => {
+                this.$router.replace('/');
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + ":" + errorMessage);
+            });
+        },
     }
 
 }
@@ -49,7 +68,6 @@ export default {
         display:table;
     }
     #dashboard button{
-        background-image:url('../../assets/community.png');
         background-repeat: no-repeat;
         background-size: contain;
         background-color: white;
@@ -66,6 +84,23 @@ export default {
         align-items: bottom;
         line-height: 20px;
         font-size: 20px;
+        transition-duration: 0.4s;
+        
+    }
+    #dashboard button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    #community-button{
+        background-image:url('../../assets/community.png');
+    }
+    #dashboard-button{
+        background-image:url('../../assets/dashboard-button.png');
+    }
+    #chat-button{
+        background-image:url('../../assets/chat-button.png');
+    }
+    #financial-calculator-button{
+        background-image:url('../../assets/financial-calculator-button.png');
     }
     #sub-footer{
         background-color: white;
