@@ -1,6 +1,6 @@
 import HomePage from './components/pages/HomePage/HomePage.vue'
 import SignUpPage from './components/pages/HomePage/SignUpPage.vue'
-import AfterLogin from './components/pages/AfterLogin.vue'
+import AfterLogin from './components/pages/AfterLogin/AfterLogin.vue'
 
 import BudgetCalculatorContent from './components/pages/BudgetCalculatorPage/BudgetCalculatorContent.vue'
 import InvestmentGrowth from './components/pages/InvestmentGrowthPage/InvestmentGrowth.vue'
