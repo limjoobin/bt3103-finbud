@@ -44,7 +44,6 @@ export default {
         font-size: 20px;
     }
 
-
     #credit-card-promo{
         background-image:url('../../../assets/credit-card.png');
     }

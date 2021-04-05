@@ -1,12 +1,15 @@
 import { Bar } from 'vue-chartjs'
+import firebase from '../../../firebase'
 
 
 export default {
     extends: Bar,
-    props:['barData','min','max'],
+    // props:['barData','min','max','loading'],
+    props:['barData','loading'],
     data: function () {
         return {
-            //["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            database: firebase.firestore(),
+            data:{},
             datacollection: {
                 labels: [],
                 datasets: [
@@ -50,39 +53,51 @@ export default {
         }
       },
       methods:{
-        
         prepChart:function(){
+            this.min = this.barData.idealRetirementAge
+            this.max = 100
             var rangeStart = parseInt(this.min) - this.barData.currentAge 
             var rangeEnd = parseInt(this.max) - this.barData.currentAge +1
             this.datacollection.labels = Array.from({length: rangeEnd- rangeStart}, (_, i) => i + this.barData.currentAge + rangeStart)
             this.datacollection.datasets[0].data = this.barData.projectedCashInBank.slice(rangeStart,rangeEnd)
             this.datacollection.datasets[1].data = this.barData.projectedInvestmentExpected.slice(rangeStart,rangeEnd)
             this.datacollection.datasets[2].data = this.barData.projectedExpenses.slice(rangeStart,rangeEnd)
-            // console.log(this.barData)
+            this.renderChart(this.datacollection,this.options)
 
         },renderChartBar: function(){
             this.prepChart()
+        },updateChartBar:function(){
+            var rangeStart = parseInt(this.min) - this.barData.currentAge 
+            var rangeEnd = parseInt(this.max) - this.barData.currentAge +1
+            this.datacollection.labels = Array.from({length: rangeEnd- rangeStart}, (_, i) => i + this.barData.currentAge + rangeStart)
+            this.datacollection.datasets[0].data = this.barData.projectedCashInBank.slice(rangeStart,rangeEnd)
+            this.datacollection.datasets[1].data = this.barData.projectedInvestmentExpected.slice(rangeStart,rangeEnd)
+            this.datacollection.datasets[2].data = this.barData.projectedExpenses.slice(rangeStart,rangeEnd)
             this.renderChart(this.datacollection,this.options)
         }
 
       }, mounted(){
-        this.renderChartBar()
+            if(!this.loading){
+                this.renderChartBar()
+            }
+       
       }, computed:{
           chartData:function(){
               return this.barData
           }
       }, watch:{
           min:function(){
-              this.renderChartBar()
+              this.updateChartBar()
           },
           max:function(){
-              this.renderChartBar()
-          },barData: {
-            handler: function () {
-                this.renderChartBar()
-            },
-            deep: true
-        }
+              this.updateChartBar()
+          },
+          barData:function(){
+              this.prepChart();
+          },
+          loading:function(){
+              this.prepChart();
+          }
       },
       
     }

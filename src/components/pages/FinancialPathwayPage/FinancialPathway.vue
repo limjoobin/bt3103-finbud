@@ -13,30 +13,38 @@
               <h3 class='header-font'>Ultimate Goal</h3>
               <div class="sub-section">
                 <div class='user-input'>
-                  <label>Ideal Retirement Age</label>
+                  <label>Ideal Retirement Age* <div class="tooltip">(?)<span class='tooltiptext'>Age that you wish to stop working</span></div> </label>
                   <input type="number" placeholder="Retirement age" v-model='retirementAge'>    
                 </div>
                 <div class='user-input'>
-                  <label>Ideal Retirement Monthly Income</label>
+                  <label>Ideal Retirement Monthly Income* <div class="tooltip">(?)<span class='tooltiptext'>How much you wish to receive monthly during your retirment years. Without considering inflation</span></div></label>
                   <input type="number" placeholder="Monthly Income before inflation" v-model="retirementIncome">               
                 </div>
                 <div class='user-input'>
-                  <label>Current Age</label>
+                  <label>Current Age*</label>
                   <input type="number" placeholder="Enter your age now" v-model="currentAge">               
                 </div>
 
                 <div class='user-input'>
-                  <label>Expected Inflation Rate</label>
+                  <label>Expected Inflation Rate* <div class="tooltip">(?)<span class='tooltiptext'>How much do you think the average inflation would be for your currency</span></div></label>
                   <input type="number" placeholder="Inflation" v-model="expectedInflation">               
                 </div>
               </div>
+                <div class='btn' style="float:right;">
+                  <button v-show='slide !== 8' v-on:click='next(retirementAge == 0 | retirementIncome == 0 | currentAge == 0 | expectedInflation == 0)' >Next</button>
+                </div>
             </div>
 
             <div v-if='slide === 1'>
               <h3 class="header-font">General</h3>
               <div class="sub-section">
-                <div style="display:block; width:100%">
-                  <p style=" width:30%; display:inline-block">Mininum Emergency Fund:</p>
+                <div style="display:block; width:100%; margin-top:2%;">
+                  <p style=" width:30%; display:inline-block">Mininum Emergency Fund: 
+                    <span class="tooltip">(?)
+                      <span class='tooltiptext'> Emergency fund is a stash of money kept aside for raining days. 
+                        This will serve as the minimum balance you'll need to have in your cash in bank at all times </span>
+                    </span>
+                  </p>
                   <input type="text" style="display:inline-block; width:20%" v-model='minEmergencyFundMultiple'> 
                   <p style=" display:inline-block; width:20%"> times of</p>
                   <select style="width:20%; display:inline-block;" v-model='minEmergencyFundType'>
@@ -44,23 +52,23 @@
                     <option value="expense">Expenses</option>
                   </select>
                 </div>
-                <!-- <div style="display:block; width:100%">
-                  <p style=" width:30%; display:inline-block">Maximum Emergency Fund:</p>
-                  <input type="text" style="display:inline-block; width:20%" v-model='maxEmergencyFundMultiple'> 
-                  <p style=" display:inline-block; width:20%"> times of</p>
-                  <select style="width:20%; display:inline-block;" v-model='maxEmergencyFundType'>
-                    <option value="income">Income</option>
-                    <option value="expense">Expenses</option>
-                  </select>
-                </div> -->
-                  <div style="display:block; width:100%">
-                    <h4>Allocation of excess funds</h4>
+                  <div style="display:block; width:100%; margin-top:2%;">
+                    <h4>Allocation of excess funds 
+                      <div class="tooltip">(?)<span class='tooltiptext'>
+                        What do you wish to do with balance that exceeds your desired emergency fund. 
+                        For example, if your emergency fund exceed by $1,000, choosing an 80% investment allocation means, 
+                        you will invest $800 and leave $200 in your bank</span></div>
+                    </h4>
                     <div style="display:block; width:100%">
                       <p style="width:15%; display:inline-block; ">Saving {{100 - excessUse}}%</p>
                       <input style="width:60%; display:inline-block;" v-model="excessUse" type="range" min="0" max=100>
                       <p style="display:inline-block; width:15%">Investment {{excessUse}}%</p>
                     </div>
                   </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(minEmergencyFundMultiple == 0, 'Minimum Emergency fund has to be more than 0')">Next</button>
               </div>
             </div>
 
@@ -74,19 +82,37 @@
                       <input type="number" id="income" v-model="incomes[i].income">
                     </div>
                     <div class="user-input">
-                      <label for="incomeGrowthRate">Annual Income Growth rate</label>
+                      <label for="incomeGrowthRate">Annual Income Growth rate <div class="tooltip">(?)<span class='tooltiptext'>
+                        How much do you think your income will increase every year. Some companies give their employees annual increment to combat inflation
+                        but that's not always the case. 
+                        </span></div> </label>
                       <input type="number" id='incomeGrowthRate' v-model="incomes[i].incomeGrowthRate">
                     </div>
                     <div class="user-input">
-                      <label for="jobSwitchFreq">How frequency would you change your job</label>
+                      <label for="jobSwitchFreq">How frequently would you change your job or expect a promotion
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          This question is to account for any big increment in your salary everytime you change job or get a promotion
+                       </span></div>
+
+                      </label>
                       <input type="number" id='jobSwitchFreq' v-model="incomes[i].jobSwitchFreq">
                     </div>
                     <div class="user-input">
-                      <label for="incomeGrowthRateJobSwitch">Income growth per job switch (in percent)</label>
+                      <label for="incomeGrowthRateJobSwitch">Income growth per job switch (in percent)
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much do you think your income will increase per promotion or job switch. If you are unsure, we recommend 10%
+                       </span></div>
+
+                      </label>
                       <input type="number" id="incomeGrowthRateJobSwitch" v-model="incomes[i].incomeGrowthRateJobSwitch">
                     </div>
                     <div class="user-input">
-                      <label for="jobSwitchStop">Stop job switch at age</label>
+                      <label for="jobSwitchStop">Stop job switch at age
+                        <div class="tooltip">(?)<span class='tooltiptext'>
+                          As you grow older, closer to your retirement age, you might feel like you want to settle down with a company or you feel that you would have reach your peaked by thn.
+                           This is to account for such situation.
+                       </span></div>
+                      </label>
                       <input type="number" id="jobSwitchStop" v-model="incomes[i].jobSwitchStop">
                     </div>
                     <div class="user-input">
@@ -94,29 +120,55 @@
                       <input type="number" id='incomeGrowthStop' v-model="incomes[i].incomeGrowthStop">
                     </div>
 
-                    <div class="top-bottom">
+                    <!-- <div class="top-bottom">
                       <button v-on:click="addIncome" v-show="i == incomes.length-1">Add new</button>
                       <button v-show="incomes.length > 1" v-on:click="removeIncome(i)"> Remove</button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
+               <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(incomes[0].income == 0 | incomes[0].jobSwitchStop < currentAge | incomes[0].incomeGrowthStop < currentAge ,'Income cant be 0. And please make sure that income growth age is equal or older than your current age')">Next</button>
+              </div>
             </div>
+
             <div v-if="slide === 3">
               <h3 class="header-font">Expenses Growth</h3>
               <div class="sub-section">
                 <div class="user-input">
-                  <label for="expenses">Expenses per Month</label>
+                  <label for="expenses">Expenses per Month (necessity only)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much are you spending per month. For better accuracy, please include only your necessity, i.e. food, bills etc. 
+                          You may include your wants expenses later in the milestone section.
+                       </span></div>
+                  </label>
                   <input type="number" id='expenses' v-model='expenses'>
                 </div>
                 <div class="user-input">
-                  <label for="expensesGrowth">Annual Expenses growth rate</label>
+                  <label for="expensesGrowth">Annual Expenses growth rate (in percent)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          How much do you think your expenses will increase per year. Inflation would already be accounted for. 
+                          Therefore, if you choose 2%, your annual expenses rate will be 2% plus the expected inflation you keyed in earlier.
+                       </span></div>
+                  </label>
                   <input type="number" id='expensesGrowth' v-model='expensesGrowth'>
                 </div>
                 <div class="user-input">
-                  <label for="expensesRise">% increase in expenses per income rise</label>
+                  <label for="expensesRise">% increase in expenses per income rise (in percent)
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          This question is to account for any lifestyle inflation everytime you have a pay rise that's bigger than your expected inflation. 
+                          For example, with a value of 10% and a current expenses of 1000. If your income rise above the expected inflation, 
+                          your new expenses next year would be $1,100.  
+                       </span></div>
+                  </label>
                   <input type="number" id='expensesRise' v-model="expensesRise">
                 </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(expensesGrowth < 0 | expensesRise < 0 | expenses <= 0 | expensesGrowth <=0,
+                'Expenses cant be 0 and expenses growth rate cannot be negative ')">Next</button>
               </div>
             </div>
 
@@ -124,22 +176,31 @@
               <h3 class="header-font">Dependent Expenses</h3>
               <div class="sub-section">
                 <div class="user-input">
-                  <label for="excludeChildren">Do you want to exclude children planning?</label>
+                  <label for="excludeChildren">Do you want to exclude children planning?
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          By selecting yes, we will exclude all expenses related to having a children from Pregnancy to university fees.
+                       </span></div>
+                  </label>
                   <select name="excludeChildren" id="excludeChildren" v-model="excludeChildren">
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                   </select>
                 </div>
                 <div v-if='excludeChildren == "no"' class="user-input">
-                  <label for="children">Do you have children?</label>
+                  <label for="children">Do you have children?
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          We will estimate the future expenses that is related to having a child, in particular school expenses. 
+                    </span></div>
+                  </label>
                   <select v-model='haveChildren'>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                   </select>
                 </div>
                 <!-- If no is selected -->
-                <div class="user-input" v-show='haveChildren === "no" && excludeChildren =="no" '>
-                  <label for="childrenPlan">Do you plan to have children?</label>
+                <div class="user-input" v-show='excludeChildren =="no" '>
+                  <label for="childrenPlan">Do you plan to have children or more children?
+                  </label>
                   <select name="childrenPlan" id="childrenPlan" v-model='childrenPlan'>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -149,14 +210,17 @@
                   <label for="numOfChildren">Number of children: {{children.length}} </label>
                   <button v-on:click="addChildren('currentChild')">add</button>
                   <button v-on:click="removeChildren('currentChild')">minus</button>
-                  <!-- <input type="number" v-model="numOfChildren" @blur='addChildren' > -->
                 </div>
-                <div class="user-input" v-if='((haveChildren == "yes" ) || (haveChildren === "no" && childrenPlan =="yes")) && excludeChildren == "no"'>
-                  <label for="expectedChild">Expected child in the future: {{expectedChildren.length}}</label>
+                <div class="user-input" v-if='childrenPlan =="yes" && excludeChildren == "no"'>
+                  <label for="expectedChild">Expected child in the future 
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          Based on your estimated age to have the child, we will be including related expenses such as tuition fee, allowance, etc. to the cost calculation. 
+                          We will assume that your expected child(ren) are all female for easier projection as male have to undergo National Service.
+                       </span></div>: {{expectedChildren.length}}</label>
                   <button v-on:click="addChildren('expectedChild')">add</button>
                   <button v-on:click="removeChildren('expectedChild')">minus</button>
-                  <!-- <input type="number" v-model='additionalChildren' @blur='addChildren'> -->
                 </div>
+
                 <div v-show='children.length>0 && haveChildren == "yes" ' style="display:flex-box;  width:100%;">
                 <h3>Current Child</h3>
                 <div v-for='(child,index) in children' v-bind:key="index" style="display:inline-block;">
@@ -180,11 +244,17 @@
                     <p>Child {{index+1}}</p>
                     <div class="user-input">
                       <label for="childAge">Estimated age of having child</label>
-                      <input type="number" id='childAge' v-model='expectedChildren[index].age'>
+                      <input type="number" id='childAge' v-model='expectedChildren[index].estimatedAge'>
                     </div>
                  </div>
                 </div>
               </div>
+                <div class='btn'>
+                  <button  v-on:click='back'>Back</button>
+                  <button  v-on:click="next(true)">
+                    
+                    Next</button>
+                </div>
             </div>
 
             <div v-if='slide === 5'>
@@ -196,24 +266,32 @@
                 </div>
                 <div class="user-input">
                   <label for="totalInvestment">Total Investment</label>
-                  <input type="number" id='totalInvestment' v-model='totalInvestment'>
+                  <input type="number" min="0"  id='totalInvestment' v-model='totalInvestment'>
                 </div>
                 <div class="user-input">
-                  <label for="investmentReturn">Average return on Investment</label>
-                  <input type="number" id="investmentReturn" v-model='investmentReturn'>
+                  <label for="investmentReturn">Average return on Investment
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                         How much do you think your investment will grow on yearly? If you are unsure, we recommend 6%. 
+                       </span></div>
+                  </label>
+                  <input type="number" min="0"  id="investmentReturn" v-model='investmentReturn'>
                 </div>
                 <div class="user-input">
                   <label for="cpfOA">CPF-Ordinary Account</label>
-                  <input type="number" id='cpfOA' v-model='cpfOA'>
+                  <input type="number" min="0"  id='cpfOA' v-model='cpfOA'>
                 </div>
                 <div class="user-input">
                   <label for="cpfSA">CPF-Special Account</label>
-                  <input type="number" id='cpfSA' v-model='cpfSA'>
+                  <input type="number" min="0"  id='cpfSA' v-model='cpfSA'>
                 </div>
                 <div class="user-input">
                   <label for="cpfMA">CPF-Medisave Account</label>
-                  <input type="number" id='cpfMA' v-model='cpfMA'>
+                  <input type="number" id='cpfMA' min="0" v-model='cpfMA'>
                 </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click="next(investmentReturn <= 0, 'Investment return can\'t be negative and must be more than 0')">Next</button>
               </div>
             </div>
 
@@ -229,7 +307,11 @@
                 </div>
 
                 <div class="user-input" v-show='haveFlat === "yes" '>
-                  <label for="mortagePayable">Total Amount Payable</label>
+                  <label for="mortagePayable">Total Amount Payable
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                         What was the total loan amount you got when u first purchase the flat
+                       </span></div>
+                  </label>
                   <input type="number" id='mortagePayable' v-model='mortagePayable'>
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes"'>
@@ -240,7 +322,7 @@
                   </select>
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes" ' >
-                  <label for="totalMortagePayment">Total amount payable</label>
+                  <label for="totalMortagePayment">Remaining mortage amount payable</label>
                   <input type="number" id="totalMortagePayment" v-model="totalMortagePaymentAmount">
                 </div>
                 <div class="user-input" v-show='haveFlat === "yes"'>
@@ -264,7 +346,11 @@
                   </select>
                 </div>
                 <div class="user-input" v-show='haveFlat === "no" && planFlat === "yes"'>
-                  <label for="ageGettingFlat">Estimated age to get Flat</label>
+                  <label for="ageGettingFlat">Estimated age to get Flat
+                    <div class="tooltip">(?)<span class='tooltiptext'>
+                          If you are planning to get BTO flat, please enter the age you foresee yourself apply for the BTO application
+                       </span></div>
+                  </label>
                   <input type="number" id='ageGettingFlat' v-model="ageGettingFlat">
                 </div>
                 <div class="user-input" v-show='haveFlat === "no" && planFlat === "yes"' >
@@ -277,6 +363,10 @@
                   <label for="estimatedPrice">Est. price of flat</label>
                   <input type="number" v-model="typeOfFlat.price">
                 </div>
+              </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click='next(true)'>Next</button>
               </div>
             </div>
 
@@ -291,11 +381,11 @@
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesAmount">Total amount Payable</label>
-                      <input type="number" id='liabilitiesAmount' v-model="liabilities[i].amountPayable">
+                      <input type="number" id='liabilitiesAmount' min="0" v-model="liabilities[i].totalAmount">
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesInterestRate">Interest Rate</label>
-                      <input type="number" id='liabilitiesInterestRate' v-model="liabilities[i].interestRate">
+                      <input type="number" id='liabilitiesInterestRate' min="0" v-model="liabilities[i].interestRate">
                     </div>
                     <div class="top-bottom">
                       <label for="liabilitiesPaymentFreq">Payment Frequency</label>
@@ -306,7 +396,7 @@
                     </div>
                     <div class="top-bottom">
                       <label for="periodicPaymentAmount">Periodic Payment Amount</label>
-                      <input type="number" id='periodicPaymentAmount' v-model='liabilities[i].periodicPaymentAmount'>
+                      <input type="number" id='periodicPaymentAmount' min="0" v-model='liabilities[i].periodicPaymentAmount'>
                     </div>
                   <div class="top-bottom">
                       <button v-on:click="addLiability" v-show="i == liabilities.length-1">Add new</button>
@@ -315,9 +405,18 @@
                   </div>
                 </div>
               </div>
+              <div class='btn'>
+                <button  v-on:click='back'>Back</button>
+                <button  v-on:click='next(false)'>Next</button>
+              </div>
             </div>
+
             <div v-if="slide === 8">
-              <h3 class="header-font">Milestone Goal</h3>
+              <h3 class="header-font">Milestone Goal 
+                <div class="tooltip">(?)<span class='tooltiptext'>
+                          This section is a chance for you to account for all the wants you want in life, or big milestone that you have. 
+                          For example, annual travel starting 5 years from now, cost of wedding or flat renovation cost etc. 
+                       </span></div></h3>
               <div class="sub-section">
                 <div class='container' v-for="(milestone,i) in milestones" v-bind:key="i">
                   <h5>Milestone {{i+1}}</h5>
@@ -332,7 +431,7 @@
                     </div>
                     <div class="top-bottom">
                       <label for='milestone-inflation'>Inflation</label>
-                      <input id='milestone-inflation' type='number' v-model="milestones[i].inflation">
+                      <input id='milestone-inflation'  type='number' v-model="milestones[i].inflation">
                     </div>
                     <div class="top-bottom">
                       <label for='milestone-amount-needed'>Amount needed</label>
@@ -355,8 +454,13 @@
                       <button v-on:click="addMilestone" v-show="i == milestones.length-1">Add new</button>
                       <button v-show="milestones.length > 1" v-on:click="removeMilestone(i)"> Remove</button>
                     </div>
+
                 </div>
 
+                </div>
+                <div class='btn' style="width:100%">
+                  <button  v-on:click='back'>Back</button>
+                  <button  v-on:click='plan'>Plan</button>
                 </div>
               </div>
             </div>
@@ -365,74 +469,73 @@
             
           </div>
         </div>
-        <div class='btn'>
+        <!-- <div class='btn'>
           <button v-show='slide !== 0' v-on:click='back'>Back</button>
           <button v-show='slide !== 8' v-on:click='next'>Next</button>
           <button v-show='slide === 8' v-on:click='plan'>Plan</button>
-        </div>
+        </div> -->
       </div>
 
-      <div class="others">
-        <h1 class="header-font">You might be interested in</h1>
-        <div class="calculators" >
-          <div class="calculator" v-for='(cal,i) in calculators' v-bind:key="i">
-            <p>{{cal}}</p>
-          </div>
-        </div>
+
+      <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
+      <div class ="budCon2">
+            <br>
+            <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
+            <button class ="navBut">Find out how long can your investment last you for</button>
+            <button class ="navBut">Calculate your investment Growth</button>
       </div>
 
-      <report :dataset="dataset"></report>
-  
   </div>
 </template>
 
 <script>
-import Report from './Report.vue';
+import firebase from "../../../../firebase";
+
 export default {
-  components: { Report },
   name: 'FinancialPathway',
   data: function(){
     return{
-      slide:8,
+      slide:0,
+      onEdit:false,
+      db:firebase.firestore(),
       //slide 0
-      retirementAge:50,
+      retirementAge:0,
       currentAge:23,
-      retirementIncome:3000,
-      expectedInflation:2,
+      retirementIncome:0,
+      expectedInflation:0,
       //slide 1
-      minEmergencyFundMultiple:8,
+      minEmergencyFundMultiple:0,
       minEmergencyFundType:'expense',
       // maxEmergencyFundMultiple:9,
       // maxEmergencyFundType:'income',
-      excessUse:80,
+      excessUse:100,
       //slide 2
       incomes:[
-        {income:3000,
-         incomeGrowthRate:0.2,
-         jobSwitchFreq:5,
-         incomeGrowthRateJobSwitch:5,
-         jobSwitchStop:50,
-         incomeGrowthStop:50,
+        {income:0,
+         incomeGrowthRate:0,
+         jobSwitchFreq:0,
+         incomeGrowthRateJobSwitch:0,
+         jobSwitchStop:0,
+         incomeGrowthStop:0,
         }
       ],
       //slide 3
-      expenses:1000,
-      expensesGrowth:2,
-      expensesRise:2,
+      expenses:0,
+      expensesGrowth:0,
+      expensesRise:0,
       //slide 4
       excludeChildren:'no',
       haveChildren:'no',
       childrenPlan:"yes",
       children:[],
       expectedChildren:[],
-      // expectedChildren:[],
       //slide 5
-      cashInBank:10000,
-      totalInvestment:5000,
-      investmentReturn:6,
-      cpfOA:10000,
-      cpfSA:6000,
-      cpfMA:60000,
+      cashInBank:0,
+      totalInvestment:0,
+      investmentReturn:0,
+      cpfOA:0,
+      cpfSA:0,
+      cpfMA:0,
 
       //Slide 6
       haveFlat:'no',
@@ -442,8 +545,8 @@ export default {
       monthlyMortagePayment:0,
       spouseMonthlyMortagePayment:0,
       mortageInterestRate:2.6,
-      planFlat:"yes",
-      ageGettingFlat:40,
+      planFlat:"no",
+      ageGettingFlat:0,
       // https://www.singsaver.com.sg/blog/costs-of-bto-flat-resale-flat-ec-and-condo-in-singapore
       flats:[{type:"BTO 2-room Flexi (NM)",price:162000},{type:'BTO 2-room Flexi (M)',price:277000},
       {type:'BTO 3-room (NM)',price:248000},{type:'BTO 3-room (M)',price:421000},
@@ -456,7 +559,7 @@ export default {
       {type:"2-room Condominiums",price:900000},{type:"3-room Condominiums",price:1200000},{type:"4-room Condominiums",price:1800000},
       {type:"5-room Condominiums",price:2200000},{type:"Penthouse Condominiums",price:3000000}
       ],
-      typeOfFlat:{type:'4-room Resale',price:550000},
+      typeOfFlat:{type:'BTO 4-room (NM)',price:381000},
       milestones:[
         {name:"",
          date:'',
@@ -465,20 +568,6 @@ export default {
          amount:0,
          freq:'yearly'
         }
-        // ,{
-        //  name:"Treat",
-        //  date:'2021-04-01',
-        //  endDate:'2100-01-01',
-        //  inflation:1,
-        //  amount:200,
-        //  freq:'monthly'
-        // }, {
-        //  name:"Flat Renovation",
-        //  date:'2034-01-01',
-        //  inflation:2,
-        //  amount: 30000,
-        //  freq:'once'
-        // }
       ],
       liabilities:[
         {name:'',
@@ -487,7 +576,8 @@ export default {
         totalAmount:0,
         periodicPaymentAmount:0}
       ],
-      calculators:["Find out you're ideal Budget", "Find out how long can your investment last you for","Calculate your investment Growth"],
+      // calculators:["Find out you're ideal Budget", "Find out how long can your investment last you for","Calculate your investment Growth"],
+      
       //information taken from online resources
       estimatedChildExpenses:{"pre-birth":13006,0:10514,1:10514,2:10514,3:6823,4:6823,5:6823,6:6823,
                               7:11423,8:11423,9:11423,10:11423,11:11423,12:11423,13:12566,14:12566,
@@ -521,8 +611,91 @@ export default {
     back:function(){
       this.slide--;
     },
-    next:function(){
-      this.slide++;
+    next:function(missing, msg = ''){
+      if(missing){
+        var m = msg ? msg : "Please fill up all the required fields before proceeding"
+        if(this.slide == 4){
+          this.childSlideValidity()
+        }else if(this.slide == 6){
+          this.flatSlideValidity()
+        }else{
+          alert(m)
+        }
+      }else{
+        this.slide++;
+      }
+    },
+    childSlideValidity(){
+      var m = ''
+      if((this.haveChildren == 'no' && this.childrenPlan == 'no') | this.excludeChildren == 'yes'){
+        this.slide++;
+      } else{
+        var invaild = false
+        if(this.childrenPlan == 'yes') {
+          for(let i = 0; i < this.expectedChildren.length; i++){
+            if(this.expectedChildren[i].estimatedAge < this.currentAge || this.expectedChildren[i].estimatedAge <= 0 ){
+              m += this.expectedChildren[i].estimatedAge < this.currentAge ? "Your current age already exceed the estimated age you will have kid!" : ''
+              m += !this.expectedChildren[i].estimatedAge <= 0 ? "Please enter a vaild age for your child" : ""
+              invaild = true
+            } 
+          }
+          if(this.expectedChildren.length == 0){
+            invaild = true
+            m = " Please tell us your estimated Age to have a child "
+          }
+        }
+        if(this.haveChildren == 'yes'){
+          for(let i = 0; i< this.children.length; i++){
+            if(this.children[i].age < 0 || this.children[i].age){
+              m += "  Invalid age for child " + i+1
+              invaild = true
+            }
+          }
+          if(this.children.length == 0){
+            invaild = true
+            m += " Please let us know your child age and gender"
+          }
+        }
+        if(!invaild){
+          this.slide++
+        }else{
+          alert(m)
+        }
+      }
+    },
+    flatSlideValidity(){
+      var m = ''
+      var invalid = false
+      if(this.haveFlat === 'yes'){
+        if(this.mortagePayable < this.totalMortagePaymentAmount ){
+          m += "Total mortage payment cant be greater than mortage payable"
+
+        }
+        if(this.spouseMonthlyMortagePayment < 0 ||  this.monthlyMortagePayment < 0){
+          m +=  "Monthly mortage payment can't be negative"
+          invalid = true
+        }
+        if(this.interestRate <= 0){
+          m += " Interest rate can't be less than or equal to 0 "
+          invalid = true
+        } 
+      }else if(this.haveFlat === 'no' && this. planFlat == 'yes'){
+        if(this.ageGettingFlat < this.currentAge){
+          m += "Your estimated age of getting a flat cant be younger than your own age"
+          invalid = true
+        }
+        if(this.typeOfFlat.price < 0){
+          m += "Your flat price can't be negative "
+          invalid = true
+        }
+      }
+
+      if(invalid){
+        alert(m)
+      }else{
+        this.slide++;
+      }
+
     },
     addChildren:function(type){
       if(type == 'currentChild') {
@@ -560,7 +733,7 @@ export default {
     addLiability:function(){
       this.liabilities.push({
         name:'',
-        amountPayable:0,
+        totalAmount:0,
         interestRate:0,
         paymentFreq:"monthly",
         periodicPaymentAmount:0
@@ -612,7 +785,6 @@ export default {
         
         //Accounting flat prices into consideration
         var flatDetails = this.deductCPFforFlat(this.typeOfFlat.price)
-        // var flatValue = flatDetails[1]
         var flatPayment = flatDetails[0]
   
         console.log("Flat Payment details",flatPayment)
@@ -682,7 +854,6 @@ export default {
         var retirementProject = this.projectedCashInBankAfterRetirement(finalExpenses,this.minEmergencyAmt,cpfLifePayout,this.projectedInvestment[1],this.projectedCashInBankBeforeRetirement,milestoneCost )
         this.projectedCashInBank = retirementProject[0]
         this.projectedInvestment[1] = retirementProject[1]
-
         console.log("CashInBank", this.projectedCashInBank)
         console.log("Investment Contribution",this.investmentContribution)
         console.log("InvestmentExpected", this.projectedInvestment[1])
@@ -692,6 +863,141 @@ export default {
         this.dataset['projectedInvestmentExpected'] = this.projectedInvestment[1]
         this.dataset['projectedExpenses'] = this.projectedExpenses
         this.dataset['currentAge'] = this.currentAge
+
+        // firebase.database.collection('user/user1/financialPathway').set({
+        //   'ProjectedCashInBank':this.projectedCashInBank
+        // },{merge:true})
+
+
+        console.log(this.milestones)
+        
+        this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
+          if(!snapshot.empty){
+            snapshot.docs.forEach(doc =>{
+              console.log(this.typeOfFlat,doc)
+              this.db.doc(`user/${firebase.auth().currentUser.uid}/financialPathway/${doc.id}`).update({
+                //User input value
+                "date": new Date().toDateString(),
+                "idealRetirementAge": this.retirementAge,
+                "currentAge": this.currentAge,
+                "idealRetirementIncome": this.retirementIncome,
+                "expectedInflation": this.expectedInflation,
+                "minEmergencyFundMultiple": this.minEmergencyFundMultiple,
+                "excessUseOfEmergencyFund": this.excessUse,
+                "currentIncome" :this.incomes,
+                "currentExpenses":this.expenses,
+                "expensesGrowth":this.expensesGrowth,
+                "expensesRise": this.expensesRise,
+                "excludeChildren": this.excludeChildren,
+                "haveChildren":this.haveChildren,
+                "childrenPlan": this.childrenPlan,
+                "children": this.children,
+                "expectedChildren": this.expectedChildren,
+                "cashInBank": this.cashInBank,
+                "totalInvestment": this.totalInvestment,
+                "investmentReturn": this.investmentReturn,
+                "cpfOA": this.cpfOA,
+                "cpfSA": this.cpfSA,
+                "cpfMA": this.cpfMA,
+                "haveFlat":this.haveFlat,
+                "mortagePayable":this.mortagePayable,
+                "mortagePaymentMethod": this.mortagePaymentMethod,
+                "totalMortagePaymentAmount": this.totalMortagePaymentAmount,
+                "monthlyMortagePayment":this.monthlyMortagePayment,
+                "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
+                "mortageInterestRate": this.mortageInterestRate,
+
+                "planFlat":this.planFlat,
+                "ageGettingFlat":this.ageGettingFlat,
+                "typeOfFlat": this.typeOfFlat,
+                "milestonesGoals":this.milestones,
+                "liabilities":this.liabilities,
+
+                //Calculated values
+                "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
+                "projectedIncome": this.projectedIncome,
+                "projectedExpenses": this.projectedExpenses,
+                "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+                'flatPayment': flatDetails[0],
+                "milestonesCost": milestoneDetails[1],
+                "minEmergencyFund": this.minEmergencyAmt,
+                "projectedCpfOA": cpf[0],
+                "projectedCpfSA": cpf[1],
+                "projectedCpfMA": cpf[2],
+                "investmentContribution":this.investmentContribution,
+                "projectedInvestmentExpected": this.projectedInvestment[1],
+                "cpfPayout": cpfLifePayout,
+                "projectedCashInBank":this.projectedCashInBank,
+                "cpfRetirementSum": this.cpfRetirement,
+                "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge)
+              })
+            })
+          } else{
+            this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).add({
+              //User input value
+              "date": new Date().toDateString(),
+              "idealRetirementAge": this.retirementAge,
+              "currentAge": this.currentAge,
+              "idealRetirementIncome": this.retirementIncome,
+              "expectedInflation": this.expectedInflation,
+              "minEmergencyFundMultiple": this.minEmergencyFundMultiple,
+              "excessUseOfEmergencyFund": this.excessUse,
+              "currentIncome" :this.incomes,
+              "currentExpenses":this.expenses,
+              "expensesGrowth":this.expensesGrowth,
+              "expensesRise": this.expensesRise,
+              "excludeChildren": this.excludeChildren,
+              "haveChildren":this.haveChildren,
+              "childrenPlan": this.childrenPlan,
+              "children": this.children ? this.children : [],
+              "expectedChildren": this.expectedChildren ? this.children : [],
+              "cashInBank": this.cashInBank,
+              "totalInvestment": this.totalInvestment,
+              "investmentReturn": this.investmentReturn,
+              "cpfOA": this.cpfOA,
+              "cpfSA": this.cpfSA,
+              "cpfMA": this.cpfMA,
+              "haveFlat":this.haveFlat,
+              "mortagePayable":this.mortagePayable,
+              "mortagePaymentMethod": this.mortagePaymentMethod,
+              "totalMortagePaymentAmount": this.totalMortagePaymentAmount,
+              "monthlyMortagePayment":this.monthlyMortagePayment,
+              "spouseMonthlyMortagePayment": this.spouseMonthlyMortagePayment,
+              "mortageInterestRate": this.mortageInterestRate,
+
+              "planFlat":this.planFlat,
+              "ageGettingFlat":this.ageGettingFlat,
+
+              "typeOfFlat": this.typeOfFlat,
+              "milestonesGoals":this.milestones,
+              "liabilities":this.liabilities,
+  
+              // Calculated values
+              "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
+              "projectedIncome": this.projectedIncome,
+              "projectedExpenses": this.projectedExpenses,
+              "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+              'flatPayment': flatDetails[0],
+              "milestonesCost": milestoneDetails[1],
+              "minEmergencyFund": this.minEmergencyAmt,
+              "projectedCpfOA": cpf[0],
+              "projectedCpfSA": cpf[1],
+              "projectedCpfMA": cpf[2],
+              "investmentContribution":this.investmentContribution,
+              "projectedInvestmentExpected": this.projectedInvestment[1],
+              "cpfPayout": cpfLifePayout,
+              "projectedCashInBank":this.projectedCashInBank,
+              "cpfRetirementSum": this.cpfRetirement,
+              "idealRetirementIncomeAt65": this.calcInflation(this.retirementIncome,this.expectedInflation/100,65-this.currentAge)
+              
+              })
+          }
+        }).then(()=>{
+          this.$router.push({path: `/report`})
+
+        })
+
+
 
 
     },
@@ -713,12 +1019,12 @@ export default {
               currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRateJobSwitch)/100)
             }else{ //if age beyond jobSwitchstop thn just add the annual income growth
               if (i <= this.incomes[0].incomeGrowthStop){ 
-                currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRate)/100)
+                currIncome = currIncome*(1 + parseFloat(this.incomes[0].incomeGrowthRate)/100)
               }
             }
           }else{ //if it is not jobswitch year and just normal year and below income growth, just add normal increment
               if (i <= this.incomes[0].incomeGrowthStop){ 
-                currIncome = currIncome*(1 + parseInt(this.incomes[0].incomeGrowthRate)/100)
+                currIncome = currIncome*(1 + parseFloat(this.incomes[0].incomeGrowthRate)/100)
               }
             }
         }
@@ -736,14 +1042,18 @@ export default {
       return [totalIncome, afterCPF ]         
     },
     projectExpense:function(){
-      var currExpenses = this.expenses
+      var currExpenses = parseInt(this.expenses)
       var totalExpenses =[currExpenses*12]
+      var expInflation = parseInt(this.expectedInflation)
+      var expGrowth = parseInt(this.expensesGrowth)
+      console.log("EXP INFLAT",expInflation)
+      console.log("EXP Growth",expGrowth)
       for(let i = this.currentAge; i < this.retirementAge; i++) {
         var yr = i-this.currentAge+1
-        var growth = currExpenses * ((this.expectedInflation + this.expensesGrowth)/100)
+        var growth = currExpenses * ((expInflation + expGrowth)/100)
         if( (yr !== 0) && ((yr % this.incomes[0].jobSwitchFreq) === 0) ){ 
-          if(i <= this.incomes[0].jobSwitchStop && (this.incomes[0].incomeGrowthRateJobSwitch > this.expectedInflation)){
-            currExpenses = currExpenses*(1 + this.expensesRise/100)
+          if(i <= this.incomes[0].jobSwitchStop && (this.incomes[0].incomeGrowthRateJobSwitch > expInflation)){
+            currExpenses = currExpenses*(1 + parseInt(this.expensesRise)/100)
           }
         }
         currExpenses += growth
@@ -752,7 +1062,7 @@ export default {
 
       var exp = totalExpenses[totalExpenses.length-1]
       for(let i = this.retirementAge; i < 100; i++){
-        exp *=(1+(this.expectedInflation/100))
+        exp *=(1+(expInflation/100))
         totalExpenses.push(exp)
       }
 
@@ -868,7 +1178,10 @@ export default {
       }
       return finalCost
     },
-    projectEmergencyAmt:function(values,multiple){
+    projectEmergencyAmt:function(values ,multiple){
+      multiple = parseInt(multiple)
+      console.log("Value is ",values)
+      console.log("Multiple is ",multiple)
       var maxVal = []
       for(let i = 0; i<values.length;i++){
         maxVal.push((values[i]/12) * multiple)
@@ -876,12 +1189,15 @@ export default {
       return maxVal
     },
     projectCashInBankBeforeRetirement:function(incomes,expenses){
-      var cash = [parseInt(this.cashInBank)]
-      var curr = parseInt(this.cashInBank)
+      console.log("CALCULATING CASH BEFORE RETIREMENNTTTTTT \n\n")
+      var cash = [parseFloat(this.cashInBank)]
+      var curr = parseFloat(this.cashInBank)
       for(let i = 0; i < incomes.length; i++){
         var newBal = 0
         var investmentAmt = 0
-        newBal = curr + (incomes[i] -expenses[i])
+        newBal = curr + (incomes[i] - expenses[i])
+        console.log("Current Age: "+ i+this.currentAge,"Before Bal: "+curr,"After Bal: "+newBal  ," Income: " + incomes[i]," Expenses: " +expenses[i], "Diff: "+ (incomes[i] - expenses[i]) )
+
         // var liability = i <= liabilities.length ? liabilities[i] : 0
         // if(flatDetails.length > 0){
         //   var flatPayment = 0
@@ -900,6 +1216,9 @@ export default {
 
         if(newBal <= this.minEmergencyAmt[i+1]){
           console.log("WARNING LOW EMERGENCY FUND",i)
+          var withdrawlFromInvestment = newBal - this.minEmergencyAmt[i+1]  
+          newBal = this.minEmergencyAmt[i+1]
+          this.investmentContribution.push(withdrawlFromInvestment)
         } else{
           var extra = newBal- this.minEmergencyAmt[i+1]
           investmentAmt = extra *this.excessUse/100 //excessUse will be 100 if user choose to put all funds in investment.
@@ -944,11 +1263,11 @@ export default {
             }
             projectedLiabilities.push([ l[i].name , amtpayable, amtPaid])
           }
+          return [projectedLiabilities, totalLiabilitiesPayable]
         } else{
           return []
         }
       
-      return [projectedLiabilities, totalLiabilitiesPayable]
 
     },
     calculateMilestoneCost:function(milestone){
@@ -1000,8 +1319,8 @@ export default {
     return [cost, totalCosts]
     },
     projectInvestment:function(investmentContribution, milestoneCost){
-      var conservative = this.investmentReturn - 2
-      var optimistic = this.investmentReturn + 2
+      var conservative = parseInt(this.investmentReturn) - 2
+      var optimistic = parseInt(this.investmentReturn) + 2
       var inv = parseInt(this.totalInvestment)
       var investmentPortfolioExpected = [inv]
       var investmentPortfolioConservative= [inv]
@@ -1082,7 +1401,7 @@ export default {
       var salist = [parseInt(this.cpfSA)]
       var malist = [parseInt(this.cpfMA)]
       var currAge = this.currentAge
-      for(let i = 0; i<incomes.length; i++){
+      for(let i = 0; i< 55 -this.currentAge; i++){
         var oa = oalist[i] * 1.025
         var sa = salist[i] * 1.04
         var ma = malist[i] * 1.04
@@ -1090,43 +1409,36 @@ export default {
           if(this.haveFlat === 'yes' || this.planFlat === 'yes'){
             oa -= i <= flatDetails.length ? flatDetails[i] : 0
           } 
-          // else{
-          //   if(this.planFlat === 'yes'){
-          //     var yr = i - (this.ageGettingFlat - this.currentAge) 
-          //     if(yr >= 0){
-          //       oa -= (yr) <= flatDetails.length ? flatDetails[yr] : 0
-          //     }
-          //   }
-          // }
         }
+        var inc = i < incomes.length ? incomes[i] : 0
         if(currAge <=35){
-          oa = oa + (incomes[i] * 0.23)
-          sa = sa + (incomes[i] * 0.06)
-          ma = ma + (incomes[i] * 0.08)
+          oa = oa + (inc * 0.23)
+          sa = sa + (inc * 0.06)
+          ma = ma + (inc * 0.08)
         } else if(currAge >35 && currAge<= 45) {
-          oa = oa + (incomes[i] * 0.21)
-          sa = sa + (incomes[i] * 0.07)
-          ma = ma + (incomes[i] * 0.09)
+          oa = oa + (inc * 0.21)
+          sa = sa + (inc * 0.07)
+          ma = ma + (inc * 0.09)
         } else if(currAge >45 && currAge<= 50) {
-          oa = oa + (incomes[i] * 0.19)
-          sa = sa + (incomes[i] * 0.08)
-          ma = ma + (incomes[i] * 0.1)
+          oa = oa + (inc * 0.19)
+          sa = sa + (inc * 0.08)
+          ma = ma + (inc * 0.1)
         } else if(currAge >50 && currAge<= 55) {
-          oa = oa + (incomes[i] * 0.15)
-          sa = sa + (incomes[i] * 0.115)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.15)
+          sa = sa + (inc * 0.115)
+          ma = ma + (inc * 0.105)
         } else if(currAge >55 && currAge<= 60) {
-          oa = oa + (incomes[i] * 0.12)
-          sa = sa + (incomes[i] * 0.035)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.12)
+          sa = sa + (inc * 0.035)
+          ma = ma + (inc * 0.105)
         } else if(currAge >60 && currAge<= 65) {
-          oa = oa + (incomes[i] * 0.035)
-          sa = sa + (incomes[i] * 0.025)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.035)
+          sa = sa + (inc * 0.025)
+          ma = ma + (inc * 0.105)
         }else {
-          oa = oa + (incomes[i] * 0.01)
-          sa = sa + (incomes[i] * 0.01)
-          ma = ma + (incomes[i] * 0.105)
+          oa = oa + (inc * 0.01)
+          sa = sa + (inc * 0.01)
+          ma = ma + (inc * 0.105)
         }
         oalist.push(Math.round(oa))
         salist.push(Math.round(sa))
@@ -1173,17 +1485,24 @@ export default {
     calculateCpfPayout:function(){
             var yearsTo55 = 55 - this.currentAge
             var cpfAmtAt55 = this.projectedCpfOA[yearsTo55-1] + this.projectedCpfSA[yearsTo55-1]
+            console.log("CPF AT 55", cpfAmtAt55)
+            console.log("Retirement sum", this.cpfRetirement[1])
             if(cpfAmtAt55 > this.cpfRetirement[1].ers){
+                console.log("GETTING ERS")
                 return this.cpfRetirement[0].ersCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].frs){
+                console.log("GETTING FRS")
                 return this.cpfRetirement[0].frsCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].brs){
+                console.log("GETTING BRS")
                 return this.cpfRetirement[0].brsCpfPayout
             }else{
                 return 0
             }
     },
     projectedCashInBankAfterRetirement:function(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost){
+      console.log("PROJECTING CASH IN BANK AFTER RETIREMENT")
+      console.log(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost)
       var currCashInBank = cashInBank
       var retirementAge = this.retirementAge
       var inv = investment[investment.length-1]
@@ -1210,12 +1529,68 @@ export default {
         }
         
         currCashInBank.push(currCash)
-        inv *=1.02
+        inv *=1.05
         investmentWithAfterRetirement.push(inv)
       }
       return [currCashInBank, investmentWithAfterRetirement] 
+    },
+    fetchData:function(){
+      
+      if(this.onEdit){
+        console.log("logged In user")
+        this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
+          if(!snapshot.empty){
+            snapshot.docs.forEach(doc =>{
+              var data = doc.data()
+                this.retirementAge = data['idealRetirementAge']
+                this.currentAge = data["currentAge"]
+                this.retirementIncome = data["idealRetirementIncome"]
+                this.expectedInflation = data["expectedInflation"]
+                this.minEmergencyFundMultiple = data["minEmergencyFundMultiple"]
+                this.excessUse = data['excessUseOfEmergencyFund']
+                
+                this.incomes = data["currentIncome"] 
+                this.expenses = data["currentExpenses"]
+                this.expensesGrowth = data["expensesGrowth"]
+                this.expensesRise = data["expensesRise"] 
+                this.excludeChildren = data["excludeChildren"] 
+                this.haveChildren = data["haveChildren"]
+                this.childrenPlan = data["childrenPlan"] 
+                this.children = data["children"] 
+                this.expectedChildren = data["expectedChildren"] 
+                this.cashInBank = data["cashInBank"] 
+                this.totalInvestment = data["totalInvestment"] 
+                this.investmentReturn = data["investmentReturn"] 
+                this.cpfOA = data["cpfOA"] 
+                this.cpfSA = data["cpfSA"] 
+                this.cpfMA = data["cpfMA"] 
+                this.haveFlat = data["haveFlat"]
+                this.mortagePayable = data["mortagePayable"]
+                this.mortagePaymentMethod = data["mortagePaymentMethod"] 
+                this.totalMortagePaymentAmount = data["totalMortagePaymentAmount"] 
+                this.monthlyMortagePayment = data["monthlyMortagePayment"]
+                this.spouseMonthlyMortagePayment = data["spouseMonthlyMortagePayment"] 
+                this.mortageInterestRate = data["mortageInterestRate"] 
+                this.planFlat = data["planFlat"]
+                this.ageGettingFlat = data["ageGettingFlat"]
+                this.typeOfFlat = data["typeOfFlat"] 
+                this.milestones = data["milestonesGoals"]
+                this.liabilites = data["liabilities"]
+              })
+          }
+          }
+        
+        )
+
+      }
     }
   },
+  created(){
+    if(this.$route.query.edit){
+      this.onEdit = this.$route.query.edit
+      this.fetchData()
+    }
+  }
   
 }
 </script>
@@ -1226,7 +1601,7 @@ export default {
   text-align: center;
   color: #0E4070;
   background: #A9D6FF;
-  height: 100vh;
+  /* height: 100vh; */
 }
 .header{
   padding-top:2%;
@@ -1244,11 +1619,11 @@ export default {
 
 .second{
   background: #B9DEFF;
-  /* height: 20vh; */
   padding:5%;
 }
 .form{
   background: #A9D6FF;
+  padding:2%;
 }
 
 input, select{
@@ -1260,12 +1635,12 @@ input, select{
 }
 
 .sub-section{
-  margin-left:2%;
+  /* padding-left:2%; */
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-content: space-around;
-  margin-top:2%;
+  /* padding-top:2%; */
 }
 
 
@@ -1313,6 +1688,7 @@ input, select{
 }
 .container{
   width: 100%;
+  margin-top:2%;
 }
 .milestone h5{
   text-decoration: underline 1px solid #0E4070;
@@ -1364,6 +1740,57 @@ input, select{
 
 .calculator p{
   padding:5%;
+}
+
+
+.budCon2{
+    display: flex;
+    justify-content: center;
+    min-height: 100px;
+    margin-bottom: 2%;
+}
+
+.navBut{
+    background-color: #fff;
+    text-align: center;
+    padding:2%;
+    width:20%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 12px;
+    color: #0E4070;
+}
+
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: x-small;
+  line-height: 120%;
+  width:50%;
+  min-width:250px;
+  background-color: rgb(255, 255, 255);
+  color: rgba(8, 35, 61, 0.685);
+  text-align: center;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 </style>
