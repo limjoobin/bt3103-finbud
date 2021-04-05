@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h2>What others say about us</h2>
+    <h2 style="text-align:center;padding-top:2%">What others say about us</h2>
     <div id="temp"></div>
 </div>
 </template>
@@ -13,13 +13,13 @@ export default {
 
 <style scoped>
 h1 {
-    padding-top:40px ;
     font-family: Lustria;
 }
 div {
     background-color: #A9D6FF;
+    height: 350px;
 }
 #temp {
-    height:200px;
+    height:50%;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
 <div id="welcome">
-    <img alt="Vue logo" src="../../../assets/logo.png" height="70px">
-    <h1>Welcome to FinBud!</h1>
-    <h3>The only personal finance buddy you need</h3>
+    <h1><img alt="Vue logo" src="../../../assets/logo.png" height="90px"></h1>
+    <h1>Welcome to FinBud!<br>
+    The only personal finance buddy you need</h1>
     <div class="flex-container">
         <div class="one">
-        <img class="cropped" src="../../../assets/mainpic.jpg" height="360px">
+        <img class="cropped" src="../../../assets/mainpic.jpg">
         </div>
 
         <div class="two">
@@ -41,19 +41,34 @@ h3,h1 {
 
 .flex-container {
     display: flex;
-    height: 400px;
+    padding: 3%;
+    width: 100%;
+    height: 440px;
+    margin: auto;    
 }
 
+.cropped {
+    width:90%;
+    min-width: 80%;
+    height: 95%;
+    min-height: 80%;
+
+} 
 .one {
-    width:70%;
-    float: left;
+    padding-left: 8%;
+    height: 100%;
+    min-height: 100%;
+} 
 
-}  
-
-.flex-child:first-child {
-    margin-right: 10px;
-
+.two {
+    padding-left: 3%;
+    padding: auto;
+    width:30%;
+    min-width: 30%;
+    height: 90%;
+    min-height: 80%;
 }
+
 
 #welcome {
     background-color: #A9D6FF;

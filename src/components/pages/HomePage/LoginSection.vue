@@ -1,23 +1,16 @@
 <template>
   <div>
-    <div class="login" id="login_div">
-      <img alt="Vue logo" src="../../../assets/logo.png" height="40px" />
-      <p>FinBud</p>
-      <form>
+    <div class="login">
+      <img alt="Vue logo" src="../../../assets/logo.png" class="center"/>
+      <h2 style="text-align:center;background-color:whitesmoke">FinBud</h2>
+      <form style="text-align:center;background-color:whitesmoke">
         <input type="text" placeholder="Username" v-model="email_field" />
         <input type="password" placeholder="Password" v-model="password" />
       </form>
       <br />
-      <button id="button1" v-on:click="login()">Login</button>
+      <button v-on:click="login()">Login</button>
       <br /><br />
-      <button id="button2">
-        <router-link to="/signup">Get Started</router-link>
-      </button>
-    </div>
-    <div id="user_div" style="display: none">
-      <h3>Welcome User</h3>
-      <p>Welcome user, you are currently logged in</p>
-      <button v-on:click="logout()">Log out</button>
+      <button @click="$router.push('/signup')">Get Started</button>
     </div>
   </div>
 </template>
@@ -47,17 +40,7 @@ export default {
                 var errorMessage = error.message;
                 alert(errorCode + ":" + errorMessage);
               });
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          // User is signed in.
-          document.getElementById("user_div").style.display = "block";
-          document.getElementById("login_div").style.display = "none";
-        } else {
-          // No user is signed in.
-          document.getElementById("user_div").style.display = "none";
-          document.getElementById("login_div").style.display = "block";
-        }
-      });
+              
     },
     logout: function () {
       firebase
@@ -79,24 +62,35 @@ export default {
 
 <style scoped>
 .login {
+  background-color:whitesmoke;
+  border-radius: 30px;
+  padding: 40px;
+  width: 60%;
+  height: 100%;
+}
+
+.center {
   background-color: white;
-  border-radius: 25px;
-  padding: 30px;
-  width: 200px;
-  height: 320px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  height: 20%;
 }
 
 input {
-  padding: 12px 20px;
-  margin: 8px 0;
+  width: 75%;
+  padding: 3% 3%;
+  margin: 3% 0;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
-#button1 {
-  width: 160px;
-  height: 40px;
+button {
+  margin-left: 25%;
+  width: 50%;
+  height: 20%;
   border-radius: 10px;
   border: 10px solid #a9b6ff;
   background-color: #a9b6ff;
@@ -105,14 +99,10 @@ input {
   text-align: center;
 }
 
-#button2 {
-  width: 160px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #a9bdff;
-  background-color: white;
-  color: #a9b6ff;
-  font-size: 15px;
-  text-align: center;
+
+button:hover {
+  background-color: lightskyblue;
+  color: white;
+  border-color:lightskyblue;
 }
 </style>
