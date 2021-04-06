@@ -86,6 +86,7 @@ export default {
       }
       if (validCred) {
         //Creates User
+        console.log("user created");
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
@@ -106,10 +107,10 @@ export default {
 
     },
     updateFirestore:function(uid) {
-      firebase.firestore().collection('user').doc(uid).set({
+      firebase.firestore().collection('user').doc(uid).update({
                 username: this.name,
                 email: this.email,
-              });
+              }).catch((error)=> {console.log(error.code+":"+error.message)});
       console.log(uid, this.name,this.email);
             
 
