@@ -477,7 +477,7 @@
       </div>
 
 
-      <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
+      <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070; margin-bottom:2%;">You might be interested in...</p>
       <div class ="budCon2">
             <br>
             <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
