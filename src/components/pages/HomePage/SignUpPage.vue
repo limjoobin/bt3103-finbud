@@ -122,7 +122,7 @@ export default {
 <style scoped>
 #main {
   background-color: #a9d6ff;
-  height: 600px;
+  height: 85vh;
 }
 .register {
   background-color: #a9d6ff;
