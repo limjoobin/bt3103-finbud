@@ -12,8 +12,7 @@
             type="text"
             id="name"
             placeholder="Enter Fullname"
-            v-model="name"
-          />
+            v-model="name"/>
         </div>
         <div>
           <label for="email">Email:</label>
@@ -21,8 +20,7 @@
             type="text"
             id="email"
             placeholder="Enter Email"
-            v-model="email"
-          />
+            v-model="email"/>
         </div>
         <div>
           <label for="password">Password:</label>
@@ -30,8 +28,7 @@
             type="password"
             id="password"
             placeholder="Enter Password"
-            v-model="password"
-          />
+            v-model="password"/>
         </div>
         <div>
           <label for="password-again">Password Again:</label>
@@ -39,8 +36,7 @@
             type="password"
             id="password-again"
             placeholder="Re-enter Password"
-            v-model="passwordcheck"
-          />
+            v-model="passwordcheck"/>
         </div>
         <br />
         <div>
