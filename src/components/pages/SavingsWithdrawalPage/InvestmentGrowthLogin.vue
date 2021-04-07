@@ -54,7 +54,8 @@
                         <label for="radio4">Weekly</label>
                     </th>
                     <td>
-                        <p style = "margin: 0px; font-size: 10px;">Login or Signup now to save your progress!</p>
+                        <!-- <p style = "margin: 0px; font-size: 10px;">Login or Signup now to save your progress!</p> -->
+                        <button style ="font-size: 20px; border-radius: 8px;" v-on:click="saveDashboard()">Save to Dashboard</button>
                     </td>
                 </tr>
             </table>
@@ -77,6 +78,8 @@
 <script>
 import IGChart from '../../charts/IGChart'
 import HeaderIG from './HeaderIG.vue'
+import firebase from '../../../../firebase.js'
+var database = firebase.firestore();
 
 export default {
     name: 'InvestmentGrowth',
@@ -92,9 +95,55 @@ export default {
             value2: 0,
             value3: 0,
             data: [100,200,300,400,500,600,700,800,900,1000],
+            uid: '',
+            all_invest_data: [],
+            users: [],
+            documents: [],
+            myDoc: '',
         }
     },
     methods: {
+        saveDashboard: function() {
+            /*
+            database.collection('user').doc('uxSscdEuyHHxuVMOHqRj').collection('investmentgrowth').get().then((querySnapShot) => {
+                let item = {}
+                this.all_invest_data = []
+                querySnapShot.forEach(doc=>{
+                    item=doc.data()
+                    item.show=false
+                    item.id=doc.id
+                    this.all_invest_data.push(item)
+                    this.documents.push(item.id)
+                })
+            });
+            */
+            for (let i = 0; i < this.documents.length; i++) {
+                this.users.push(this.all_invest_data[i].dashboard_info.user);
+                if (this.all_invest_data[i].dashboard_info.user == this.uid) {
+                    this.myDoc = this.documents[i];
+                }
+            }
+            if (this.users.includes(this.uid)) {
+                database.collection('user').doc('uxSscdEuyHHxuVMOHqRj').collection('investmentgrowth').doc(this.myDoc).update({
+                    dashboard_info: {
+                        'user': this.uid,
+                        'input_data': [this.startingBalance, this.Arr, this.Duration, this.Pa],
+                        'invest_growth_data': this.data,
+                        'timestamp': firebase.firestore.FieldValue.serverTimestamp()
+                    }
+                }).then(() => {location.reload()});
+            } else {
+                alert('hi')
+                database.collection('user').doc('uxSscdEuyHHxuVMOHqRj').collection('investmentgrowth').add({
+                    dashboard_info: {
+                        'user': this.uid,
+                        'input_data': [this.startingBalance, this.Arr, this.Duration, this.Pa],
+                        'invest_growth_data': this.data,
+                        'timestamp': firebase.firestore.FieldValue.serverTimestamp()
+                    }
+                }).then(()=>{location.reload()});
+            }
+        },
         budgetCalulator: function() {
             this.$router.push('/budget_planning'); 
         },
@@ -289,8 +338,25 @@ export default {
     },
     components: {
         'igchart': IGChart,
-        'header1': HeaderIG,
+        header1: HeaderIG,
     },
+    created() {
+        var user = firebase.auth().currentUser;
+        if (user != null) {
+            this.uid = user.uid;
+        }
+        database.collection('user').doc('uxSscdEuyHHxuVMOHqRj').collection('investmentgrowth').get().then((querySnapShot) => {
+                let item = {}
+                this.all_invest_data = []
+                querySnapShot.forEach(doc=>{
+                    item=doc.data()
+                    item.show=false
+                    item.id=doc.id
+                    this.all_invest_data.push(item)
+                    this.documents.push(item.id)
+                })
+        });
+    }
 }
 </script>
 

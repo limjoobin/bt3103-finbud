@@ -40,7 +40,8 @@ export default[
     {
         path:'/savings_withdrawal', 
         name:'savings-withdrawal',
-        component: SavingsWithdrawal
+        component: SavingsWithdrawal,
+        meta: {requiresAuth: true}
     },
     {
         path:'/financial_pathway', 
