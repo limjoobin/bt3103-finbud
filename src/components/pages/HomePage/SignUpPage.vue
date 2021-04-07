@@ -12,8 +12,7 @@
             type="text"
             id="name"
             placeholder="Enter Fullname"
-            v-model="name"
-          />
+            v-model="name"/>
         </div>
         <div>
           <label for="email">Email:</label>
@@ -21,8 +20,7 @@
             type="text"
             id="email"
             placeholder="Enter Email"
-            v-model="email"
-          />
+            v-model="email"/>
         </div>
         <div>
           <label for="password">Password:</label>
@@ -30,8 +28,7 @@
             type="password"
             id="password"
             placeholder="Enter Password"
-            v-model="password"
-          />
+            v-model="password"/>
         </div>
         <div>
           <label for="password-again">Password Again:</label>
@@ -39,15 +36,15 @@
             type="password"
             id="password-again"
             placeholder="Re-enter Password"
-            v-model="passwordcheck"
-          />
+            v-model="passwordcheck"/>
         </div>
         <br />
         <div>
-          <label></label>
-          <button type="submit" id="signUp" v-on:click="register()">
-            Sign up
-          </button>
+          <div class='signUpBtn' v-on:click='register'>Sign up</div>
+          <!-- <button v-on:click="register">sign up</button> -->
+          <!-- <button id="signUp" v-on:click="register()">
+            Sign up NOW
+          </button> -->
         </div>
       </form>
     </div>
@@ -56,25 +53,37 @@
 
 <script>
 import firebase from "../../../../firebase.js";
+
 export default {
-  data() {
+  data:function() {
     return {
-      name: "",
-      email: "",
-      password: "",
-      passwordcheck: "",
+      name: "darren",
+      email: "darren1@gmail.com",
+      password: "123456",
+      passwordcheck: "123456",
     };
   },
   methods: {
     register:function() {
-      console.log(this.email + ":" + this.password);
+      console.log(this.email + ":" + this.password)
+      console.log("user created")
+      // firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(function(userCred) {console.log(userCred.user.uid);
+      //                                                                                                 // var uid = firebase.auth().currentUser.uid;
+      //                                                                                                 // this.updateFirestore(uid);
+      //                                                                                                 alert("Successful Sign up, please proceed to login");
+      //                                                                                               // this.$router.push({ name: "homepage" });
+      //                                                                                                 }).catch((error) => {
+      //                                                                                                 var errorCode = error.code;
+      //                                                                                                 var errorMessage = error.message;
+      //                                                                                                 alert(errorCode + ":" + errorMessage);
+      //                                                                                                 console.log(errorCode + ":" + errorMessage);
+      //                                                                                               });
       var validCred = true;
       if (
         (this.name == "",
         this.email == "",
         this.password == "",
-        this.passwordcheck == "")
-      ) {
+        this.passwordcheck == "")) {
         alert("Please Fill All Required Field");
         validCred = false;
       } else if (this.password != this.passwordcheck) {
@@ -87,30 +96,35 @@ export default {
       if (validCred) {
         //Creates User
         console.log("user created");
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then((userCred) => {
-            console.log(userCred.user.uid);
-            var uid = firebase.auth().currentUser.uid;
-            this.updateFirestore(uid);
-            alert("Successful Sign up, please proceed to login");
-        this.$router.push({ name: "homepage" });
-          }).catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorCode + ":" + errorMessage);
-          console.log(errorCode + ":" + errorMessage);
-        });
-        
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((userCred) => {console.log(userCred.user.uid);
+                                                                                                      var uid = userCred.user.uid;
+                                                                                                      // this.updateFirestore(uid);
+                                                                                                       firebase.firestore().doc(`user/${uid}`).set({
+                                                                                                                                      username: this.name,
+                                                                                                                                      email: this.email,
+                                                                                                                                    }).then(()=> 
+                                                                                                                                    this.$router.push({ name: "homepage" })
+                                                                                                                                    ).catch((error)=> {console.log(error.code+":"+error.message)});
+                                                                                                      // alert("Successful Sign up, please proceed to login");
+                                                                                                      
+                                                                                                      }).catch((error) => {
+                                                                                                      var errorCode = error.code;
+                                                                                                      var errorMessage = error.message;
+                                                                                                      alert(errorCode + ":" + errorMessage);
+                                                                                                      console.log(errorCode + ":" + errorMessage);
+                                                                                                    });
+                                                                                                  
       }
 
     },
     updateFirestore:function(uid) {
-      firebase.firestore().collection('user').doc(uid).update({
+      console.log("HIII")
+      firebase.firestore().collection(`user`).add({
                 username: this.name,
                 email: this.email,
-              }).catch((error)=> {console.log(error.code+":"+error.message)});
+              }).then(()=> 
+              this.$router.push({ name: "homepage" })
+              ).catch((error)=> {console.log(error.code+":"+error.message)});
       console.log(uid, this.name,this.email);
             
 
@@ -153,29 +167,24 @@ input[type="password"] {
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.07);
 }
-button {
-  width: 160px;
-  height: 40px;
+
+
+
+.signUpBtn {
+  float: right;
+  /* width: 160px; */
+  width:30%;
+  height: 20px;
+  padding:1%;
+  margin-right:5%;
   border-radius: 10px;
-  border: 10px solid #a9b6ff;
-  background-color: #a9b6ff;
+  background-color: #3d5afa;
   color: white;
   font-size: 15px;
   text-align: center;
 }
 
-#signUp {
-  width: 160px;
-  height: 40px;
-  border-radius: 10px;
-  border: 10px solid #a9b6ff;
-  background-color: #a9b6ff;
-  color: white;
-  font-size: 15px;
-  text-align: center;
-}
-
-#signUp:hover {
+.signUpBtn:hover {
   background-color: lightskyblue;
   color: white;
   border-color: lightskyblue;
