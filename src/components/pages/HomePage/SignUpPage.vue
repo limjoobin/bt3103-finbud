@@ -67,17 +67,6 @@ export default {
     register:function() {
       console.log(this.email + ":" + this.password)
       console.log("user created")
-      // firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(function(userCred) {console.log(userCred.user.uid);
-      //                                                                                                 // var uid = firebase.auth().currentUser.uid;
-      //                                                                                                 // this.updateFirestore(uid);
-      //                                                                                                 alert("Successful Sign up, please proceed to login");
-      //                                                                                               // this.$router.push({ name: "homepage" });
-      //                                                                                                 }).catch((error) => {
-      //                                                                                                 var errorCode = error.code;
-      //                                                                                                 var errorMessage = error.message;
-      //                                                                                                 alert(errorCode + ":" + errorMessage);
-      //                                                                                                 console.log(errorCode + ":" + errorMessage);
-      //                                                                                               });
       var validCred = true;
       if (
         (this.name == "",
