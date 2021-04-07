@@ -53,9 +53,9 @@ li {
 #button1{
     width:50%;
     height:15%;
-    border-radius: 5px;
+    border-radius: 25px 25px 25px 25px;
     border: 2% solid #a9b6ff;
-    background-color: #a9b6ff;
+    background-color: #1e40ff;
     color:white;
     font-size:20px;
     text-align:center;  

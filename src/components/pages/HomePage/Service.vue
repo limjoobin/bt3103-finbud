@@ -23,8 +23,8 @@
     <h1 style="background-color:white;text-align:center"> You might be interested in</h1>
     <div class ="budCon2">
             <button class ="navBut" @click="$router.push('/investment_growth')">Calculate Your Investment Growth</button>
-            <button class ="navBut">Find out how long can your investment last you for</button>
-            <button class ="navBut">Map out your pathway to Financial Freedom</button>
+            <button class ="navBut" @click="$router.push('/savings_withdrawal')">Find out how long can your investment last you for</button>
+            <button class ="navBut" @click="$router.push('/financial_pathway')">Map out your pathway to Financial Freedom</button>
     </div>
 
 </div>
@@ -47,7 +47,7 @@ export default {
 #service {
     height:25%;
     background-color: white;
-    width: 100%;
+    width: 100vw;
 }
 #boxes {
     background-color:white;
