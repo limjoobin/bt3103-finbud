@@ -1,7 +1,11 @@
 <template> 
   <div>
-    <h1>Savings Withdrawal Page</h1>
+    <savings-header></savings-header>
     <br><br><br><br>
+
+        <calculator v-on:chart-data='onChartData'></calculator>
+        <savings-chart v-bind:timestep="this.timesteps" v-bind:amount="this.amount"></savings-chart>
+        <br>
         <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
         <div class ="budCon2">
             <br><br>
@@ -14,11 +18,27 @@
 </template>
 
 <script>
-
+import Header from './Header.vue'
+import Calculator from './Calculator.vue'
+import SavingsWithdrawlChart from '../../charts/SavingsWithdrawlChart.vue'
 export default {
     name: 'SavingsWithdrawal',
+    components:{
+        'savings-header':Header,
+        'calculator':Calculator,
+        'savings-chart': SavingsWithdrawlChart
+    },
     data (){
-        return{}
+        return{
+            timesteps:0,
+            amount:[]
+        }
+    },
+    methods:{
+        onChartData:function(timesteps, amount){
+            this.timesteps = timesteps;
+            this.amount = amount;
+        }
     }
 
 }
@@ -46,5 +66,8 @@ export default {
     border-radius: 12px;
     color: #0E4070;
 }
+
+
+
 
 </style>
