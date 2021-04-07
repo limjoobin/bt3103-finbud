@@ -91,9 +91,9 @@ button {
   margin-left: 25%;
   width: 50%;
   height: 20%;
-  border-radius: 10px;
-  border: 10px solid #a9b6ff;
-  background-color: #a9b6ff;
+  border-radius: 25px;
+  padding:2%;
+  background-color: #1e40ff;
   color: white;
   font-size: 15px;
   text-align: center;
