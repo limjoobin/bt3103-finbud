@@ -46,6 +46,8 @@ export default {
     },
     created: function(){
         var user = firebase.auth().currentUser
+        console.log(user)
+        console.log(user ? true : false)
         if (user){
             // user is signed in
             this.user = user;

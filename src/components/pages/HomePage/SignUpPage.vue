@@ -2,53 +2,60 @@
   <div id="main">
     <h1><img alt="Vue logo" src="../../../assets/logo.png" height="70px" /></h1>
     <h1>Welcome to FinBud!</h1>
-    <h2>Is user log in ?: {{loginStatus}}</h2>
+    <h2 v-show="notLogin">You need to log in to access the {{page}} page!</h2>
     <h3 style="text-align:center;padding-bottom:1%">The only personal finance buddy you need</h3>
-    <div class="register">
+
+    <div   class="register">
       <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Create your FinBud account</h3>
       <form id="reg-form">
-        <div>
-          <label for="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter Fullname"
-            v-model="name"/>
+        <div v-show="showing === 'register' " >
+          <div>
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter Fullname"
+              v-model="name"/>
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input
+              type="text"
+              id="email"
+              placeholder="Enter Email"
+              v-model="email"/>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter Password"
+              v-model="password"/>
+          </div>
+          <div>
+            <label for="password-again">Password Again:</label>
+            <input
+              type="password"
+              id="password-again"
+              placeholder="Re-enter Password"
+              v-model="passwordcheck"/>
+          </div>
+
         </div>
-        <div>
-          <label for="email">Email:</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="Enter Email"
-            v-model="email"/>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter Password"
-            v-model="password"/>
-        </div>
-        <div>
-          <label for="password-again">Password Again:</label>
-          <input
-            type="password"
-            id="password-again"
-            placeholder="Re-enter Password"
-            v-model="passwordcheck"/>
+
+        <div v-show="showing === 'login' ">
+          <h1>login</h1>
         </div>
         <br />
         <div>
           <div class='signUpBtn' v-on:click='register'>Sign up</div>
-          <!-- <button v-on:click="register">sign up</button> -->
-          <!-- <button id="signUp" v-on:click="register()">
-            Sign up NOW
-          </button> -->
+          <div class='signUpBtn' v-on:click="toggle('login')">I have an account</div>
         </div>
       </form>
     </div>
+
+    
   </div>
 </template>
 
@@ -56,9 +63,10 @@
 import firebase from "../../../../firebase.js";
 
 export default {
-  props:['loginStatus'],
+  props:['notLogin','page'],
   data:function() {
     return {
+      showing:'register',
       name: "darren",
       email: "darren1@gmail.com",
       password: "123456",
@@ -66,6 +74,9 @@ export default {
     };
   },
   methods: {
+    toggle:function(page){
+      this.showing = page
+    },
     register:function() {
       console.log(this.email + ":" + this.password)
       console.log("user created")
