@@ -124,9 +124,10 @@ export default {
         this.database.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then((snapshot)=>{
             if(snapshot.empty){
                 console.log("Not done yet")
+            }else{
+                this.fetchData();
             }
         })
-        // this.fetchData();
     }
 }
 </script>
