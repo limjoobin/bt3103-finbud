@@ -1,7 +1,7 @@
 <template>
     <div style ="background-color: #B9DEFF;">
         <header1></header1>
-        <img class ="timer" v-bind:src="img">
+        <img class ="timer" v-bind:src="img" @click="$router.push('/')">
         <p class ="b1">{{content}}</p>
         <br><br>
         <div class ="budCon1">

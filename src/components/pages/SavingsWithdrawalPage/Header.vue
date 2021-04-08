@@ -1,6 +1,6 @@
 <template>
     <header>
-        <img src= '../../../assets/logo.png'>
+        <img src= '../../../assets/logo.png' @click="$router.push('/')">
         <h1>{{title}}</h1>
         <p>{{msg}}</p>
     </header>
