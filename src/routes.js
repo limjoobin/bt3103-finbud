@@ -85,6 +85,8 @@ export default[
         meta: {requiresAuth: true},
         props: 'true'
     },
+
+    //Duplicate?
     {
         path: '/investment_growth_login',
         name: 'InvestmentGrowthLogin',
