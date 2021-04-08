@@ -6,9 +6,9 @@
     <h3 style="text-align:center;padding-bottom:1%">The only personal finance buddy you need</h3>
 
     <div   class="register">
-      <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Create your FinBud account</h3>
       <form id="reg-form">
         <div v-show="showing === 'register' " >
+        <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Create your FinBud account</h3>
           <div>
             <label for="name">Name:</label>
             <input
@@ -45,12 +45,22 @@
         </div>
 
         <div v-show="showing === 'login' ">
-          <h1>login</h1>
+          <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Enter your FinBud account details</h3>
+            <div>
+              <label for='email-login'>Email address:</label>
+              <input id='email-login' type="text" placeholder="email" v-model="email" />
+            </div>
+            <div>
+              <label for='password-login'>Password:</label>
+              <input id='password-login' type="password" placeholder="Password" v-model="password" />
+            </div>
         </div>
         <br />
-        <div>
-          <div class='signUpBtn' v-on:click='register'>Sign up</div>
-          <div class='signUpBtn' v-on:click="toggle('login')">I have an account</div>
+        <div class='btns'>
+          <div class='alt' v-show="showing === 'register'"  v-on:click="toggle('login')">I have an account</div>
+          <div class='alt' v-show="showing === 'login'"  v-on:click="toggle('register')">I don't have an account</div>
+          <div  class='signUpBtn' v-show="showing === 'register'" v-on:click='register'>Sign up</div>
+          <div  class='signUpBtn' v-show="showing === 'login'" v-on:click='login'>Login</div>
         </div>
       </form>
     </div>
@@ -119,6 +129,20 @@ export default {
       }
 
     },
+    login:function(){
+      console.log("logged in clicked")
+      console.log(this.email, this.password)
+       firebase.auth()
+              .signInWithEmailAndPassword(this.email, this.password)
+              .then(()=>{
+                this.$router.push({path: 'home'})
+              })
+              .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + ":" + errorMessage);
+              });
+    },
     updateFirestore:function(uid) {
       console.log("HIII")
       firebase.firestore().collection(`user`).add({
@@ -170,11 +194,20 @@ input[type="password"] {
   background: rgba(0, 0, 0, 0.07);
 }
 
+.btns{
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+}
+
+.alt{
+  text-decoration: underline;
+  font-size: smaller;
+}
+
 
 
 .signUpBtn {
-  float: right;
-  /* width: 160px; */
   width:30%;
   height: 20px;
   padding:1%;
