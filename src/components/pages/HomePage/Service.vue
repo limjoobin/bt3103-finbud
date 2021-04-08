@@ -24,7 +24,7 @@
     <div class ="budCon2">
             <button class ="navBut" @click="$router.push('/investment_growth')">Calculate Your Investment Growth</button>
             <button class ="navBut" @click="$router.push('/savings_withdrawal')">Find out how long can your investment last you for</button>
-            <button class ="navBut" @click="$router.push('/financial_pathway')">Map out your pathway to Financial Freedom</button>
+            <button class ="navBut" @click="nav">Map out your pathway to Financial Freedom</button>
     </div>
 
 </div>
@@ -32,8 +32,16 @@
 </template>
 
 <script>
+import firebase from '../../../../firebase'
+
 export default {
-    
+    methods:{
+        nav:function(){
+            if(!firebase.auth().currentUser){
+                this.$router.push({name:'signup',params:{loginStatus:false,page:'Financial Pathway'}})
+            }
+        }
+    }
 }
 </script>
 
