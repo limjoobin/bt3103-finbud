@@ -14,6 +14,7 @@ import CommunityPost from './components/pages/CommunityPage/CommunityPost'
 import Posts from './components/pages/CommunityPage/Posts.vue'
 import Dashboard from './components/pages/DashboardPage/Dashboard.vue'
 
+import NotFound from './components/UI/NotFound'
 
 export default[
     {
@@ -90,4 +91,12 @@ export default[
         component: InvestmentGrowthLogin,
         meta: {requiresAuth: true}
     }
+    //Page does not exist. 
+    , {
+        path:'/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFound
+
+    }
+
 ]
