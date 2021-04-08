@@ -2,6 +2,7 @@
   <div id="main">
     <h1><img alt="Vue logo" src="../../../assets/logo.png" height="70px" /></h1>
     <h1>Welcome to FinBud!</h1>
+    <h2>Is user log in ?: {{loginStatus}}</h2>
     <h3 style="text-align:center;padding-bottom:1%">The only personal finance buddy you need</h3>
     <div class="register">
       <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Create your FinBud account</h3>
@@ -55,6 +56,7 @@
 import firebase from "../../../../firebase.js";
 
 export default {
+  props:['loginStatus'],
   data:function() {
     return {
       name: "darren",

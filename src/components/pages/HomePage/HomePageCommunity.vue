@@ -13,7 +13,7 @@
             <li>Learn to invest as a community</li>
         </ul>
 
-        <button id="button1" style="align:center">Join the community</button>
+        <button id="button1" style="align:center" @click="navigate">Join the community</button>
     </div>
     </div>
 
@@ -22,7 +22,16 @@
 </template>
 
 <script>
+import firebase from '../../../../firebase'
+
 export default {
+    methods:{
+        navigate:function(){
+            var login = firebase.auth().currentUser ? false : true
+            this.$emit("loginStatus", {query:{loginStatus:login}})
+            this.$router.push('/signup')
+        }
+    }
     
 }
 </script>
