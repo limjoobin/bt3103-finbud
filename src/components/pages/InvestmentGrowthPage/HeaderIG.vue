@@ -1,6 +1,6 @@
 <template>
     <header class="headerIG">
-        <img class ="bcHeaderIG" v-bind:src="imageURL">
+        <img class ="bcHeaderIG" v-bind:src="imageURL" @click="$router.push('/')">
         <h1>{{title}}</h1>
         <p class ="headerIGDesc">{{msg}}</p>
     </header>
