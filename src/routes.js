@@ -41,14 +41,13 @@ export default[
     {
         path:'/savings_withdrawal', 
         name:'savings-withdrawal',
-        component: SavingsWithdrawal,
-        meta: {requiresAuth: true}
+        component: SavingsWithdrawal
     },
     {
         path:'/financial_pathway', 
         name: 'financial-pathway',
-        component: FinancialPathway, meta: {requiresAuth: true},
-        // props: true
+        component: FinancialPathway,
+        meta: {requiresAuth: true},
     },
     {
         path:'/report', 
