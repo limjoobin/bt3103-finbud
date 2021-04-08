@@ -37,8 +37,11 @@ import firebase from '../../../../firebase'
 export default {
     methods:{
         nav:function(){
-            if(!firebase.auth().currentUser){
-                this.$router.push({name:'signup',params:{loginStatus:false,page:'Financial Pathway'}})
+            var notLogin = firebase.auth().currentUser ? false : true
+            if(notLogin){
+                this.$router.push({name:'signup', params:{ notLogin:  notLogin, page:'Financial Pathway'}})
+            } else{
+                this.$router.push('/financial_pathway')
             }
         }
     }
