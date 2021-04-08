@@ -1,8 +1,7 @@
 <template>
     <div class='report'>
         <div class='profile-details'>
-            <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>
-               
+            <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>       
         </div>
         <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
         <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
@@ -47,7 +46,6 @@ export default {
             if(!snapshot.empty){
                 snapshot.docs.forEach(doc =>{
                         var data = doc.data()
-                        console.log("HIIIII")
                         console.log(data)
                         var milestones = this.getDataPointsForMilestone(data.milestonesGoals, data.date ,data.currentAge)
                         this.assetGrowthData['currentAge'] = data.currentAge
@@ -121,8 +119,14 @@ export default {
           return [milestones, milestonesLabel]
       }
     },    
-    created(){
-        this.fetchData();
+    created() {
+        console.log(firebase.auth().currentUser.uid)
+        this.database.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then((snapshot)=>{
+            if(snapshot.empty){
+                console.log("Not done yet")
+            }
+        })
+        // this.fetchData();
     }
 }
 </script>
