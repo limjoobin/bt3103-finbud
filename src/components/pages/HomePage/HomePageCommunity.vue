@@ -27,9 +27,8 @@ import firebase from '../../../../firebase'
 export default {
     methods:{
         navigate:function(){
-            var login = firebase.auth().currentUser ? false : true
-            this.$emit("loginStatus", {query:{loginStatus:login}})
-            this.$router.push('/signup')
+            var notLogin = firebase.auth().currentUser ? false : true
+            this.$router.push({name:'signup', params:{ notLogin:  notLogin, page:'Community'}})
         }
     }
     

@@ -64,7 +64,8 @@ export default[
     {
         path:'/signup', 
         name:'signup',
-        component:SignUpPage
+        component:SignUpPage,
+        props:true 
     },
     {
         path:'/community', 
@@ -96,7 +97,6 @@ export default[
         path:'/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound
-
     }
 
 ]
