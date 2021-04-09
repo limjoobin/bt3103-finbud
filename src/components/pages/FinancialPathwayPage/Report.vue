@@ -1,11 +1,16 @@
 <template>
     <div class='report'>
+        <div v-if='this.hasData'>
         <div class='profile-details'>
             <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>       
         </div>
-        <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
-        <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
-        <Retirement-income-chart :incomeData='incomeInfo' :loading='loading'></Retirement-income-chart>
+            <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
+            <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
+            <Retirement-income-chart :incomeData='incomeInfo' :loading='loading'></Retirement-income-chart>
+        </div>
+        <div v-if='!this.hasData'>
+            <h1>Hello</h1>
+        </div>
     </div>    
 </template>
 
@@ -20,6 +25,7 @@ export default {
     name:"Report",
     data:function(){
         return{
+            hasData:false,
             database: firebase.firestore(),
             editMode:false,
             loading:true,
@@ -41,9 +47,10 @@ export default {
           this.$router.push({path:'./financial_pathway', query:{edit:true}})
       },
       fetchData:function(){
-        this.sendIncomeInfo()
+        // this.sendIncomeInfo()
         this.database.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
             if(!snapshot.empty){
+                this.hasData = true
                 snapshot.docs.forEach(doc =>{
                         var data = doc.data()
                         console.log(data)
@@ -121,13 +128,7 @@ export default {
     },    
     created() {
         console.log(firebase.auth().currentUser.uid)
-        this.database.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then((snapshot)=>{
-            if(snapshot.empty){
-                console.log("Not done yet")
-            }else{
-                this.fetchData();
-            }
-        })
+        this.fetchData();
     }
 }
 </script>
