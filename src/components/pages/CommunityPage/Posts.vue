@@ -42,8 +42,10 @@ export default {
     },
     methods: {
         fetchPost:function(){
+            console.log(this.id)
             database.collection('forum').doc(this.id).get().then(snapshot => {
             this.item = snapshot.data();
+            console.log(this.item)
             this.post.push(this.item['question']);
         })},
         postComment: function() {

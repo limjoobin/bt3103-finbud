@@ -14,20 +14,24 @@
         <br><br>
         <div class ="forumc">
             <br>
-            <p style ="background-color: white; border-radius: 50px;">Top Questions</p>
+            <p style ="background-color: white; border-radius: 50px;">Latest Questions</p>
             <br>
             <ol class="myList" style ="width: 80%; margin-left: 10%; border-radius: 50px">
-                <li class ="li4" v-for="item in items" v-bind:key="item.question">
+                <li class ="li4" v-for="item in items" v-bind:key="item.id">
                     <br>
                     Asked by {{item.question.user}}
                     <h4 style ="padding: 10px;">{{item.question.question}}</h4>
                     Comments: {{item.question.comments.length/2}}
+                    <br>
+                    <button style='background:white; padding:2%; border-radius:25px 25px 25px 25px;' @click='expand(item.id)'>Expand</button>
                 </li>
                 <br>
             </ol>
             <br>
+            <!-- <h6 style ="text-align: center; background-color:white; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </h6> -->
+            <button  style="background-color: #000080; color:white; padding:2%; margin-bottom:1%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
         </div>
-        <h1 style ="text-align: center;"  @click="$router.push('/communitypost')"> See more Questions </h1>
+
         <div class ="askQn">
             <br>
             <p style ="font-size: 30px; background-color: white; border-radius: 50px">Ask a Question</p>
@@ -76,6 +80,10 @@ export default {
                 }
             }).then(()=>{location.reload()});
         },
+        expand:function(docId){
+            // console.log(docId)
+            this.$router.push({name: 'Posts', query: {id: docId}});
+        },
         fetchItems:function(){
             database.collection('forum').orderBy('question.timestamp','desc').limit(5).get().then((querySnapShot)=>{
             let item={}
@@ -84,7 +92,9 @@ export default {
                 item.show=false
                 item.id=doc.id
                 this.items.push(item) 
-                })      })
+                })
+             
+            }).then(()=>console.log(this.items))
                 
         },
         
@@ -129,6 +139,7 @@ export default {
     border-radius: 50px;
     width: 80%;
     margin-left: 10%;
+    margin-top: 10%;
 }
 
 .exptopic {
@@ -169,6 +180,7 @@ textarea {
   width: 50%;
   margin-left: 25%;
   border-radius: 20px;
+  border-bottom: solid 0.5px #43a1fa88;
 }
 
 </style>
