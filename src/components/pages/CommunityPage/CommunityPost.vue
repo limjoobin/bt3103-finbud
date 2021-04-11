@@ -10,16 +10,16 @@
                     </div>
                 </form>
             </nav>
-            <ul class = "ul">
-                <li class ="li" v-for="post in posts" v-bind:key="post.id" v-on:click ="route(post.id)">
+            <div class = "questions">
+                <div class ="question" v-for="post in posts" v-bind:key="post.id" v-on:click ="route(post.id)">
                     Asked by: {{post.question.user}}
-                    <h4>Question:</h4>
-                    <ul v-for = "p in post" v-bind:key ="p">
+                    <h4 style="margin-top:2%;">Question:</h4>
+                    <div v-for = "p in post" v-bind:key ="p">
                         <p>{{p.question}}</p>
-                    </ul>      
-                    <p style = "font-size: 15px;">Number of comments: {{post.question.comments.length/2}}</p>
-                </li>
-            </ul>    
+                    </div>      
+                    <p style = "font-size: 15px; margin-top:4%;">Number of comments: {{post.question.comments.length/2}}</p>
+                </div>
+            </div>    
         </div>
     </div>
 </template>
@@ -71,6 +71,34 @@ var database = firebase.firestore();
     font-size: 20px;
 }
 
+.questions{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.question{
+    background:white;
+    padding:2%;
+    margin:2%;
+    width: 25%;
+    border-radius: 25px 25px 25px 25px ;
+    box-shadow: 5px 10px 8px 10px #85c1fa;
+}
+
+.question:hover{
+    box-shadow: 5px 10px 8px 10px #ffffff;
+}
+
+.question > *{
+    background:white;
+}
+
+.question p{
+    background:white;
+}
+
+
+/* 
 .ul {
   list-style-type: none;
   padding: 0;
@@ -82,6 +110,6 @@ var database = firebase.firestore();
   border: 1px solid #222;
   margin: 10px;
   font-size: 20px;
-}
+} */
 
 </style>
