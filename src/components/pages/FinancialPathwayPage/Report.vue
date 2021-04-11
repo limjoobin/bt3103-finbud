@@ -8,8 +8,12 @@
             <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
             <Retirement-income-chart :incomeData='incomeInfo' :loading='loading'></Retirement-income-chart>
         </div>
-        <div v-if='!this.hasData'>
-            <h1>Hello</h1>
+        <div v-if='!this.hasData' style="height:100vh;">
+            <h1>Oops, it seems that you have yet to set up your financial pathway details</h1>
+            <h3 style="width:100%; text-align:center;">You can set them up here!</h3>
+            <div class='btn' @click="$router.push('/financial_pathway')">
+                <p style="background-color:white;">Map out your pathway to Financial Freedom</p>
+            </div>
         </div>
     </div>    
 </template>
@@ -167,5 +171,15 @@ export default {
 
 .left{
     text-align: center;
+}
+
+.btn{
+    background-color:white; 
+    border-radius:25px 25px 25px 25px; 
+    width:30%; 
+    padding:2%; 
+    text-align:center; 
+    margin-left:35%; 
+    margin-top:2%;
 }
 </style>
