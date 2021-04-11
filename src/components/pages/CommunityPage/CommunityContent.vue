@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--
         <br><br>
         <div class ="topicscc">
             <br>
@@ -8,8 +9,8 @@
             <button class ="exptopic">Cards</button>
             <button class ="exptopic">Investments</button>
             <button class ="exptopic">Insurance</button>
-            <button class ="exptopic">...</button>
         </div>
+        -->
         <br><br>
         <div class ="forumc">
             <br>
@@ -135,15 +136,17 @@ export default {
     font-size: 30px;
     color: #0E4070;
     margin: 20px;
-    border-radius: 10px;   
+    border-radius: 20px;
+    padding: 10px;
 }
 
 .submitQn {
     background-color: #1B4F80;
     color: white;
     font-size: 20px;
-    margin-left: 58%;
+    margin-left: 55%;
     border-radius: 30px;
+    padding: 10px;
 }
 
 textarea {
