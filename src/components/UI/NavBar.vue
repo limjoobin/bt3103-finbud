@@ -33,11 +33,17 @@ export default {
 </script>
 
 <style>
+#navigation{
+    position: sticky;
+    top: 0;
+}
+
 #navigation *{
     height:10%;
     background-color: #3B75AB;
     color: white;
     font-family: Lato;
+
 }
 
 
@@ -96,6 +102,7 @@ h2{
     text-decoration: none;
     display: block;
     padding: 5%;
+
 
 }	
 
