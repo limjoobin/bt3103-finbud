@@ -1,5 +1,8 @@
 <template>
     <div class='report'>
+        <div class="header">
+            <img class="logo" alt="Finbud logo" src="../../../assets/logo.png" @click="$router.push('/')">
+        </div>
         <div v-if='this.hasData'>
         <div class='profile-details'>
             <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>       
@@ -140,6 +143,18 @@ export default {
 <style scoped>
 .report{
     padding:5%;
+}
+.logo{
+  position: relative;
+  transform: translate(-50,-50);
+  max-width: 15%;
+  max-height:20%;
+}
+
+.header{
+  display:flex;
+  justify-content: center;
+
 }
 
 .profile{
