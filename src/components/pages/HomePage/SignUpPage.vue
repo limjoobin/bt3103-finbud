@@ -5,7 +5,7 @@
     <h2 style="text-align:center;padding-bottom:1%; color:white" v-show="notLogin">You need to log in to access the {{page}} page!</h2>
     <h3 style="text-align:center;padding-bottom:1%">The only personal finance buddy you need</h3>
 
-    <div   class="register">
+    <div class="register">
       <form id="reg-form">
         <div v-show="showing === 'register' " >
         <h3 style="text-align:center;padding-bottom:5%;padding-top:5%">Create your FinBud account</h3>
@@ -163,6 +163,7 @@ export default {
 #main {
   background-color: #a9d6ff;
   height: 85vh;
+  margin-bottom: 10%;
 }
 .register {
   background-color: #a9d6ff;

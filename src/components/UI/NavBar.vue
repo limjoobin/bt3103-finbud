@@ -7,7 +7,7 @@
 
             <ul class='navbar-links'>
                 <li><router-link to='/home'>Home</router-link></li>
-                <li><router-link to='/dashboard'>Dashboard</router-link></li>
+                <li><router-link to='/report'>Dashboard</router-link></li>
                 <li class="dropdown">
                     <router-link to='/financial_pathway'>Calculators</router-link>
                     <ul id="dropdown-content">
