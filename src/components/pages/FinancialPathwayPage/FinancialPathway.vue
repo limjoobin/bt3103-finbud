@@ -924,7 +924,7 @@ export default {
                 "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
                 "projectedIncome": this.projectedIncome,
                 "projectedExpenses": this.projectedExpenses,
-                "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+                "projectedliabilities": liabilitiesDetails[1] ? liabilitiesDetails[1] : [] ,
                 'flatPayment': flatDetails[0],
                 "milestonesCost": milestoneDetails[1],
                 "minEmergencyFund": this.minEmergencyAmt,
@@ -980,10 +980,11 @@ export default {
               "liabilities":this.liabilities,
   
               // Calculated values
+
               "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
               "projectedIncome": this.projectedIncome,
               "projectedExpenses": this.projectedExpenses,
-              "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+              "projectedliabilities": liabilitiesDetails[1] ? liabilitiesDetails[1] : [] ,
               'flatPayment': flatDetails[0],
               "milestonesCost": milestoneDetails[1],
               "minEmergencyFund": this.minEmergencyAmt,
@@ -1000,6 +1001,7 @@ export default {
               })
           }
         }).then(()=>{
+          console.log("LIABILITIESSSS",liabilitiesDetails)
           this.$router.push({path: `/report`})
 
         })
@@ -1587,7 +1589,7 @@ export default {
           }
           }
         
-        )
+        ).then(()=>{console.log(this.liabilites)})
 
       }
     }
