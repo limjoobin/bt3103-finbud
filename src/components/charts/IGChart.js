@@ -7,7 +7,7 @@ export default{
             label: [1,2,3,4,5,6,7,8,9,10],
         }       
     },
-    props: ['data','options','value'],
+    props: ['data','value'],
     mounted() {
         //alert(this.label)
         this.renderBarChart();
