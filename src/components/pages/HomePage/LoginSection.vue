@@ -71,6 +71,7 @@ export default {
 
 .login h2{
   width: 100%;
+  font-family: Lato;
 }
 
 .center {
