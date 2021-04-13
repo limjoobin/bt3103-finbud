@@ -59,7 +59,7 @@
                 </tr>
             </table>
             <br><br><br><br>
-            <igchart :data="data" :options="chartOptions" :value="principal"/>
+            <igchart :data="data" :value="principal"/>
         </div>
         <br><br><br><br>
         <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
@@ -96,9 +96,6 @@ export default {
         }
     },
     methods: {
-        budgetCalulator: function() {
-            this.$router.push('/budget_planning'); 
-        },
         community: function() {
             this.$router.push('/community');
         },
