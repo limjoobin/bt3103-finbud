@@ -54,12 +54,12 @@
                         <label for="radio4">Weekly</label>
                     </th>
                     <td>
-                        <p style = "margin: 0px; font-size: 10px;">Login or Signup now to save your progress!</p>
+                        <p style = "margin: 0px; font-size: 10px;"><router-link to = "/">Login</router-link> or <router-link to = "/signup">Signup</router-link> now to save your progress!</p>
                     </td>
                 </tr>
             </table>
             <br><br><br><br>
-            <igchart :data="data" :options="chartOptions"/>
+            <igchart :data="data" :options="chartOptions" :value="principal"/>
         </div>
         <br><br><br><br>
         <p style ="text-align: center; padding-top: 10px;font-size: 50px; color: #0E4070">You might be interested in...</p>
@@ -92,6 +92,7 @@ export default {
             value2: 0,
             value3: 0,
             data: [100,200,300,400,500,600,700,800,900,1000],
+            principal: [],
         }
     },
     methods: {
@@ -106,7 +107,7 @@ export default {
             var total = Number(this.startingBalance);
             var tracker = Number(this.startingBalance);
             var storage = [];
-            storage.push(tracker);
+            //storage.push(tracker);
             for (let i = 0; i < this.Duration; i++) {
                 tracker += Number(this.Pa);
                 storage.push(tracker);
@@ -117,9 +118,10 @@ export default {
                 total += (Number(total)*Number(this.Arr/100));
                 this.data.push(total);
             }
-            this.value1 = this.data.slice(-1)[0];
-            this.value2 =  tracker;
-            this.value3 = this.value1 - this.value2;
+            this.value1 = this.data.slice(-1)[0].toFixed(2);
+            this.value2 =  tracker.toFixed(2);
+            this.value3 = (this.value1 - this.value2).toFixed(2);
+            this.principal = storage;
             //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 1))**(1*this.Duration);
             //this.value3 = this.value1 - this.startingBalance;
         },
@@ -128,22 +130,23 @@ export default {
             var total = Number(this.startingBalance);
             var tracker = Number(this.startingBalance);
             var storage = [];
-            storage.push(tracker);
+            //storage.push(tracker);
             for (let i = 0; i < this.Duration; i++) {
                 for (let j = 0; j < 4; j++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/400);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/400));
                 }
+                storage.push(tracker);
                 this.data.push(total);
             }
-            this.value1 = this.data.slice(-1)[0];
-            this.value2 =  tracker;
-            this.value3 = this.value1 - this.value2;
+            this.value1 = this.data.slice(-1)[0].toFixed(2);
+            this.value2 =  tracker.toFixed(2);
+            this.value3 = (this.value1 - this.value2).toFixed(2);
+            this.principal = storage;
             //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 4))**(4*this.Duration);
             //this.value3 = this.value1 - this.startingBalance;
         },
@@ -152,22 +155,22 @@ export default {
             var total = Number(this.startingBalance);
             var tracker = Number(this.startingBalance);
             var storage = [];
-            storage.push(tracker);
             for (let i = 0; i < this.Duration; i++) {
                 for (let j = 0; j < 12; j++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/1200);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/1200));
-                }    
+                }
+                storage.push(tracker)
                 this.data.push(total);
             }
-            this.value1 = this.data.slice(-1)[0];
-            this.value2 =  tracker;
-            this.value3 = this.value1 - this.value2;
+            this.value1 = this.data.slice(-1)[0].toFixed(2);
+            this.value2 =  tracker.toFixed(2);
+            this.value3 = (this.value1 - this.value2).toFixed(2);
+            this.principal = storage;
             //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 12))**(12*this.Duration);
             //this.value3 = this.value1 - this.startingBalance;
         },
@@ -176,11 +179,11 @@ export default {
             var total = Number(this.startingBalance);
             var tracker = Number(this.startingBalance);
             var storage = [];
-            storage.push(tracker);
+            //storage.push(tracker);
             for (let i = 0; i < this.Duration; i++) {
                 for (let j = 0; j < 52; j++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
+                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/5200);
                     }
@@ -188,10 +191,12 @@ export default {
                     total += (Number(total)*Number(this.Arr/5200));
                 }
                 this.data.push(total);
+                storage.push(tracker)
             }
-            this.value1 = this.data.slice(-1)[0];
-            this.value2 =  tracker;
-            this.value3 = this.value1 - this.value2;
+            this.value1 = this.data.slice(-1)[0].toFixed(2);
+            this.value2 =  tracker.toFixed(2);
+            this.value3 = (this.value1 - this.value2).toFixed(2);
+            this.principal = storage;
             //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 52))**(52*this.Duration);
             //this.value3 = this.value1 - this.startingBalance;
         }
@@ -203,20 +208,22 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                storage.push(tracker);
+                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
+                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/100));
                     this.data.push(total);
+                    storage.push(tracker);
                 }
-                this.value1 = this.data.slice(-1)[0];
-                this.value2 =  tracker;
-                this.value3 = this.value1 - this.value2;
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }     
         },
         startingBalance: function() {
@@ -225,20 +232,22 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                storage.push(tracker);
+                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
+                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/100));
                     this.data.push(total);
+                    storage.push(tracker);
                 }
-                this.value1 = this.data.slice(-1)[0];
-                this.value2 =  tracker;
-                this.value3 = this.value1 - this.value2;
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
         },
         Arr: function() {
@@ -247,20 +256,22 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                storage.push(tracker);
+                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
+                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/100));
                     this.data.push(total);
+                    storage.push(tracker);
                 }
-                this.value1 = this.data.slice(-1)[0];
-                this.value2 =  tracker;
-                this.value3 = this.value1 - this.value2;
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
         },
         Duration: function() {
@@ -269,20 +280,22 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                storage.push(tracker);
+                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    storage.push(tracker);
+                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
                     total += Number(this.Pa);
                     total += (Number(total)*Number(this.Arr/100));
                     this.data.push(total);
+                    storage.push(tracker);
                 }
-                this.value1 = this.data.slice(-1)[0];
-                this.value2 =  tracker;
-                this.value3 = this.value1 - this.value2;
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
         },
 

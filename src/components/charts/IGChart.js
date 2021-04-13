@@ -7,7 +7,7 @@ export default{
             label: [1,2,3,4,5,6,7,8,9,10],
         }       
     },
-    props: ['data','options'],
+    props: ['data','options','value'],
     mounted() {
         //alert(this.label)
         this.renderBarChart();
@@ -22,12 +22,27 @@ export default{
             this.renderChart( {
                 labels: this.label,
                 datasets: [{
-                    label: "Investment Growth",
+                    label: "Investment Principal",
                     backgroundColor: "blue",
                     data: this.chartData
-                }]
+                },
+                {
+                    label: "Investment Growth",
+                    backgroundColor: "red",
+                    data: this.value
+                },
+                ],
             },
-            { responsive: true, maintainAspectRatio: false}
+            { responsive: true, maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                      stacked: true,
+                    }],
+                    yAxes: [{
+                      stacked: true
+                    }]
+                },
+            },
         );
         }
     },
@@ -39,8 +54,12 @@ export default{
             for (let i = 1; i < this.data.length+1; i++) {
                 this.label.push(i);
             }
+            for (let i = 0; i < this.data.length; i++) {
+                this.value[i] = this.data[i] - this.value[i];
+                this.data[i] = this.data[i] - this.value[i]
+            }
             this.renderBarChart();
-        }
+        },
     },
     /*
     data:()=>({
