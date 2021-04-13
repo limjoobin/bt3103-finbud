@@ -163,6 +163,7 @@ export default {
 #main {
   background-color: #a9d6ff;
   height: 85vh;
+  margin-bottom: 10%;
 }
 .register {
   background-color: #a9d6ff;
