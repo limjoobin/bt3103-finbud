@@ -42,7 +42,6 @@ h3,h1 {
 .flex-container {
     display: flex;
     padding: 3%;
-    width: 100%;
     height: 440px;
     margin: auto;    
 }

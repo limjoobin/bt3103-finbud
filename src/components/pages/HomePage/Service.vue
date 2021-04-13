@@ -58,7 +58,6 @@ export default {
 #service {
     height:25%;
     background-color: white;
-    width: 100vw;
 }
 #boxes {
     background-color:white;
@@ -66,14 +65,14 @@ export default {
     padding: 10px;
     width: 160px;
     height: 160px;
-  line-height: 160px;
-  text-align: center;
+    line-height: 160px;
+    text-align: center;
 }
 
 span {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: normal;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }
 
 .budCon2{
