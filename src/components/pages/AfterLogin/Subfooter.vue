@@ -1,9 +1,9 @@
 <template>
     <div id = 'sub-footer'>
         <h1>Exclusive Financial Deals</h1>
-        <button id='credit-card-promo'>Credit Card Promotion</button>
-        <button id='insurance'>Comprehensive Insurance Coverage</button>
-        <button id='investment'>High Yield Investment Returns</button>
+        <button id='credit-card-promo' @click="redirectCreditCard()">Credit Card Promotion</button>
+        <button id='insurance' @click='redirectInsurance()'>Comprehensive Insurance Coverage</button>
+        <button id='investment' @click='redirectInvestment()'>High Yield Investment Returns</button>
     </div>
 </template>
 
@@ -12,6 +12,18 @@ export default {
     data(){
         return{}
     },
+    methods:{
+        redirectCreditCard:function(){
+            window.open('https://www.singsaver.com.sg/credit-card/best-deals','_blank')
+        },
+        redirectInsurance:function(){
+            window.open('https://www.moneyowl.com.sg/','_blank')
+        },
+        redirectInvestment:function(){
+            window.open('https://www.stashaway.sg/','_blank')
+        },
+        
+    }
 }
 </script>
 

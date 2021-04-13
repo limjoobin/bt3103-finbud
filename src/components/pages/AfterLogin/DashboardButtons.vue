@@ -2,7 +2,7 @@
     <div id = 'dashboard'>
         <button id='community-button' v-on:click="$router.push('community')">Community News Feed</button>
         <button id='dashboard-button' v-on:click="$router.push('report')">Dashboard</button>
-        <button id='chat-button'>Chat with Expert</button>
+        <button id='chat-button' @click='redirectFinancialExpert()'>Chat with Expert</button>
         <button id='financial-calculator-button' v-on:click="$router.push('financial_pathway')">Financial Calculators</button>
     </div>
 </template>
@@ -12,6 +12,11 @@ export default {
 	data (){
 		return{}
 	},
+    methods:{
+        redirectFinancialExpert(){
+            window.open('https://www.instagram.com/daretofinance','_blank')
+        }
+    }
 }
 </script>
 
