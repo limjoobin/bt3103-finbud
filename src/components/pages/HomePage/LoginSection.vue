@@ -69,6 +69,10 @@ export default {
   height: 100%;
 }
 
+.login h2{
+  width: 100%;
+}
+
 .center {
   background-color: white;
   display: block;
