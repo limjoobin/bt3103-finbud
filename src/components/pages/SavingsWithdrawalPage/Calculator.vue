@@ -4,7 +4,7 @@
         <br>
         <div id="info">
             <div id='inputs'>
-                <p style="padding: 2%; font-family: Lustria;">Your Inputs</p>
+                <p style="padding: 5%; font-family: Lustria;">Your Inputs</p>
                 <p class = 'input-box' style='padding-top: 2%'> 
                     <label for='startingBalance'>Starting Balance ($) </label>
                     <input id = "startingBalance" type='number' v-model.trim.lazy.number="startingBalance" v-on:change="sendData">
@@ -36,7 +36,7 @@
             </div>
             <hr>
             <div id= 'owned'>
-                <p style='padding: 2%; font-family: Lustria;'>How much you will have:</p>
+                <p style='padding: 5%; font-family: Lustria;'>How much you will have:</p>
                 <div class = 'owned-text'> 
                     <p>Total Balance:</p>
                     <p class = 'owned-value'> ${{balance}}</p>
@@ -128,7 +128,7 @@ export default {
 }
 
 #calculator{
-    padding: 1% 15% 10% 15%;
+    padding: 1% 10% 10% 10%;
     background-color:#B9DEFF;
     display: lex;
 }
