@@ -11,8 +11,8 @@
             <br><br>
             <br><br>
             <button class ="navBut" @click="$router.push('/budget_planning')">Find out your Ideal Budget for Investment</button>
-            <button class ="navBut">Find out how long can your investment last you for</button>
-            <button class ="navBut">Map out your pathway to Financial Freedom</button>
+            <button class ="navBut" @click="$router.push('/investment_growth')">Find out how long can your investment last you for</button>
+            <button class ="navBut" @click="$router.push('/financial_pathway')">Map out your pathway to Financial Freedom</button>
         </div>
   </div>
 </template>
@@ -52,8 +52,8 @@ export default {
     justify-content: center;
     min-height: 200px;
     background-color: #A9D6FF;
-    padding-bottom: 2%;
-
+    padding-bottom: 3%;
+    padding: 30px;
 }
 
 .navBut{

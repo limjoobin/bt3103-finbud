@@ -55,8 +55,8 @@
         <div class ="budCon2">
             <br><br>
             <button class ="navBut" @click="$router.push('/investment_growth')">Calculate Your Investment Growth</button>
-            <button class ="navBut">Find out how long can your investment last you for</button>
-            <button class ="navBut">Map out your pathway to Financial Freedom</button>
+            <button class ="navBut" @click="$router.push('/savings_withdrawal')">Find out how long can your investment last you for</button>
+            <button class ="navBut" @click="$router.push('/financial_pathway')">Map out your pathway to Financial Freedom</button>
         </div>
         <br><br><br>
     </div>
@@ -179,8 +179,8 @@ td, th {
     justify-content: center;
     min-height: 200px;
     background-color: #A9D6FF;
-    padding-bottom: 2%;
-
+    padding-bottom: 3%;
+    padding: 30px;
 }
 
 .navBut{
