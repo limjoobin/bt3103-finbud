@@ -77,7 +77,6 @@ span {
 }
 
 .budCon2{
-    width: 100%;
     background-color:white;
     text-align: center;
     padding-bottom: 50px;
