@@ -380,7 +380,8 @@
             <div v-if="slide === 7">
               <h3 class="header-font">Liabilities</h3>
               <div class="sub-section">
-                <div class='container' v-for="(l,i) in liabilities" v-bind:key="i">
+                <div class='container' v-for="(liability,i) in liabilities" v-bind:key="i">
+                  <h5>Liability {{i+1}}</h5>
                   <div class="list">
                     <div class="top-bottom">
                       <label for="liabilitiesName">Name</label>
@@ -924,7 +925,7 @@ export default {
                 "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
                 "projectedIncome": this.projectedIncome,
                 "projectedExpenses": this.projectedExpenses,
-                "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+                "projectedliabilities": liabilitiesDetails[1] ? liabilitiesDetails[1] : [] ,
                 'flatPayment': flatDetails[0],
                 "milestonesCost": milestoneDetails[1],
                 "minEmergencyFund": this.minEmergencyAmt,
@@ -980,10 +981,11 @@ export default {
               "liabilities":this.liabilities,
   
               // Calculated values
+
               "idealRetirementIncomeAfterInflation":this.idealRetirementIncome,
               "projectedIncome": this.projectedIncome,
               "projectedExpenses": this.projectedExpenses,
-              "projectedliabilities": liabilitiesDetails[0] ? liabilitiesDetails[0] : [] ,
+              "projectedliabilities": liabilitiesDetails[1] ? liabilitiesDetails[1] : [] ,
               'flatPayment': flatDetails[0],
               "milestonesCost": milestoneDetails[1],
               "minEmergencyFund": this.minEmergencyAmt,
@@ -1000,6 +1002,7 @@ export default {
               })
           }
         }).then(()=>{
+          console.log("LIABILITIESSSS",liabilitiesDetails)
           this.$router.push({path: `/report`})
 
         })
@@ -1582,12 +1585,12 @@ export default {
                 this.ageGettingFlat = data["ageGettingFlat"]
                 this.typeOfFlat = data["typeOfFlat"] 
                 this.milestones = data["milestonesGoals"]
-                this.liabilites = data["liabilities"]
+                this.liabilities = data["liabilities"]
               })
           }
           }
         
-        )
+        ).then(()=>{console.log(this.liabilities)})
 
       }
     }
