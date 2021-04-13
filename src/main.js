@@ -17,9 +17,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const flag = to.matched.some(record => record.meta.flag);
 
   if (requiresAuth && !currentUser) next('/');
-  else if (!requiresAuth && currentUser) next ('home','community','budget_planning','investment_growth','savings_withdrawal','financial_pathway','dashboard');
+  else if (!requiresAuth && currentUser && !flag) next ('/home');
   else next();
 });
 
