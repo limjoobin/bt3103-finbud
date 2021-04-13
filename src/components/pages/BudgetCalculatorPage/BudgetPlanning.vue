@@ -45,7 +45,7 @@
                         <label style ="font-size: 8px;">50% on needs, 30% on wants, and socking away 20% to savings.</label>
                     </th>
                     <td>
-                        <p style = "margin: 0px; font-size: 10px;">Login or Signup now to save your progress!</p>
+                        <p style = "margin: 0px; font-size: 10px;"><router-link to = "/">Login</router-link> or <router-link to = "/signup">Signup</router-link> now to save your progress!</p>
                     </td>
                 </tr>
             </table>
