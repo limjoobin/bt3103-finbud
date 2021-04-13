@@ -8,7 +8,10 @@ import firebase from 'firebase';
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes:Routes,
-  mode:'history'
+  mode:'history',
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  }
 });
 
 router.beforeEach((to, from, next) => {
