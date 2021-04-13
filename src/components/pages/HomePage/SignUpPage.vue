@@ -2,7 +2,7 @@
   <div id="main">
     <h1><img alt="Vue logo" src="../../../assets/logo.png" height="70px" @click="$router.push('/')" /></h1>
     <h1>Welcome to FinBud!</h1>
-    <h2 style="text-align:center;padding-bottom:1%; color:white" v-show="notLogin">You need to log in to access the {{page}} page!</h2>
+    <h3 style="text-align:center;padding-bottom:1%; color:white" v-show="notLogin">You need to log in to access the {{page}} page!</h3>
     <h3 style="text-align:center;padding-bottom:1%">The only personal finance buddy you need</h3>
 
     <div class="register">
@@ -162,9 +162,10 @@ export default {
 <style scoped>
 #main {
   background-color: #a9d6ff;
-  height: 85vh;
+  height: 100vh;
   margin-bottom: 10%;
 }
+
 .register {
   background-color: #a9d6ff;
   width: 500px;
