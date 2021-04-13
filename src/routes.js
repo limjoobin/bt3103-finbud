@@ -31,17 +31,20 @@ export default[
     {
         path:'/budget_planning', 
         name:'budget-planning',
-        component: BudgetCalculatorContent
+        component: BudgetCalculatorContent,
+        meta: {flag: true}
     },
     {
         path:'/investment_growth', 
         name:'investment-growth',
-        component: InvestmentGrowth
+        component: InvestmentGrowth,
+        meta: {flag: true}
     },
     {
         path:'/savings_withdrawal', 
         name:'savings-withdrawal',
-        component: SavingsWithdrawal
+        component: SavingsWithdrawal,
+        meta: {flag: true}
     },
     {
         path:'/financial_pathway', 
@@ -52,7 +55,8 @@ export default[
     {
         path:'/report', 
         name: 'report',
-        component: Report, meta: {requiresAuth: true}
+        component: Report, 
+        meta: {requiresAuth: true}
     },
     {
         path:'/dashboard', 

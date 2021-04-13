@@ -8,7 +8,6 @@
 
 <script>
 export default {
-    name: 'Budget Calculator',
     data() {
         return {
             title: 'Investment Growth Calculator',
