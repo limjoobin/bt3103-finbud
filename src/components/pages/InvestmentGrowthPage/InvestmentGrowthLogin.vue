@@ -78,7 +78,7 @@
 <script>
 import IGChart from '../../charts/IGChart'
 import HeaderIG from './HeaderIG.vue'
-import firebase from '../../../../firebase.js'
+import firebase from '../../../firebase.js'
 var database = firebase.firestore();
 
 export default {

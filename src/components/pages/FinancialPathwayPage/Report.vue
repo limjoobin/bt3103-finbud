@@ -23,7 +23,7 @@
 
 <script>
 import RetirementChart from '../../charts/RetirementChart.vue'
-import firebase from '../../../../firebase'
+import firebase from '../../../firebase'
 import RetirementIncomeChart from '../../charts/retirementIncomeChart.vue'
 import RetirementLineChart from '../../charts/RetirementLineChart.vue'
 

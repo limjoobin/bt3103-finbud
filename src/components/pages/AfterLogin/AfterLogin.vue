@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import firebase from "../../../../firebase";
+import firebase from "../../../firebase";
 import DashboardButtons from "./DashboardButtons.vue"
 import Subfooter from "./Subfooter.vue"
 
