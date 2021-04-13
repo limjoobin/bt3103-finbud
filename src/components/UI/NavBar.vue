@@ -14,6 +14,7 @@
                         <li><router-link class='dropdown-link' style='text-decoration: none' to='/financial_pathway'>Financial Pathway Calculator</router-link></li>
                         <li><router-link class='dropdown-link' style='text-decoration: none' to='/investment_growth'>Investment Growth Calculator</router-link></li>
                         <li><router-link class='dropdown-link' style='text-decoration: none' to='/savings_withdrawal'>Savings Withdrawal Calculator</router-link></li>
+                        <li><router-link class='dropdown-link' style='text-decoration: none' to='/budget_planning'>Budget Calculator</router-link></li>
                     </ul>
                 </li>
                 <li><router-link to='/community'>Community</router-link></li>
