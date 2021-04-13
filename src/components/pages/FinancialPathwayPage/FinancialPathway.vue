@@ -19,6 +19,7 @@
                 <div class='user-input'>
                   <label>Ideal Retirement Monthly Income* <div class="tooltip">(?)<span class='tooltiptext'>How much you wish to receive monthly during your retirment years. Without considering inflation</span></div></label>
                   <input type="number" placeholder="Monthly Income before inflation" v-model="retirementIncome">               
+                  <p class='info'>(before inflation)</p>
                 </div>
                 <div class='user-input'>
                   <label>Current Age*</label>
@@ -27,7 +28,8 @@
 
                 <div class='user-input'>
                   <label>Expected Inflation Rate* <div class="tooltip">(?)<span class='tooltiptext'>How much do you think the average inflation would be for your currency</span></div></label>
-                  <input type="number" placeholder="Inflation" v-model="expectedInflation">               
+                  <input type="number" placeholder="Inflation" v-model="expectedInflation">
+                  <p class="info">(in percent)</p>              
                 </div>
               </div>
                 <div class='btn' style="float:right;">
@@ -87,6 +89,7 @@
                         but that's not always the case. 
                         </span></div> </label>
                       <input type="number" id='incomeGrowthRate' v-model="incomes[i].incomeGrowthRate">
+                      <p class="info">(in percentage)</p>
                     </div>
                     <div class="user-input">
                       <label for="jobSwitchFreq">How frequently would you change your job or expect a promotion
@@ -96,6 +99,7 @@
 
                       </label>
                       <input type="number" id='jobSwitchFreq' v-model="incomes[i].jobSwitchFreq">
+                      <p class="info">(in years)</p>
                     </div>
                     <div class="user-input">
                       <label for="incomeGrowthRateJobSwitch">Income growth per job switch (in percent)
@@ -105,6 +109,7 @@
 
                       </label>
                       <input type="number" id="incomeGrowthRateJobSwitch" v-model="incomes[i].incomeGrowthRateJobSwitch">
+                      <p class="info">(in percentage)</p>
                     </div>
                     <div class="user-input">
                       <label for="jobSwitchStop">Stop job switch at age
@@ -153,6 +158,7 @@
                        </span></div>
                   </label>
                   <input type="number" id='expensesGrowth' v-model='expensesGrowth'>
+                  <p class="info">(excluding inflation)</p>
                 </div>
                 <div class="user-input">
                   <label for="expensesRise">% increase in expenses per income rise (in percent)
@@ -208,8 +214,8 @@
                 </div>
                 <div class="user-input" v-if='(haveChildren == "yes" ) &&  excludeChildren == "no"'>
                   <label for="numOfChildren">Number of children: {{children.length}} </label>
-                  <button v-on:click="addChildren('currentChild')">add</button>
-                  <button v-on:click="removeChildren('currentChild')">minus</button>
+                  <button style='background-color:white; border-radius:25px 25px 25px 25px; padding:1%; margin:1; min-width:80px;' v-on:click="addChildren('currentChild')">add</button>
+                  <button  style='background-color:white; border-radius:25px 25px 25px 25px; padding:1%; margin:1; min-width:80px;' v-on:click="removeChildren('currentChild')">minus</button>
                 </div>
                 <div class="user-input" v-if='childrenPlan =="yes" && excludeChildren == "no"'>
                   <label for="expectedChild">Expected child in the future 
@@ -217,8 +223,8 @@
                           Based on your estimated age to have the child, we will be including related expenses such as tuition fee, allowance, etc. to the cost calculation. 
                           We will assume that your expected child(ren) are all female for easier projection as male have to undergo National Service.
                        </span></div>: {{expectedChildren.length}}</label>
-                  <button v-on:click="addChildren('expectedChild')">add</button>
-                  <button v-on:click="removeChildren('expectedChild')">minus</button>
+                  <button  style='background-color:white; border-radius:25px 25px 25px 25px; padding:1%; margin:1; min-width:80px;' v-on:click="addChildren('expectedChild')">add</button>
+                  <button style='background-color:white; border-radius:25px 25px 25px 25px; padding:1%; margin:1; min-width:80px;'  v-on:click="removeChildren('expectedChild')">minus</button>
                 </div>
 
                 <div v-show='children.length>0 && haveChildren == "yes" ' style="display:flex-box;  width:100%;">
@@ -275,6 +281,7 @@
                        </span></div>
                   </label>
                   <input type="number" min="0"  id="investmentReturn" v-model='investmentReturn'>
+                  <p class="info">(in percent)</p>
                 </div>
                 <div class="user-input">
                   <label for="cpfOA">CPF-Ordinary Account</label>
@@ -1653,6 +1660,11 @@ input, select{
 
  .user-input input, label,select{
   display:block;
+}
+
+.info{
+  font-size: smaller;
+  opacity: 0.8;
 }
 
 .list{
