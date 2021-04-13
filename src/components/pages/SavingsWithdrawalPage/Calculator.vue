@@ -82,16 +82,16 @@ export default {
         },
         balance: function(){
             let amount = this.startingBalance * Math.pow((1+ this.returnRate), this.duration);
-            return amount
+            return amount.toFixed(2)
         },
         withdrawal: function(){
             let total_withdrawal = this.duration * this.frequency * this.periodicWithdrawal;
-            return total_withdrawal
+            return total_withdrawal.toFixed(2)
         },
         timeLeft: function(){
             let yearlyWithdrawal = this.frequency * this.periodicWithdrawal;
             let time = this.balance / yearlyWithdrawal;
-            return time;
+            return time.toFixed(2);
         }
 
     },
