@@ -1,9 +1,7 @@
 <template>
     <div style ="background-color: #B9DEFF;">
-        <img class ="timer" v-bind:src="img">
-        <p class ="b1">{{content}}</p>
-        
         <div class ="budCon1">
+            <br><br><br>
             <table class ="yourBudget">
                 <tr class ="tr1">
                     <br>
@@ -44,9 +42,6 @@
                         <br>
                         <label style ="font-size: 8px;">50% on needs, 30% on wants, and socking away 20% to savings.</label>
                     </th>
-                    <td>
-                        <p style = "margin: 0px; font-size: 10px;"><router-link to = "/">Login</router-link> or <router-link to = "/signup">Signup</router-link> now to save your progress!</p>
-                    </td>
                 </tr>
             </table>
         </div>
@@ -86,9 +81,9 @@ export default {
     },
     watch: {
         amount: function() {
-            this.value1 = this.amount*0.50;
-            this.value2 = this.amount*0.30;
-            this.value3 = this.amount*0.20;
+            this.value1 = (this.amount*0.50).toFixed(2);
+            this.value2 = (this.amount*0.30).toFixed(2);
+            this.value3 = (this.amount*0.20).toFixed(2);
         }
     },
     components: {
