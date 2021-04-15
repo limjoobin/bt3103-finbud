@@ -7,6 +7,8 @@
         <input type="text" placeholder="Username" v-model="email_field" />
         <input type="password" placeholder="Password" v-model="password" />
       </form>
+      <label style = "background-color: white; margin-left: 50%; font-size: 12px;" @click ="$router.push('/forgotpassword')">Forgot password?</label>
+      <br>
       <br />
       <button v-on:click="login()">Login</button>
       <br /><br />
