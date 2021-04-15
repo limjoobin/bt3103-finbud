@@ -1798,7 +1798,7 @@ input, select{
   text-align: center;
   border-radius: 6px;
  
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
 }
