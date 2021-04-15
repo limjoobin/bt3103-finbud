@@ -1,17 +1,19 @@
 <template>
-    <div class = "register">
-        <h1>Welcome to FinBud!</h1>
-        <h3 style="text-align:center;padding-bottom:1%">Forgot Password</h3>
-        <form @submit.prevent='forgotPassword'>
-            <div class ="reg-form">
+    <div>
+        <div class = "register">
+            <!-- <h1>Reset your password here!</h1> -->
+            <h3 style="text-align:center;padding-bottom:1%">Reset your password here!</h3>
+            <form @submit.prevent='forgotPassword'>
+                <div class ="reg-form">
+                    <br>
+                    <label for="exampleInputEmail" style ="margin-left: 15%; margin-right: 5%">Email Address: </label>
+                    <input text="text" style="width:50%" v-model="user.email">
+                </div>
                 <br>
-                <label for="exampleInputEmail" style ="margin-left: 16%;">Email Address: </label>
-                <input text="text" class = "form-control" v-model="user.email">
-            </div>
-            <br>
-            <button type="submit" class="btns" style ="margin-left: 70%;">Reset Password</button>
-        </form>
-        <br><br><br>
+                <button type="submit" class="btns" style ="margin-top: 10%; margin-left: 70%; background:white; padding:1%; border-radius:25px">Reset Password</button>
+            </form>
+            <br><br><br>
+        </div>
     </div>
 </template>
 
@@ -44,18 +46,20 @@ export default {
 </script>
 
 <style scoped>
+
+
 .register {
   background-color: #a9d6ff;
   width: 500px;
-  margin: 10px auto;
-  padding: 10px;
+  margin: 10% auto;
+  padding: 2%;
   border: 7px solid green-border;
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #444;
   background-color: back-color;
   box-shadow: 0 0 20px 0 #000000;
-  height: 350px;
+  /* height: 350px; */
 }
 
 .btns{
