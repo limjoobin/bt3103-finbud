@@ -22,6 +22,7 @@
     -->
     <h1 style="background-color:white;text-align:center"> You might be interested in</h1>
     <div class ="budCon2">
+            <button class ="navBut" @click="$router.push('/budget_planning')">Calculate Your Monthly Budget</button>
             <button class ="navBut" @click="$router.push('/investment_growth')">Calculate Your Investment Growth</button>
             <button class ="navBut" @click="$router.push('/savings_withdrawal')">Find out how long can your investment last you for</button>
             <button class ="navBut" @click="nav">Map out your pathway to Financial Freedom</button>
