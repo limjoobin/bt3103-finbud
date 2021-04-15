@@ -7,48 +7,90 @@
                 <p style="padding: 5%; font-family: Lustria;">Your Inputs</p>
                 <p class = 'input-box' style='padding-top: 2%'> 
                     <label for='startingBalance'>Starting Balance ($) </label>
-                    <input id = "startingBalance" type='number' v-model.trim.lazy.number="startingBalance" v-on:change="sendData">
+                    <!-- <input id = "startingBalance" type='number' v-model.trim.lazy.number="startingBalance" v-on:change="sendData"> -->
+                    <input id = "startingBalance" type='number' v-model.trim.lazy.number="startingBalance">
                 </p>
                 <p class = 'input-box'> 
                     <label for='returnRate'>Annual Return Rate (%) </label>
-                    <input id = "returnRate" type='number' v-model.trim.lazy.number="returnRate" v-on:change="sendData">
+                    <!-- <input id = "returnRate" type='number' v-model.trim.lazy.number="returnRate" v-on:change="sendData"> -->
+                    <input id = "returnRate" type='number' v-model.trim.lazy.number="returnRate">
                 </p>
                 <p class = 'input-box'> 
-                    <label for='duration'>Duration (in years) </label>
-                    <input id = "duration" type='number' v-model.trim.lazy.number="duration" v-on:change="sendData">
+                    <label for='duration'>Duration (in years) 
+                        <div class="tooltip">(?)
+                            <span class='tooltiptext'>
+                                How many years would you be withdrawing this fund?
+                            </span>
+                        </div>
+
+                    </label>
+
+                    <!-- <input id = "duration" type='number' v-model.trim.lazy.number="duration" v-on:change="sendData"> -->
+                    <input id = "duration" type='number' v-model.trim.lazy.number="duration">
                 </p>
                 <p class = 'input-box'> 
-                    <label for='periodicWithdrawal'>Periodic Withdrawal ($) </label>
-                    <input id = "periodicWithdrawal" type='number' v-model.trim.lazy.number="periodicWithdrawal" v-on:change="sendData">
+                    <label for='periodicWithdrawal'>Periodic Withdrawal ($) 
+                        <div class="tooltip">(?)
+                            <span class='tooltiptext'>
+                                How much would you wish to withdraw everytime?
+                            </span>
+                        </div>
+
+                    </label>
+                    <!-- <input id = "periodicWithdrawal" type='number' v-model.trim.lazy.number="periodicWithdrawal" v-on:change="sendData"> -->
+                    <input id = "periodicWithdrawal" type='number' v-model.trim.lazy.number="periodicWithdrawal">
                 </p>
 
                 <div class = 'freq'>
-                   <p style="padding: 1%"> Periodic Withdrawal Frequency</p>
-                        <input type="radio" id="radio1" value=1 v-model.number='frequency' v-on:change="sendData" checked> 
+                    <div style="margin-bottom:1%;">
+                        <p style="padding: 1%"> Periodic Withdrawal Frequency </p>
+                       <div class="tooltip">(?)
+                            <span class='tooltiptext'>
+                                How many frequent would you be withdrawing from this fund?
+                            </span>
+                        </div>                
+                    </div>
+                        <input type="radio" id="radio1" value=1 v-model.number='frequency' checked> 
+                        <label for="radio1">Yearly</label>
+                        <input type="radio" id="radio2" value=4 v-model.number='frequency'>
+                        <label for="radio2">Quarterly</label>
+                        <input type="radio" id="radio3" value=12 v-model.number='frequency'>
+                        <label for="radio3">Monthly</label>
+                        <input type="radio" id="radio4" value=52 v-model.number='frequency'>
+                        <label for="radio4">Weekly</label> 
+                        <!-- <input type="radio" id="radio1" value=1 v-model.number='frequency' v-on:change="sendData" checked> 
                         <label for="radio1">Yearly</label>
                         <input type="radio" id="radio2" value=4 v-model.number='frequency' v-on:change="sendData">
                         <label for="radio2">Quarterly</label>
                         <input type="radio" id="radio3" value=12 v-model.number='frequency' v-on:change="sendData">
                         <label for="radio3">Monthly</label>
                         <input type="radio" id="radio4" value=52 v-model.number='frequency' v-on:change="sendData">
-                        <label for="radio4">Weekly</label> 
+                        <label for="radio4">Weekly</label>  -->
                 </div>
             </div>
             <hr>
             <div id= 'owned'>
-                <p style='padding: 5%; font-family: Lustria;'>How much you will have:</p>
+                <p style='padding: 5%; font-family: Lustria;'>How much you will have after {{this.duration}} years:</p>
                 <div class = 'owned-text'> 
-                    <p>Total Balance:</p>
-                    <p class = 'owned-value'> ${{balance}}</p>
+                    <p>Remaining Balance:</p>
+                    <p class = 'owned-value'> 
+                        {{Math.round(investmentAmount[investmentAmount.length-1]) >=0 ? 
+                        "$"+Math.round(investmentAmount[investmentAmount.length-1]): 
+                        "Not enough"}}
+                        
+                        </p>
                 </div>
                 <div class = 'owned-text'> 
                     <p>Total Withdrawal:</p>
-                    <p class = 'owned-value'> ${{withdrawal}}</p>
+                    <p class = 'owned-value'> ${{totalWithdrawn}}</p>
                 </div>
                 <div class = 'owned-text'> 
                     <p>Time to $0.00:</p>
-                    <p class = 'owned-value'> {{timeLeft}} years</p>
+                    <p class = 'owned-value'> {{this.numWithdrawal}} years</p>
                 </div>
+            <div style="display:block; width:100%; margin-top:10%;">
+                <button style="background:white; padding:1%; float:right; border-radius:25px 25px 25px 25px; font-size:large;" @click="sendData()">Calculate</button>
+            </div>
 
             </div>
         </div>
@@ -63,56 +105,36 @@ export default {
     },
     data (){
         return{
-            startingBalance : 10000,
+            startingBalance : 0,
             returnRate : 0,
             duration : 0,
             periodicWithdrawal : 0,
-            frequency:0,
+            frequency:1,
+            investmentAmount: [0],
+            numWithdrawal:0,
+            totalWithdrawn:0
         }
-    },
-    watch:{
-        frequency: function(val){
-            this.frequency = val;
-        }
-    },
-    computed:{
-        timesteps: function(){
-            let total_timesteps = this.duration * this.frequency;
-            return total_timesteps
-        },
-        balance: function(){
-            let amount = this.startingBalance * Math.pow((1+ this.returnRate), this.duration);
-            return amount.toFixed(2)
-        },
-        withdrawal: function(){
-            let total_withdrawal = this.duration * this.frequency * this.periodicWithdrawal;
-            return total_withdrawal.toFixed(2)
-        },
-        timeLeft: function(){
-            let yearlyWithdrawal = this.frequency * this.periodicWithdrawal;
-            let time = this.balance / yearlyWithdrawal;
-            return time.toFixed(2);
-        }
-
     },
     methods:{
         sendData: function(){
-            var remAmt = this.balance;
-            var savingsAmount = []
-            let numWithdrawal = 0;
-            for (let i = 0; i < this.timesteps; i++){
-                if(remAmt <=0){
-                    remAmt = 0;
-                    
-                    continue
-                }else{
-                    remAmt = remAmt - this.periodicWithdrawal;
-                }
-                savingsAmount.push(remAmt)
-                numWithdrawal++;
-                
+            var remAmt = this.startingBalance;
+            this.investmentAmount = [this.startingBalance]
+            // let years = 0;
+            this.numWithdrawal = 0;
+            this.totalWithdrawn = 0;
+            let yearlyAmountWithdrawn = this.periodicWithdrawal * this.frequency
+
+            while(remAmt > 0 && this.numWithdrawal < this.duration){
+                this.numWithdrawal +=1
+                remAmt -= yearlyAmountWithdrawn
+                this.totalWithdrawn += yearlyAmountWithdrawn
+                remAmt *= (1+(this.returnRate/100))
+                this.investmentAmount.push(remAmt)
             }
-            this.$emit('chart-data', numWithdrawal, savingsAmount)
+            console.log(this.investmentAmount[this.investmentAmount.length-1])
+            this.$emit('chart-data',this.numWithdrawal,this.investmentAmount)
+        }, withdrawalAmount(){
+            return this.duration * this.frequency * this.periodicWithdrawal
         }
     }
 
@@ -209,6 +231,35 @@ input[type=radio]:checked + label {
     font-size: 40px;
 }
 
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
 
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: x-small;
+  line-height: 120%;
+  width:50%;
+  min-width:250px;
+  background-color: rgb(255, 255, 255);
+  color: rgba(8, 35, 61, 0.685);
+  text-align: center;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 </style>
