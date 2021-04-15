@@ -1,6 +1,7 @@
 import HomePage from './components/pages/HomePage/HomePage.vue'
 import SignUpPage from './components/pages/HomePage/SignUpPage.vue'
 import AfterLogin from './components/pages/AfterLogin/AfterLogin.vue'
+import ForgotPassword from "./components/pages/HomePage/ForgotPassword.vue";
 
 import BudgetCalculatorContent from './components/pages/BudgetCalculatorPage/BudgetCalculatorContent.vue'
 import InvestmentGrowth from './components/pages/InvestmentGrowthPage/InvestmentGrowth.vue'
@@ -14,6 +15,8 @@ import CommunityPost from './components/pages/CommunityPage/CommunityPost'
 import Posts from './components/pages/CommunityPage/Posts.vue'
 
 import NotFound from './components/UI/NotFound'
+
+
 
 export default[
     {
@@ -89,12 +92,17 @@ export default[
         name: 'InvestmentGrowthLogin',
         component: InvestmentGrowthLogin,
         meta: {requiresAuth: true}
+    },
+    {
+        path: "/forgotpassword",
+        name: "ForgotPassword",
+        component: ForgotPassword,
     }
     //Page does not exist. 
     , {
         path:'/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound
-    }
+    },
 
 ]

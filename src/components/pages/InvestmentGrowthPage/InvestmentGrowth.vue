@@ -86,7 +86,7 @@ export default {
             value1: 0,
             value2: 0,
             value3: 0,
-            data: [100,200,300,400,500,600,700,800,900,1000],
+            data: [],
             principal: [],
         }
     },
