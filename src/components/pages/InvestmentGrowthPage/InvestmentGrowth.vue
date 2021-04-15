@@ -1,9 +1,7 @@
 <template>
     <div style ="background-color: #B9DEFF;">
         <header1></header1>
-        <img class ="timer" v-bind:src="img" @click="$router.push('/')">
-        <p class ="b1">{{content}}</p>
-        <br><br>
+        <br><br><br>
         <div class ="budCon1">
             <table class ="yourBudget">
                 <tr class ="tr1">
@@ -20,7 +18,7 @@
                         <label>Annual Return Rate (%)    </label>
                         <input type="number" v-model.trim.lazy="Arr" style = "width:50%; height: 30px; border-radius: 5px; background-color: #D7ECFF" required>
                         <br><br>
-                        <label>Duration</label>
+                        <label>Number of periods</label>
                         <input type="number" v-model.trim.lazy="Duration" style = "width:50%; height: 30px; border-radius: 5px; background-color: #D7ECFF" required>
                         <br><br>
                         <label>Periodic Addtion</label>
@@ -53,9 +51,6 @@
                         <input type="radio" id="radio4" @change= "onChangeWeekly()" name="radios" value="true">
                         <label for="radio4">Weekly</label>
                     </th>
-                    <td>
-                        <p style = "margin: 0px; font-size: 10px;"><router-link to = "/">Login</router-link> or <router-link to = "/signup">Signup</router-link> now to save your progress!</p>
-                    </td>
                 </tr>
             </table>
             <br><br><br><br>
@@ -100,102 +95,98 @@ export default {
             this.$router.push('/community');
         },
         onChangeYearly() {
-            this.data = [];
-            var total = Number(this.startingBalance);
-            var tracker = Number(this.startingBalance);
-            var storage = [];
-            //storage.push(tracker);
-            for (let i = 0; i < this.Duration; i++) {
-                tracker += Number(this.Pa);
-                storage.push(tracker);
-                if (i == 0) {
-                    total += total*Number(this.Arr/100);
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                for (let i = 0; i < this.Duration; i++) {
+                    tracker += Number(this.Pa);
+                    storage.push(tracker);
+                    if (i == 0) {
+                        total += total*Number(this.Arr/100);
+                    }
+                    total += Number(this.Pa);
+                    total += (Number(total)*Number(this.Arr/100));
+                    this.data.push(total);
                 }
-                total += Number(this.Pa);
-                total += (Number(total)*Number(this.Arr/100));
-                this.data.push(total);
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
-            this.value1 = this.data.slice(-1)[0].toFixed(2);
-            this.value2 =  tracker.toFixed(2);
-            this.value3 = (this.value1 - this.value2).toFixed(2);
-            this.principal = storage;
-            //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 1))**(1*this.Duration);
-            //this.value3 = this.value1 - this.startingBalance;
         },
         onChangeQuarterly() {
-            this.data = [];
-            var total = Number(this.startingBalance);
-            var tracker = Number(this.startingBalance);
-            var storage = [];
-            //storage.push(tracker);
-            for (let i = 0; i < this.Duration; i++) {
-                for (let j = 0; j < 4; j++) {
-                    tracker += Number(this.Pa);
-                    if (i == 0) {
-                        total += total*Number(this.Arr/400);
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                for (let i = 0; i < this.Duration; i++) {
+                    for (let j = 0; j < 4; j++) {
+                        tracker += Number(this.Pa);
+                        if (i == 0) {
+                            total += total*Number(this.Arr/400);
+                        }
+                        total += Number(this.Pa);
+                        total += (Number(total)*Number(this.Arr/400));
                     }
-                    total += Number(this.Pa);
-                    total += (Number(total)*Number(this.Arr/400));
+                    storage.push(tracker);
+                    this.data.push(total);
                 }
-                storage.push(tracker);
-                this.data.push(total);
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
-            this.value1 = this.data.slice(-1)[0].toFixed(2);
-            this.value2 =  tracker.toFixed(2);
-            this.value3 = (this.value1 - this.value2).toFixed(2);
-            this.principal = storage;
-            //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 4))**(4*this.Duration);
-            //this.value3 = this.value1 - this.startingBalance;
         },
         onChangeMonthly() {
-            this.data = [];
-            var total = Number(this.startingBalance);
-            var tracker = Number(this.startingBalance);
-            var storage = [];
-            for (let i = 0; i < this.Duration; i++) {
-                for (let j = 0; j < 12; j++) {
-                    tracker += Number(this.Pa);
-                    if (i == 0) {
-                        total += total*Number(this.Arr/1200);
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                for (let i = 0; i < this.Duration; i++) {
+                    for (let j = 0; j < 12; j++) {
+                        tracker += Number(this.Pa);
+                        if (i == 0) {
+                            total += total*Number(this.Arr/1200);
+                        }
+                        total += Number(this.Pa);
+                        total += (Number(total)*Number(this.Arr/1200));
                     }
-                    total += Number(this.Pa);
-                    total += (Number(total)*Number(this.Arr/1200));
+                    storage.push(tracker)
+                    this.data.push(total);
                 }
-                storage.push(tracker)
-                this.data.push(total);
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
-            this.value1 = this.data.slice(-1)[0].toFixed(2);
-            this.value2 =  tracker.toFixed(2);
-            this.value3 = (this.value1 - this.value2).toFixed(2);
-            this.principal = storage;
-            //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 12))**(12*this.Duration);
-            //this.value3 = this.value1 - this.startingBalance;
         },
         onChangeWeekly() {
-            this.data = [];
-            var total = Number(this.startingBalance);
-            var tracker = Number(this.startingBalance);
-            var storage = [];
-            //storage.push(tracker);
-            for (let i = 0; i < this.Duration; i++) {
-                for (let j = 0; j < 52; j++) {
-                    tracker += Number(this.Pa);
-                    //storage.push(tracker);
-                    if (i == 0) {
-                        total += total*Number(this.Arr/5200);
+            if (this.Pa != 0 && this.startingBalance != 0 && this.Arr != 0 && this.Duration != 0) {
+                this.data = [];
+                var total = Number(this.startingBalance);
+                var tracker = Number(this.startingBalance);
+                var storage = [];
+                for (let i = 0; i < this.Duration; i++) {
+                    for (let j = 0; j < 52; j++) {
+                        tracker += Number(this.Pa);
+                        if (i == 0) {
+                            total += total*Number(this.Arr/5200);
+                        }
+                        total += Number(this.Pa);
+                        total += (Number(total)*Number(this.Arr/5200));
                     }
-                    total += Number(this.Pa);
-                    total += (Number(total)*Number(this.Arr/5200));
+                    this.data.push(total);
+                    storage.push(tracker)
                 }
-                this.data.push(total);
-                storage.push(tracker)
+                this.value1 = this.data.slice(-1)[0].toFixed(2);
+                this.value2 =  tracker.toFixed(2);
+                this.value3 = (this.value1 - this.value2).toFixed(2);
+                this.principal = storage;
             }
-            this.value1 = this.data.slice(-1)[0].toFixed(2);
-            this.value2 =  tracker.toFixed(2);
-            this.value3 = (this.value1 - this.value2).toFixed(2);
-            this.principal = storage;
-            //this.value1 = this.startingBalance * (1 + ((this.Arr/100) / 52))**(52*this.Duration);
-            //this.value3 = this.value1 - this.startingBalance;
         }
     },
     watch: {
@@ -205,10 +196,8 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
@@ -229,10 +218,8 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
@@ -253,10 +240,8 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
@@ -277,10 +262,8 @@ export default {
                 var total = Number(this.startingBalance);
                 var tracker = Number(this.startingBalance);
                 var storage = [];
-                //storage.push(tracker);
                 for (let i = 0; i < this.Duration; i++) {
                     tracker += Number(this.Pa);
-                    //storage.push(tracker);
                     if (i == 0) {
                         total += total*Number(this.Arr/100);
                     }
@@ -308,22 +291,8 @@ export default {
 
 .budCon1{
     background-color: #B9DEFF;
-    
 }
 
-/* .budCon2{
-    background-color: #A9D6FF;
-    text-align: center;
-    padding-bottom: 50px;
-} */
-
-.timer{
-    height: 40px;
-    width: 40px;
-    position: relative;
-    top: 30px;
-    left: 290px;
-}
 
 .b1{
     font-size: 15px;
@@ -373,17 +342,6 @@ td, th {
     text-align: center;
 }
 
-/* .navBut{
-    text-align: center;
-    font-size: 30px;
-    padding: 5px;
-    margin-left: 85px;
-    height: 230px;
-    width: 200px;
-    border-radius: 12px;
-    color: #0E4070;
-} */
-
 .budCon2{
     display: flex;
     justify-content: center;
@@ -410,10 +368,6 @@ input[type=radio] {
     margin:10px;
 }
 
-/*
-  Change the look'n'feel of labels (which are adjacent to radiobuttons).
-  Add some margin, padding to label
-*/
 input[type=radio] + label {
     display:inline-block;
     margin:-2px;
