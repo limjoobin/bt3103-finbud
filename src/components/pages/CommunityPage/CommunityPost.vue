@@ -46,9 +46,6 @@ var database = firebase.firestore();
                 })    
             },
             route(p) {
-                //let doc_id = event.target.getAttribute("key");
-                //alert(p)
-                //this.$router.push({name: 'Posts', params: {document_id: p}})
                 this.$router.push({name: 'Posts', query: {id: p}});
             }
         },
@@ -96,20 +93,5 @@ var database = firebase.firestore();
 .question p{
     background:white;
 }
-
-
-/* 
-.ul {
-  list-style-type: none;
-  padding: 0;
-}
-.li {
-  flex-grow: 1;
-  flex-basis: 300px;
-  padding: 10px;
-  border: 1px solid #222;
-  margin: 10px;
-  font-size: 20px;
-} */
 
 </style>

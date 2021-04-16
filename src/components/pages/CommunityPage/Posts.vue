@@ -32,7 +32,6 @@ var database = firebase.firestore();
 export default {
     data() {
         return {
-            //id: this.$route.params.document_id,
             id: this.$route.query.id,
             post: [],
             comment: '',
@@ -57,9 +56,8 @@ export default {
                 this.comment = '';
             }
             database.collection('forum').doc(this.id).update({
-                //name: this.email,
                 'question.comments': this.post[0].comments
-            })//.then(()=>{window.location.reload()});
+            })
         },
     },
     created() {

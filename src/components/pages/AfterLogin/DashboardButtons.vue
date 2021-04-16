@@ -1,9 +1,9 @@
 <template>
     <div id = 'dashboard'>
-        <button id='community-button' v-on:click="$router.push('community')">Community News Feed</button>
-        <button id='dashboard-button' v-on:click="$router.push('report')">Dashboard</button>
-        <button id='chat-button' @click='redirectFinancialExpert()'>Chat with Expert</button>
-        <button id='financial-calculator-button' v-on:click="$router.push('financial_pathway')">Map your financial journey</button>
+        <button id='community-button' style ="border-radius: 50px;" v-on:click="$router.push('community')">Community News Feed</button>
+        <button id='dashboard-button' style ="border-radius: 50px;" v-on:click="$router.push('report')">Dashboard</button>
+        <button id='chat-button' style ="border-radius: 50px;" @click='redirectFinancialExpert()'>Chat with Expert</button>
+        <button id='financial-calculator-button' style ="border-radius: 50px;" v-on:click="$router.push('financial_pathway')">Map your financial journey</button>
     </div>
 </template>
 
