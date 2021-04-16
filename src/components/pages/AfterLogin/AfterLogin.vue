@@ -1,10 +1,17 @@
 <template>
     <div>
-        <h1>
-            Good Morning {{ this.user.username }}!<br>
+        <h1 v-if ="date < 12">
+            Good Morning {{ this.user }}!<br>
             What would you like to do today?
         </h1>
-
+        <h1 v-else-if="date >= 12 && date <= 17">
+            Good Afternoon {{ this.user }}!<br>
+            What would you like to do today?
+        </h1>
+        <h1 v-else>
+            Good Evening {{ this.user }}!<br>
+            What would you like to do today?
+        </h1>
         <button class ="logout" v-on:click="logout()" >Logout</button>
         
         <dashboard-buttons></dashboard-buttons>
@@ -17,12 +24,14 @@
 import firebase from "../../../firebase";
 import DashboardButtons from "./DashboardButtons.vue"
 import Subfooter from "./Subfooter.vue"
+var database = firebase.firestore();
 
 export default {
     name: 'AfterLogin',
     data (){
         return{
             user : null,
+            date: new Date().getHours()
         }
     },
     components:{
@@ -46,15 +55,17 @@ export default {
     },
     created: function(){
         var user = firebase.auth().currentUser
-        console.log(user)
-        console.log(user ? true : false)
-        if (user){
-            // user is signed in
-            this.user = user;
-
-        }else{
-            // no user is signed in
-        }
+        var useremail = user.email;
+        database.collection('user').get().then((querySnapShot)=>{
+            querySnapShot.forEach(doc=>{
+                var item = doc.data();
+                for (const i in item) {
+                    if (item[i] == useremail) {
+                        this.user = item['username'];
+                    }
+                }
+            })      
+        });
     }
 }
 </script>
@@ -67,8 +78,13 @@ export default {
         line-height: 1.5;
     }
     .logout{
-        background-color: white;
-        font-size: 30px; 
-        margin-left: 80%;
+        letter-spacing: 3px;
+        text-decoration: none;
+        opacity: .9;
+        letter-spacing: 3px;
+        border-radius: 8px;
+        font-size: 25px; 
+        margin-left: 80%;   
     }
+
 </style>

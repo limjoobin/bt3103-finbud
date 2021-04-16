@@ -1,16 +1,5 @@
 <template>
     <div>
-        <!--
-        <br><br>
-        <div class ="topicscc">
-            <br>
-            <p style ="font-size: 30px; color: #0E4070; background-color: white; border-radius: 50px;">Explore Topics</p>
-            <button class ="exptopic">Banking</button>
-            <button class ="exptopic">Cards</button>
-            <button class ="exptopic">Investments</button>
-            <button class ="exptopic">Insurance</button>
-        </div>
-        -->
         <br><br>
         <div class ="forumc">
             <br>
@@ -28,7 +17,6 @@
                 <br>
             </ol>
             <br>
-            <!-- <h6 style ="text-align: center; background-color:white; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </h6> -->
             <button  style="background-color: #000080; color:white; padding:2%; margin-bottom:1%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
         </div>
 
@@ -81,7 +69,6 @@ export default {
             }).then(()=>{location.reload()});
         },
         expand:function(docId){
-            // console.log(docId)
             this.$router.push({name: 'Posts', query: {id: docId}});
         },
         fetchItems:function(){

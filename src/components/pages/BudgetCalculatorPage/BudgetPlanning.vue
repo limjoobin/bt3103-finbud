@@ -100,12 +100,6 @@ export default {
     
 }
 
-/* .budCon2{
-    background-color: #A9D6FF;
-    text-align: center;
-    padding-bottom: 50px;
-} */
-
 .timer{
     height: 40px;
     width: 40px;
@@ -159,16 +153,6 @@ td, th {
     text-align: center;
 }
 
-/* .navBut{
-    text-align: center;
-    font-size: 30px;
-    padding: 5px;
-    margin-left: 85px;
-    height: 230px;
-    width: 200px;
-    border-radius: 12px;
-    color: #0E4070;
-} */
 .budCon2{
     display: flex;
     justify-content: center;
