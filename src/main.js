@@ -19,7 +19,13 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const flag = to.matched.some(record => record.meta.flag);
 
-  if (requiresAuth && !currentUser) next('/');
+  
+  if (requiresAuth && !currentUser) {
+    if (requiresAuth) {
+      alert('Please login to use this feature.')
+    }
+    next('/');
+  }
   else if (!requiresAuth && currentUser && !flag) next ('/home');
   else next();
 });
