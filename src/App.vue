@@ -37,5 +37,7 @@ export default {
         padding: 0px;
     }
 	
-
+    button{
+      cursor: pointer;
+    }
 </style>
