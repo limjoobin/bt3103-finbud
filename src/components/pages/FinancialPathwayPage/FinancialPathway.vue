@@ -244,7 +244,7 @@
                     </div>
                  </div>
                 </div>
-                <div v-show='expectedChildren.length>0' style="display:flex-box;  width:100%;">
+                <div v-show="expectedChildren.length>0 && childrenPlan == 'yes'" style="display:flex-box;  width:100%;">
                 <h3>Future Child</h3>
                 <div v-for='(child,index) in expectedChildren' v-bind:key="index" style="display:inline-block; margin:3%;">
                     <p>Child {{index+1}}</p>
@@ -1599,6 +1599,14 @@ export default {
     if(this.$route.query.edit){
       this.onEdit = this.$route.query.edit
       this.fetchData()
+    }else{
+      this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
+        if(!snapshot.empty){
+          console.log('hihi')
+          this.onEdit = true
+          this.fetchData()
+        }
+      })
     }
   }
   
