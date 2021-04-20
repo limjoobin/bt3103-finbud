@@ -37,6 +37,7 @@ export default{
                     title: {
                         display: true,
                         text: 'Savings Withdrawal Chart',
+                        fontSize: 28,
                       },
                     scales:{
                         yAxes: [{

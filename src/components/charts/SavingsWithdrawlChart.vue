@@ -18,6 +18,6 @@ export default {
 <style>
 #savings-chart{
     background-color:#B9DEFF;
-    padding: 1% 15% 10% 15%;
+    padding: 1% 1% 10% 1%;
 }
 </style>
