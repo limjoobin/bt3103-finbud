@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="../../../assets/logo.png" class="center"/>
       <h2 style="text-align:center;background-color:whitesmoke">FinBud</h2>
       <form style="text-align:center;background-color:whitesmoke">
-        <input type="text" placeholder="Enter Email" v-model="email_field" />
+        <input type="text" placeholder="Email" v-model="email_field" />
         <input type="password" placeholder="Password" v-model="password" />
       </form>
       <button style = "background-color: white; border: none; margin-left: 44%; font-size: 12px; color: black" @click ="$router.push('/forgotpassword')">Forgot password?</button>
