@@ -6,7 +6,7 @@
             <p style ="background-color: white; border-radius: 50px;">Latest Questions</p>
             <br>
             <ol class="myList" style ="width: 80%; margin-left: 10%; border-radius: 50px">
-                <li class ="li4" v-for="item in items" v-bind:key="item.id">
+                <li class ="li4" v-for="item in items" v-bind:key="item.id" style="padding-bottom: 2%;">
                     <br>
                     Asked by {{item.question.user}}
                     <h4 style ="padding: 10px;">{{item.question.question}}</h4>
@@ -17,7 +17,7 @@
                 <br>
             </ol>
             <br>
-            <button  style="background-color: #000080; color:white; padding:2%; margin-bottom:1%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
+            <button style="background-color: #000080; color:white; padding:2%; margin-bottom:1%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
         </div>
 
         <div class ="askQn">
