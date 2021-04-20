@@ -80,15 +80,18 @@ export default {
         line-height: 1.5;
     }
     .logout{
-        letter-spacing: 1px;
         text-decoration: none;
         opacity: .9;
-        letter-spacing: 3px;
         border-radius: 8px;
         font-size: 25px; 
         margin-left: 80%; 
         background-color: white;  
         padding: 0.5%;
+        transition-duration: 0.4s;
+    }
+
+    .logout:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 30px 0 rgba(0,0,0,0.19);
     }
 
 </style>

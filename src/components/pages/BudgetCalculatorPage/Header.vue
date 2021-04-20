@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header class="header" style="padding-bottom: 4%;">
         <img class ="bcHeader" v-bind:src="imageURL">
         <h1>{{title}}</h1>
         <p class ="headerDesc">{{msg}}</p>
@@ -40,7 +40,7 @@ h1{
     font-family: Lustria;
     text-align: center;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 40px;
 }
 
 .headerDesc{

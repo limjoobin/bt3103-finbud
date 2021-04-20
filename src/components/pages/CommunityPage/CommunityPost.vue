@@ -5,7 +5,7 @@
             <nav class="navbar navbar-default navbar-collapse" >
                 <form class="nav navbar-nav pull-right navbar-form">
                     <div class="form-group" style="padding-left: 2%;">
-                        <input type="text" style = "padding: 5px; margin-left: 10px; background-color: #E6F3FF" height = "48" size="50" placeholder="Search"/>
+                        <input type="text" height = "48" size="50" placeholder="Search"/>
                         <button class="btn-search">Search</button>
                     </div>
                 </form>
@@ -86,7 +86,7 @@ var database = firebase.firestore();
 }
 
 .question:hover{
-    box-shadow: 5px 10px 8px 10px #ffffff;
+    box-shadow: 5px 10px 8px 10px rgba(0,0,0,0.29);
 }
 
 .question > *{
@@ -97,4 +97,14 @@ var database = firebase.firestore();
     background:white;
 }
 
+.form-group input{
+    padding: 5px;
+    margin-left: 10px; 
+    border-radius: 3px;
+    background-color: #E6F3FF;
+}
+
+.form-group button{
+    border-radius: 3px;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="login">
-      <img alt="Vue logo" src="../../../assets/logo.png" class="center"/>
+      <img alt="Vue logo" src="../../../assets/logo.png" class="center" style="background-color: whitesmoke"/>
       <h2 style="text-align:center;background-color:whitesmoke">FinBud</h2>
       <form style="text-align:center;background-color:whitesmoke">
         <input type="text" placeholder="Email" v-model="email_field" />
@@ -106,7 +106,6 @@ button {
   font-size: 15px;
   text-align: center;
 }
-
 
 button:hover {
   background-color: lightskyblue;

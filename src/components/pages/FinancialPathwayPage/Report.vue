@@ -5,7 +5,7 @@
         </div>
         <div v-if='this.hasData'>
         <div class='profile-details'>
-            <h1>Current Profile  <button v-on:click='edit()' >Edit</button></h1>       
+            <h1>Current Profile  <button v-on:click='edit()' style="background-color: whitesmoke; border-radius: 2px; padding: 2px;">Edit</button></h1>       
         </div>
             <retirement-line-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-line-chart>
             <retirement-chart :assetGrowthData='assetGrowthData' :loading='loading'></retirement-chart>
@@ -143,8 +143,8 @@ export default {
 .logo{
   position: relative;
   transform: translate(-50,-50);
-  max-width: 15%;
-  max-height:20%;
+  max-width: 10%;
+  max-height:10%;
 }
 
 .header{
