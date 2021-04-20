@@ -55,6 +55,7 @@ export default {
         },
     },
     created: function(){
+        this.$store.commit('login')
         var user = firebase.auth().currentUser
         var useremail = user.email;
         database.collection('user').get().then((querySnapShot)=>{
