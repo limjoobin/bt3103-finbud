@@ -7,7 +7,7 @@
                 <div class ="reg-form">
                     <br>
                     <label for="exampleInputEmail" style ="margin-left: 15%; margin-right: 5%">Email Address: </label>
-                    <input text="text" style="width:50%" v-model="user.email">
+                    <input text="text" style="width:50%; background-color: rgba(0, 0, 0, 0.07)" v-model="user.email">
                 </div>
                 <br>
                 <button type="submit" class="btns" >Reset Password</button>
