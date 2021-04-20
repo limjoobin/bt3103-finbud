@@ -40,12 +40,13 @@ h1{
     font-family: Lustria;
     text-align: center;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 40px;
 }
 
 .headerIGDesc{
     font-size: 15px;
     text-align: center;
     font-family: Lato;
+    padding-bottom: 5%;
 }
 </style>

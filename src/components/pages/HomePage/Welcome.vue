@@ -29,7 +29,6 @@ export default {
 </script>
 
 <style scoped>
-h3,
 h1 {
   font-family: Lustria;
 }

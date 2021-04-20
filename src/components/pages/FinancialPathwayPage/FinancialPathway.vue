@@ -3,7 +3,7 @@
       <div class="header">
         <img class="logo" alt="Finbud logo" src="../../../assets/logo.png" @click="$router.push('/')">
         <h1 class='header-font'>Planning your Financial Pathway</h1>
-        <p>Use this to plan your journey towards your financial freedom</p>
+        <p style="padding-bottom: 5%">Use this to plan your journey towards your financial freedom</p>
       </div>
 
       <div class="second">
@@ -1635,8 +1635,8 @@ export default {
 .logo{
   position: relative;
   transform: translate(-50,-50);
-  max-width: 15%;
-  max-height:20%;
+  max-width: 10%;
+  max-height: 10%;
 }
 
 .second{

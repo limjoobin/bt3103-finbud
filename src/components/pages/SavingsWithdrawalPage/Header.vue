@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header id='savings-header'>
     <img src="../../../assets/logo.png" @click="$router.push('/')" />
     <h1>{{ title }}</h1>
     <p>{{ msg }}</p>
@@ -20,14 +20,16 @@ export default {
 </script>
 
 <style>
-header {
+#savings-header {
   background-color: #a9d6ff;
   content: "";
   display: table;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-header img {
+#savings-header img {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -44,7 +46,7 @@ h1 {
   font-size: 40px;
 }
 
-header p {
+#savings-header p {
   font-size: 15px;
   text-align: center;
   font-family: Lato;

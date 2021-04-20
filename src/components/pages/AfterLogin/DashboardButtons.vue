@@ -1,9 +1,9 @@
 <template>
     <div id = 'dashboard'>
-        <button id='community-button' style ="border-radius: 50px;" v-on:click="$router.push('community')">Community News Feed</button>
-        <button id='dashboard-button' style ="border-radius: 50px;" v-on:click="$router.push('report')">Dashboard</button>
-        <button id='chat-button' style ="border-radius: 50px;" @click='redirectFinancialExpert()'>Chat with Expert</button>
-        <button id='financial-calculator-button' style ="border-radius: 50px;" v-on:click="$router.push('financial_pathway')">Map your financial journey</button>
+        <button id='community-button'  v-on:click="$router.push('community')">Community News Feed</button>
+        <button id='dashboard-button'  v-on:click="$router.push('report')">Dashboard</button>
+        <button id='chat-button'  @click='redirectFinancialExpert()'>Chat with Expert</button>
+        <button id='financial-calculator-button'  v-on:click="$router.push('financial_pathway')">Map your financial journey</button>
     </div>
 </template>
 
@@ -36,10 +36,10 @@ export default {
         background-size: 80%;
         background-color: white;
         background-position: center;
-        border-radius: 8px;
+        border-radius: 50px;
         font-family: Lato;
-        width: 20%;
-        min-width: 20%;
+        width: 22%;
+        min-width: 22%;
         height: 100%;
         min-height: 100%;
         padding: 20% 0 0 0;
@@ -49,8 +49,8 @@ export default {
         line-height: 20px;
         font-size: 20px;
         transition-duration: 0.4s;
-        
     }
+
     #dashboard button:hover {
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     }

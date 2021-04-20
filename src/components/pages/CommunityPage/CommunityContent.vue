@@ -12,12 +12,12 @@
                     <h4 style ="padding: 10px;">{{item.question.question}}</h4>
                     Comments: {{item.question.comments.length/2}}
                     <br>
-                    <button style='background:white; padding:2%; border-radius:25px 25px 25px 25px;' @click='expand(item.id)'>Expand</button>
+                    <button style='background:white; padding:2%; margin-top:2%; border-radius:25px 25px 25px 25px;' @click='expand(item.id)'>Expand</button>
                 </li>
                 <br>
             </ol>
             <br>
-            <button style="background-color: #000080; color:white; padding:2%; margin-bottom:1%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
+            <button style="background-color: #000080; color:white; padding:2%; margin-bottom:3%; border-radius:25px 25px 25px 25px;"  @click="$router.push('/communitypost')"> See more Questions </button>
         </div>
 
         <div class ="askQn">

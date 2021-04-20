@@ -89,6 +89,11 @@ export default {
   border: 2px solid #222;
   margin: 10px;
   font-size: 20px;
+  background-color: white;
+}
+
+.li2 *{
+    background-color: white;
 }
 
 .li {

@@ -6,8 +6,8 @@
             <form @submit.prevent='forgotPassword'>
                 <div class ="reg-form">
                     <br>
-                    <label for="exampleInputEmail" style ="margin-left: 15%; margin-right: 5%">Email Address: </label>
-                    <input text="text" style="width:50%; background-color: rgba(0, 0, 0, 0.07)" v-model="user.email">
+                    <label for="exampleInputEmail">Email Address: </label>
+                    <input text="text" v-model="user.email">
                 </div>
                 <br>
                 <button type="submit" class="btns" >Reset Password</button>
@@ -49,8 +49,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .register {
   background-color: whitesmoke;
   width: 500px;
@@ -86,5 +84,16 @@ export default {
   background-color: lightskyblue;
   color: whitesmoke;
   border-color:lightskyblue;
+}
+
+.reg-form label{
+    margin-left: 15%; 
+    margin-right: 5%;
+}
+
+.reg-form input{
+    width:50%; 
+    background-color: rgba(0, 0, 0, 0.07); 
+    border-radius: 3px;
 }
 </style>

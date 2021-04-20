@@ -1,6 +1,6 @@
 <template>
   <div id="service">
-    <h1 style="padding-top: 10px; background-color: white">Our Services</h1>
+    <h1 style="padding-top: 2%; background-color: white">Our Services</h1>
     <h1 style="background-color: white; text-align: center">
       You might be interested in
     </h1>
@@ -82,10 +82,15 @@ span {
   padding: 5px;
   align-self: center;
   flex-basis: auto;
-  margin-left: 85px;
+  margin-left: 2%;
   height: 230px;
-  width: 200px;
+  width: 50%;
   border-radius: 12px;
   color: #0e4070;
+  transition-duration: 0.4s;
+}
+
+.navBut:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 </style>
