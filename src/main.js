@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App.vue'
 import Routes from './routes.js'
+import createPersistedState from "vuex-persistedstate";
 
 import VueRouter from 'vue-router'
 import firebase from 'firebase';
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
     logout(state) {
       state.logged_in=false
     }
-  }
+  },
+  plugins:[createPersistedState()]
 })
 
 router.beforeEach((to, from, next) => {
