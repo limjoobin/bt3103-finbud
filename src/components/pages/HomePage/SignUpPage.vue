@@ -188,6 +188,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
+          this.$store.commit('login')
           this.$router.push({ path: "home" });
         })
         .catch((error) => {
