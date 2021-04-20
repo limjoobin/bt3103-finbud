@@ -2,10 +2,10 @@
     <div>
         <h1 class = "communityHeader"> Finbud Forum</h1>
         <div class ="forum">
-            <nav class="navbar navbar-default navbar-collapse">
+            <nav class="navbar navbar-default navbar-collapse" >
                 <form class="nav navbar-nav pull-right navbar-form">
-                    <div class="form-group">
-                        <input type="text" style = "padding: 5px; margin-left: 10px;" height = "48" size="50" placeholder="Search"/>
+                    <div class="form-group" style="padding-left: 2%;">
+                        <input type="text" style = "padding: 5px; margin-left: 10px; background-color: #E6F3FF" height = "48" size="50" placeholder="Search"/>
                         <button class="btn-search">Search</button>
                     </div>
                 </form>
@@ -66,6 +66,8 @@ var database = firebase.firestore();
 .btn-search {
     margin-left: 10px;
     font-size: 20px;
+    padding: 2px;
+    background-color: whitesmoke;
 }
 
 .questions{

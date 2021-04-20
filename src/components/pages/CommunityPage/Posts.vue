@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 style = "text-align: center">Posts</h1>
-        <button  style ="margin-left: 40px; font-size: 20px; background-color: #A9D6FF; border-radius: 5px" @click="$router.push('/communitypost')">Back</button>
+        <button  style ="margin-left: 40px; font-size: 20px; background-color: white; padding: 5px; border-radius: 5px" @click="$router.push('/communitypost')">Back</button>
         <div style ="padding: 10px;">
             <h2>Question:</h2>
             <h4 style ="margin-left: 30px">{{post[0].question}}</h4>
@@ -18,7 +18,7 @@
         <div style ="padding: 40px;">
             <p>Write your comment here</p>
             <br>
-            <textarea v-model="comment" rows="7" cols="80px" required></textarea>
+            <textarea v-model="comment" rows="7" cols="80px" required style='background-color: #E6F3FF'></textarea>
             <br><br>		
             <button class ="postComment" v-on:click="postComment()">Post</button>
         </div>
