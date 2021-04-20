@@ -33,7 +33,14 @@ export default{
                 },
                 ],
             },
-            { responsive: true, maintainAspectRatio: false,
+            {   
+                title: {
+                    display: true,
+                    text: 'Investment Growth Chart',
+                    fontSize: 28,
+                  },
+                responsive: true, 
+                maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
                       stacked: true,
