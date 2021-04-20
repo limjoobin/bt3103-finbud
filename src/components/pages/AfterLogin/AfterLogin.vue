@@ -79,13 +79,15 @@ export default {
         line-height: 1.5;
     }
     .logout{
-        letter-spacing: 3px;
+        letter-spacing: 1px;
         text-decoration: none;
         opacity: .9;
         letter-spacing: 3px;
         border-radius: 8px;
         font-size: 25px; 
-        margin-left: 80%;   
+        margin-left: 80%; 
+        background-color: white;  
+        padding: 0.5%;
     }
 
 </style>
