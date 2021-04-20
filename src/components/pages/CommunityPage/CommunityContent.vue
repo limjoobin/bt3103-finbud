@@ -47,10 +47,7 @@ export default {
                 ques: [],
             },
             items: [],
-            name: '',
-            email: '',
-            emailVerified: '',
-            uid: '',
+            user: '',
         }
     },
     methods: {
@@ -63,7 +60,7 @@ export default {
                 question: {
                     "question": this.question.ques[0],
                     "comments": this.question.ques[1],
-                    "user": this.email,
+                    "user": this.user,
                     'timestamp': firebase.firestore.FieldValue.serverTimestamp()
                 }
             }).then(()=>{location.reload()});
@@ -89,14 +86,19 @@ export default {
     components:{
     },
     created(){
-        this.fetchItems()
-        var user = firebase.auth().currentUser;
-        if (user != null) {
-            this.name = user.displayName;
-            this.email = user.email.split("@")[0];
-            this.emailVerified = user.emailVerified;
-            this.uid = user.uid;
-        }
+        this.fetchItems();
+        var user = firebase.auth().currentUser
+        var useremail = user.email;
+        database.collection('user').get().then((querySnapShot)=>{
+            querySnapShot.forEach(doc=>{
+                var item = doc.data();
+                for (const i in item) {
+                    if (item[i] == useremail) {
+                        this.user = item['username'];
+                    }
+                }
+            })      
+        });
     },
 }
 </script>

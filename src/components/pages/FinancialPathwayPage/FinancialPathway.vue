@@ -654,7 +654,7 @@ export default {
         }
         if(this.haveChildren == 'yes'){
           for(let i = 0; i< this.children.length; i++){
-            if(this.children[i].age < 0 || this.children[i].age){
+            if(this.children[i].age < 0 || !(this.children[i].age)){
               m += "  Invalid age for child " + i+1
               invaild = true
             }
@@ -1174,7 +1174,10 @@ export default {
       for(let i = 0; i< l; i++){
         // var exp = grossExp[grossExp.length -1]
         gross = i< grossExp.length ? grossExp[i]:0
-        child = i< childCost.length ? childCost[i]:0
+        //child = i< childCost.length ? childCost[i]:0
+        if(this.excludeChildren === 'no'){
+          child =  i < childCost.length ? childCost[i]:0
+        }
         tax = i< taxes.length ? taxes[i]:0
         liabilitiesCost = i < liabilites.length ? liabilites[i]:0
         flatPaymentCost = i< flatPayment.length ? flatPayment[i]:0

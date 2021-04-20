@@ -1,9 +1,10 @@
 <template>
     <div>
         <h1 style = "text-align: center">Posts</h1>
+        <button  style ="margin-left: 40px; font-size: 20px; background-color: #A9D6FF; border-radius: 5px" @click="$router.push('/communitypost')">Back</button>
         <div style ="padding: 10px;">
             <h2>Question:</h2>
-            <h3>{{post[0].question}}</h3>
+            <h4 style ="margin-left: 30px">{{post[0].question}}</h4>
             <ul class = "ul">
                 <li class ="li" v-for="comments in post" v-bind:key="comments.id">
                     <ul class ="ul" v-for ="(c,v) in comments.comments" v-bind:key = v>
@@ -41,10 +42,8 @@ export default {
     },
     methods: {
         fetchPost:function(){
-            console.log(this.id)
             database.collection('forum').doc(this.id).get().then(snapshot => {
             this.item = snapshot.data();
-            console.log(this.item)
             this.post.push(this.item['question']);
         })},
         postComment: function() {
@@ -80,6 +79,7 @@ export default {
 .ul {
   list-style-type: none;
   padding: 0;
+  margin-left: 5px;
 }
 .li2 {
   flex-grow: 1;
