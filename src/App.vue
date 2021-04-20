@@ -1,6 +1,6 @@
 <template> 
   <div id = "app">
-    <nav-bar style="z-index:10;"></nav-bar>
+    <nav-bar style="z-index:10;" v-if="this.$store.state.logged_in == true"></nav-bar>
     <router-view></router-view>
     <app-footer></app-footer>
   </div>

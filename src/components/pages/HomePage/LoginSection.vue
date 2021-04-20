@@ -35,6 +35,7 @@ export default {
       firebase.auth()
               .signInWithEmailAndPassword(userEmail, userPass)
               .then(()=>{
+                this.$store.commit('login')
                 this.$router.push({path: 'home'})
               })
               .catch((error) => {

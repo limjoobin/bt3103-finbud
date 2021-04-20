@@ -44,6 +44,7 @@ export default {
             .auth()
             .signOut()
             .then(() => {
+                this.$store.commit('logout')
                 this.$router.replace('/');
             })
             .catch((error) => {

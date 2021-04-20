@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 import Routes from './routes.js'
 
@@ -13,6 +14,21 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   }
 });
+
+Vue.use(Vuex)
+const store = new Vuex.Store({
+  state:{
+    logged_in : false
+  }, 
+  mutations:{
+    login(state) {
+      state.logged_in=true
+    }, 
+    logout(state) {
+      state.logged_in=false
+    }
+  }
+})
 
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
@@ -40,13 +56,8 @@ firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = new Vue({
       router,
-      render: h => h(App)
+      store,
+      render: h => h(App),
     }).$mount('#app');
   }
 })
-/*
-new Vue({
-  render: h => h(App),
-  router: router,
-}).$mount('#app')
-*/
