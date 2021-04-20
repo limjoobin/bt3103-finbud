@@ -130,10 +130,10 @@ export default {
   data: function () {
     return {
       showing: "register",
-      name: "darren",
-      email: "darren1@gmail.com",
-      password: "123456",
-      passwordcheck: "123456",
+      name: "",
+      email: "",
+      password: "",
+      passwordcheck: "",
     };
   },
   methods: {
