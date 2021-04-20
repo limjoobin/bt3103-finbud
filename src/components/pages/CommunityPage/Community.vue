@@ -18,6 +18,9 @@ export default {
     components:{
         'header1': HeaderCommunity,
         'body-2': CommunityContent,
+    },
+    created(){
+        document.title="FinBud - Community"
     }
 }
 </script>

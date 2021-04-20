@@ -136,6 +136,9 @@ export default {
       passwordcheck: "",
     };
   },
+  created(){
+    document.title="Sign Up"
+  },
   methods: {
     toggle: function (page) {
       this.showing = page;

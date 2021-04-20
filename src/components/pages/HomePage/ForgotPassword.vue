@@ -28,6 +28,9 @@ export default {
             }
         }
     },
+    created(){
+        document.title="Forgot Password"
+    },
     methods: {
         forgotPassword(){
             firebase.auth()

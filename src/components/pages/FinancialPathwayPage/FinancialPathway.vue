@@ -1599,6 +1599,7 @@ export default {
     }
   },
   created(){
+    document.title="FinBud - Financial Pathway Planner"
     if(this.$route.query.edit){
       this.onEdit = this.$route.query.edit
       this.fetchData()

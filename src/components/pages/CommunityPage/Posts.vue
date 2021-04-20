@@ -60,6 +60,7 @@ export default {
         },
     },
     created() {
+        document.title="FinBud - Community"
         this.fetchPost();
     },
 }

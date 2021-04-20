@@ -21,6 +21,9 @@ export default {
     Welcome,
     Reviews,
   },
+  created(){
+    document.title="Home"
+  }
 };
 </script>
 
