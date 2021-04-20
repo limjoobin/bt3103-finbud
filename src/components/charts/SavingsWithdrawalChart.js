@@ -58,8 +58,6 @@ export default{
             for(let i =0; i < this.timestep; i++){
                 this.label.push(i+1);
             }
-            console.log(this.label);
-
             this.renderBarChart();
         }
     },
