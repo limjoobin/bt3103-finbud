@@ -134,7 +134,7 @@ export default {
       }
     },    
     created() {
-        console.log(firebase.auth().currentUser.uid)
+        document.title="FinBud - Dashboard"
         this.fetchData();
     }
 }

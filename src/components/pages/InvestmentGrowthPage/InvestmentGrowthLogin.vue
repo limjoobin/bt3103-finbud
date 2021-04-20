@@ -451,6 +451,7 @@ export default {
     header1: HeaderIG,
   },
   created() {
+    document.title="FinBud - Investment Growth"
     var user = firebase.auth().currentUser;
     if (user != null) {
       this.uid = user.uid;

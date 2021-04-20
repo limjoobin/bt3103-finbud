@@ -52,6 +52,9 @@ export default {
       amount: [],
     };
   },
+  created(){
+    document.title="FinBud - Savings Withdrawal"
+  },
   methods: {
     onChartData: function (timesteps, amount) {
       this.timesteps = timesteps;

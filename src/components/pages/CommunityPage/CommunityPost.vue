@@ -50,6 +50,7 @@ var database = firebase.firestore();
             }
         },
         created() {
+            document.title="FinBud - Community"
             this.fetchPosts();
         }
     }

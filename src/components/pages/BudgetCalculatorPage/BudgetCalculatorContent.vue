@@ -14,6 +14,9 @@ export default {
   components: {
     'app-header':Header,
     'body-1': budCalContent,
+  },
+  created(){
+    document.title= "FinBud - Budget Planning"
   }
 }
 </script>

@@ -159,6 +159,9 @@ import HeaderIG from "./HeaderIG.vue";
 
 export default {
   name: "InvestmentGrowth",
+  created(){
+    document.title="FinBud - Investment Growth"
+  },
   data() {
     return {
       content: "Estimated time: 1 min",

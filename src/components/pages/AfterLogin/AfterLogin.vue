@@ -56,6 +56,7 @@ export default {
     },
     created: function(){
         this.$store.commit('login')
+        document.title="FinBud - Home"
         var user = firebase.auth().currentUser
         var useremail = user.email;
         database.collection('user').get().then((querySnapShot)=>{
