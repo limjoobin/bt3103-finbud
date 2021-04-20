@@ -60,7 +60,6 @@ export default {
                 this.hasData = true
                 snapshot.docs.forEach(doc =>{
                         var data = doc.data()
-                        console.log(data)
                         var milestones = this.getDataPointsForMilestone(data.milestonesGoals, data.date ,data.currentAge)
                         this.assetGrowthData['currentAge'] = data.currentAge
                         this.assetGrowthData['projectedCashInBank'] = data.projectedCashInBank
@@ -92,7 +91,6 @@ export default {
           this.$emit('incomeData',this.incomeInfo)
           this.$emit('loading',this.loading)
       },sendAssetInfo:function(){
-          console.log("SENDING")
           this.$emit('assetGrowthData',this.assetGrowthData)
           this.$emit('loading',this.loading)
       }, calculateIncome:function(){
@@ -114,7 +112,6 @@ export default {
 
           var expAtRetirement = Math.round(this.assetGrowthData.projectedExpenses[yearsToRetirement]/12)
           var expAt65 = Math.round(this.assetGrowthData.projectedExpenses[yearsto65]/12)
-          console.log(expAtRetirement,expAt65)
           this.incomeInfo.push([expAtRetirement,expAt65])
       }, getDataPointsForMilestone:function(milestone, date,currentAge){
           var milestones =[]
@@ -122,7 +119,6 @@ export default {
           for(let i = 0; i < milestone.length ; i++){
               var amt = milestone[i].amount
               var yr =  new Date(milestone[i].date).getFullYear() - new Date(date).getFullYear() +1
-              console.log(yr+currentAge)
               milestones.push({x:yr+currentAge, y:amt})
               if(milestone[i].freq !== 'once'){
                   milestonesLabel.push(milestone[i].freq +" " + milestone[i].name)

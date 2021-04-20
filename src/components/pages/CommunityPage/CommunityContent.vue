@@ -78,8 +78,7 @@ export default {
                 this.items.push(item) 
                 })
              
-            }).then(()=>console.log(this.items))
-                
+            })  
         },
         
     },

@@ -51,7 +51,6 @@ export default{
                 this.datacollection.datasets[0].data = this.assetGrowthData.projectedInvestmentExpected.slice(0,this.assetGrowthData.currentAge - this.assetGrowthData.idealRetirementAge+1)
                 // this.datacollection.datasets[0].data = this.assetGrowthData.projectedInvestmentExpected
                 for(let i = 0; i < this.assetGrowthData.milestones.length; i ++){
-                    console.log("Pushing",this.assetGrowthData.milestonesLabel[i]," ",this.assetGrowthData.milestones[i])
                     this.datacollection.datasets.push(
                         {
                             label: this.assetGrowthData.milestonesLabel[i],
@@ -71,8 +70,6 @@ export default{
         }
     }, watch:{
         loading:function(){
-            console.log("CURRENTLY LOADING",this.loading)
-            console.log(this.assetGrowthData)
             this.renderChartLine()
         }, assetGrowthData:function(){
             this.renderChartLine()

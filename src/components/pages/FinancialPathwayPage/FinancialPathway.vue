@@ -769,33 +769,27 @@ export default {
         this.projectedIncome = income[0]
         this.projectedIncomeAfterCPF = income[1]
 
-        console.log("Projected Income",this.projectedIncome)
         this.projectedExpenses = this.projectExpense()
 
-        console.log("Annual Gross Expenses",this.projectedExpenses)
 
         if(this.excludeChildren === 'no'){
           var childCost = this.addChildExpenses(this.projectedExpenses)
         }
 
-        console.log("Child Expenses",childCost)
         
         this.projectedTax = this.projectTax(this.projectedIncome)
 
-        console.log("Tax",this.projectedTax)
 
 
         var liabilitiesDetails = this.projectLiabilities(this.liabilities)
         this.projectedLiabilities = liabilitiesDetails.length > 0 ? liabilitiesDetails[0] : []
         var totalLiabilitiesPayable = liabilitiesDetails.length > 0 ? liabilitiesDetails[1] : []
         
-        console.log("Liabilities",liabilitiesDetails[0])
         
         //Accounting flat prices into consideration
         var flatDetails = this.deductCPFforFlat(this.typeOfFlat.price)
         var flatPayment = flatDetails[0]
   
-        console.log("Flat Payment details",flatPayment)
         
         var finalExpenses = []
         if(this.mortagePaymentMethod === 'cpf'){
@@ -805,25 +799,17 @@ export default {
         }
  
         this.projectedExpenses = finalExpenses
-        console.log("Final Expenses", this.projectedExpenses)
         
 
           //Adding the milestone into consideration
         var milestoneDetails = this.calculateMilestoneCost(this.milestones)
-        var milestoneCost = milestoneDetails[0]
-        console.log("Milestone cost",milestoneDetails[1])
-   
-        
+        var milestoneCost = milestoneDetails[0]        
         
         if(this.minEmergencyFundType ==='income'){
           this.minEmergencyAmt = this.projectEmergencyAmt(this.projectedIncomeAfterCPF,this.minEmergencyFundMultiple)
         }else{
           this.minEmergencyAmt = this.projectEmergencyAmt(finalExpenses,this.minEmergencyFundMultiple)
-        } 
-
-        console.log("Minimum Emergency Fund", this.minEmergencyAmt)
- 
-
+        }  
 
         if(this.mortagePaymentMethod === 'cpf'){
           var cpf = this.projectCPF(this.projectedIncome,flatPayment)
@@ -836,53 +822,29 @@ export default {
                                                                                           finalExpenses, 
                                                                                           liabilitiesDetails[1], flatPayment)
         }
-        // console.log("Cash in bank", this.projectedCashInBankBeforeRetirement)
-        // console.log("Investment Contribution",this.investmentContribution)
-        // console.log("Expenses: ", this.projectedExpenses)
-        // console.log("liabilites", liabilitiesDetails[1])
-
+        
         this.projectedCpfOA = cpf[0]
         this.projectedCpfSA = cpf[1]
-        this.projectedCpfMA = cpf[2]
-        console.log("OA: ", this.projectedCpfOA)
-        console.log("SA: ", this.projectedCpfSA)
-       
+        this.projectedCpfMA = cpf[2]       
         
         this.projectedInvestment = this.projectInvestment(this.investmentContribution,milestoneCost)
-        // console.log("Milestone Expenses: ",milestoneCost)
-        // console.log("InvestmentConservative", this.projectedInvestment[0])
-        // console.log("InvestmentExpected", this.projectedInvestment[1])
-        // console.log("InvestmentOptimistic", this.projectedInvestment[2])
         //Calculate CPF Retirement sum
         this.cpfRetirement = this.projectRetirementSum()
-        // console.log(this.cpfRetirement)
         var cpfLifePayout =  this.calculateCpfPayout()
 
 // currCashInBank, investmentWithAfterRetirement
         var retirementProject = this.projectedCashInBankAfterRetirement(finalExpenses,this.minEmergencyAmt,cpfLifePayout,this.projectedInvestment[1],this.projectedCashInBankBeforeRetirement,milestoneCost )
         this.projectedCashInBank = retirementProject[0]
         this.projectedInvestment[1] = retirementProject[1]
-        console.log("CashInBank", this.projectedCashInBank)
-        console.log("Investment Contribution",this.investmentContribution)
-        console.log("InvestmentExpected", this.projectedInvestment[1])
-          
-        console.log("CPF PAYOUT",cpfLifePayout)
+
         this.dataset['projectedCashInBank'] = this.projectedCashInBank
         this.dataset['projectedInvestmentExpected'] = this.projectedInvestment[1]
         this.dataset['projectedExpenses'] = this.projectedExpenses
         this.dataset['currentAge'] = this.currentAge
-
-        // firebase.database.collection('user/user1/financialPathway').set({
-        //   'ProjectedCashInBank':this.projectedCashInBank
-        // },{merge:true})
-
-
-        console.log(this.milestones)
         
         this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
           if(!snapshot.empty){
             snapshot.docs.forEach(doc =>{
-              console.log(this.typeOfFlat,doc)
               this.db.doc(`user/${firebase.auth().currentUser.uid}/financialPathway/${doc.id}`).update({
                 //User input value
                 "date": new Date().toDateString(),
@@ -1002,9 +964,7 @@ export default {
               })
           }
         }).then(()=>{
-          console.log("LIABILITIESSSS",liabilitiesDetails)
           this.$router.push({path: `/report`})
-
         })
 
 
@@ -1056,8 +1016,6 @@ export default {
       var totalExpenses =[currExpenses*12]
       var expInflation = parseInt(this.expectedInflation)
       var expGrowth = parseInt(this.expensesGrowth)
-      console.log("EXP INFLAT",expInflation)
-      console.log("EXP Growth",expGrowth)
       for(let i = this.currentAge; i < this.retirementAge; i++) {
         var yr = i-this.currentAge+1
         var growth = currExpenses * ((expInflation + expGrowth)/100)
@@ -1085,7 +1043,6 @@ export default {
       var costs = Array(100).fill(0)
       var estCost =0
       if(this.haveChildren === 'yes'){
-        console.log("HI")
         for(let child of this.children){
           if(child.gender === 'female'){
             if(child.age <= 23){
@@ -1114,7 +1071,6 @@ export default {
           var pos = age.estimatedAge - this.currentAge //to get the year in which the user plans to have child.
           for(let a = pos;  a<= pos+23;a++) { //plus 23 because child education is expected to last 23 years
                 estCost = this.estimatedChildExpenses[a-pos]/2 //will not divide by 2 if its sole breadwinner
-                // console.log("Child age",a-pos,' cost ==>',estCost," My age",a+this.currentAge) For checking of calculation
                 costs[a] = costs[a] + estCost
           }
         }
@@ -1193,8 +1149,6 @@ export default {
     },
     projectEmergencyAmt:function(values ,multiple){
       multiple = parseInt(multiple)
-      console.log("Value is ",values)
-      console.log("Multiple is ",multiple)
       var maxVal = []
       for(let i = 0; i<values.length;i++){
         maxVal.push((values[i]/12) * multiple)
@@ -1202,14 +1156,12 @@ export default {
       return maxVal
     },
     projectCashInBankBeforeRetirement:function(incomes,expenses){
-      console.log("CALCULATING CASH BEFORE RETIREMENNTTTTTT \n\n")
       var cash = [parseFloat(this.cashInBank)]
       var curr = parseFloat(this.cashInBank)
       for(let i = 0; i < incomes.length; i++){
         var newBal = 0
         var investmentAmt = 0
         newBal = curr + (incomes[i] - expenses[i])
-        console.log("Current Age: "+ i+this.currentAge,"Before Bal: "+curr,"After Bal: "+newBal  ," Income: " + incomes[i]," Expenses: " +expenses[i], "Diff: "+ (incomes[i] - expenses[i]) )
 
         // var liability = i <= liabilities.length ? liabilities[i] : 0
         // if(flatDetails.length > 0){
@@ -1228,7 +1180,6 @@ export default {
         // }
 
         if(newBal <= this.minEmergencyAmt[i+1]){
-          console.log("WARNING LOW EMERGENCY FUND",i)
           var withdrawlFromInvestment = newBal - this.minEmergencyAmt[i+1]  
           newBal = this.minEmergencyAmt[i+1]
           this.investmentContribution.push(withdrawlFromInvestment)
@@ -1312,7 +1263,6 @@ export default {
         }else if(milestone[i].freq === "quarterly"){
           amt *=3
         }
-        // console.log(yearsBeforeStart)
         for(let yr =0; yr < durationOfMilestone; yr++){
           year =  yearsBeforeStart + yr
           var amtWithInflation = this.calcInflation(amt,milestone[i].inflation/100,year)
@@ -1348,7 +1298,6 @@ export default {
         
         //Remove milestone cost
         if(i in milestoneCost){
-          // console.log(portfolioSize,milestoneCost[i])
           portfolioSizeExpected -= milestoneCost[i].amount
           portfolioSizeConservative -= milestoneCost[i].amount
           portfolioSizeOptimistic -= milestoneCost[i].amount
@@ -1498,46 +1447,34 @@ export default {
     calculateCpfPayout:function(){
             var yearsTo55 = 55 - this.currentAge
             var cpfAmtAt55 = this.projectedCpfOA[yearsTo55-1] + this.projectedCpfSA[yearsTo55-1]
-            console.log("CPF AT 55", cpfAmtAt55)
-            console.log("Retirement sum", this.cpfRetirement[1])
             if(cpfAmtAt55 > this.cpfRetirement[1].ers){
-                console.log("GETTING ERS")
                 return this.cpfRetirement[0].ersCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].frs){
-                console.log("GETTING FRS")
                 return this.cpfRetirement[0].frsCpfPayout
             }else if(cpfAmtAt55 > this.cpfRetirement[1].brs){
-                console.log("GETTING BRS")
                 return this.cpfRetirement[0].brsCpfPayout
             }else{
                 return 0
             }
     },
     projectedCashInBankAfterRetirement:function(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost){
-      console.log("PROJECTING CASH IN BANK AFTER RETIREMENT")
-      console.log(expenses,minEmergencyAmt,cpfLifePayout,investment,cashInBank,milestoneCost)
       var currCashInBank = cashInBank
       var retirementAge = this.retirementAge
       var inv = investment[investment.length-1]
       var currCash = parseInt(currCashInBank[currCashInBank.length-1])
       var investmentWithAfterRetirement = investment
       for(let i = retirementAge; i < 100; i++){
-        // var currCash = currCashInBank[currCashInBank.length-1]
-        // console.log(i,expenses[i-retirementAge],currCash)
         if(i < 65){ //CPF Payout not started 
           inv -= expenses[i-this.currentAge] 
         }else{
           inv +=  ((cpfLifePayout*12) - expenses[i-this.currentAge])
         }
         // if(currCash < minEmergencyAmt[i]){
-        //   console.log("SHORTAGEEEE  ")
         //   var shortage =  minEmergencyAmt[i] - currCash
         //   inv -= shortage
         // }
-        // console.log(expenses[i],minEmergencyAmt[i])
 
         if(i in milestoneCost){
-          // console.log(portfolioSize,milestoneCost[i])
           inv-= milestoneCost[i].amount
         }
         
@@ -1550,7 +1487,6 @@ export default {
     fetchData:function(){
       
       if(this.onEdit){
-        console.log("logged In user")
         this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
           if(!snapshot.empty){
             snapshot.docs.forEach(doc =>{
@@ -1593,7 +1529,7 @@ export default {
           }
           }
         
-        ).then(()=>{console.log(this.liabilities)})
+        )
 
       }
     }
@@ -1606,7 +1542,6 @@ export default {
     }else{
       this.db.collection(`user/${firebase.auth().currentUser.uid}/financialPathway`).get().then(snapshot =>{
         if(!snapshot.empty){
-          console.log('hihi')
           this.onEdit = true
           this.fetchData()
         }
