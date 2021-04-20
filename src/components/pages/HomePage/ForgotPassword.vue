@@ -10,7 +10,7 @@
                     <input text="text" style="width:50%" v-model="user.email">
                 </div>
                 <br>
-                <button type="submit" class="btns" style ="margin-top: 10%; margin-left: 70%; background:white; padding:1%; border-radius:25px">Reset Password</button>
+                <button type="submit" class="btns" >Reset Password</button>
             </form>
             <br><br><br>
         </div>
@@ -69,8 +69,19 @@ export default {
   display: flex;
   justify-content: space-around;
   align-content: space-around;
-  padding: none;
+  padding: 2%;
   border: none;
   background: none;
+  background-color: #3d5afa;
+  margin-top: 10%;
+  margin-left: 70%;
+  color: whitesmoke;
+  border-radius: 25px;
+}
+
+.btns:hover {
+  background-color: lightskyblue;
+  color: whitesmoke;
+  border-color:lightskyblue;
 }
 </style>
