@@ -53,7 +53,7 @@
             />
           </div>
           <div>
-            <label for="password-again">Password Again:</label>
+            <label for="password-again">Retype Password:</label>
             <input
               type="password"
               id="password-again"
@@ -224,7 +224,7 @@ export default {
 }
 
 .register {
-  background-color: #a9d6ff;
+  background-color:whitesmoke;
   width: 500px;
   margin: 10px auto;
   padding: 10px;
@@ -235,6 +235,9 @@ export default {
   background-color: back-color;
   box-shadow: 0 0 20px 0 #000000;
   height: 350px;
+}
+.register *{
+  background-color: whitesmoke;
 }
 
 label {
