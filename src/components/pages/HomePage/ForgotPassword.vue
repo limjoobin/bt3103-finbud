@@ -49,7 +49,7 @@ export default {
 
 
 .register {
-  background-color: #a9d6ff;
+  background-color: whitesmoke;
   width: 500px;
   margin: 10% auto;
   padding: 2%;
@@ -59,7 +59,10 @@ export default {
   color: #444;
   background-color: back-color;
   box-shadow: 0 0 20px 0 #000000;
-  /* height: 350px; */
+}
+
+.register *{
+    background-color: whitesmoke;
 }
 
 .btns{
